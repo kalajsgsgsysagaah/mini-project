@@ -277,10 +277,10 @@ def dark_fig(w=8, h=4.5):
 #  TAB 1: Prediction
 # ─────────────────────────────────────────────
 def predict_groundwater(geology, geomorphology, soil, slope, drainage,
-                        lineament, lulc, ndvi, savi, rainfall, station):
-    print(f"[PREDICT] called: geo={geology}, rain={rainfall}, station={station}")
+                        lineament, lulc, ndvi, savi, rainfall, station, num_days=30):
+    print(f"[PREDICT] called: geo={geology}, rain={rainfall}, station={station}, days={num_days}")
     if model is None:
-        return "⚠️ Model not loaded", None
+        return "⚠️ Model not loaded", None, "", None
     try:
         inp = pd.DataFrame([{
             'Geology':           str(geology),
@@ -325,11 +325,76 @@ def predict_groundwater(geology, geomorphology, soil, slope, drainage,
         ax.set_xticks(range(len(sc)))
         ax.set_xticklabels(sc, fontsize=10, color='#c8d8ff')
         plt.tight_layout()
-        return f"🌍 {pred}", fig
+
+        # ── Daily projection estimates based on zone ──
+        zone_yield = {'Very Low': 2, 'Low': 5, 'Moderate': 10, 'High': 20, 'Very High': 35}  # lpm
+        zone_depth = {'Very Low': 30, 'Low': 22, 'Moderate': 15, 'High': 10, 'Very High': 6}  # m
+        lpm = zone_yield.get(pred, 10)
+        dep = zone_depth.get(pred, 15)
+        daily_litres = lpm * 60 * 8  # 8 hrs pumping/day
+        total_litres = daily_litres * int(num_days)
+        zone_color = CLASS_COLOR.get(pred, '#667eea')
+
+        prob_top = max(probs)
+        confidence_pct = round(prob_top * 100, 1)
+
+        summary_html = f"""
+        <div style="font-family:Inter,sans-serif;padding:18px;
+                    background:linear-gradient(135deg,rgba(13,21,48,0.98),rgba(26,32,80,0.98));
+                    border:1.5px solid {zone_color};border-radius:18px;margin-top:12px;">
+          <div style="text-align:center;margin-bottom:16px;">
+            <div style="font-size:2.4rem;font-weight:800;color:{zone_color};
+                        letter-spacing:1px;">{pred}</div>
+            <div style="color:#7a8ab0;font-size:0.85rem;">Groundwater Potential Zone</div>
+            <div style="background:rgba(255,255,255,0.08);border-radius:999px;
+                        height:8px;overflow:hidden;margin:8px auto;max-width:240px;">
+              <div style="width:{confidence_pct}%;height:100%;background:{zone_color};
+                          border-radius:999px;"></div>
+            </div>
+            <div style="color:{zone_color};font-size:0.9rem;font-weight:700;">
+              {confidence_pct}% Model Confidence
+            </div>
+          </div>
+          <hr style="border:none;border-top:1px solid rgba(102,126,234,0.25);margin:10px 0;">
+          <div style="color:#667eea;font-size:0.8rem;font-weight:700;
+                      text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">
+            📅 {int(num_days)}-Day Projection
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div style="background:rgba(102,126,234,0.1);border:1px solid rgba(102,126,234,0.3);
+                        border-radius:12px;padding:12px;text-align:center;">
+              <div style="color:#7a8ab0;font-size:0.75rem;text-transform:uppercase;">💧 Est. Yield</div>
+              <div style="color:#4ecdc4;font-size:1.2rem;font-weight:700;">{lpm} lpm</div>
+            </div>
+            <div style="background:rgba(102,126,234,0.1);border:1px solid rgba(102,126,234,0.3);
+                        border-radius:12px;padding:12px;text-align:center;">
+              <div style="color:#7a8ab0;font-size:0.75rem;text-transform:uppercase;">📏 Est. Depth</div>
+              <div style="color:#ffd700;font-size:1.2rem;font-weight:700;">{dep} m</div>
+            </div>
+            <div style="background:rgba(102,126,234,0.1);border:1px solid rgba(102,126,234,0.3);
+                        border-radius:12px;padding:12px;text-align:center;">
+              <div style="color:#7a8ab0;font-size:0.75rem;text-transform:uppercase;">📊 Daily Volume</div>
+              <div style="color:#ff9f40;font-size:1.2rem;font-weight:700;">{daily_litres:,} L</div>
+            </div>
+            <div style="background:rgba(78,205,196,0.1);border:1px solid rgba(78,205,196,0.3);
+                        border-radius:12px;padding:12px;text-align:center;">
+              <div style="color:#7a8ab0;font-size:0.75rem;text-transform:uppercase;">📦 {int(num_days)}-Day Total</div>
+              <div style="color:{zone_color};font-size:1.2rem;font-weight:700;">{total_litres:,} L</div>
+            </div>
+          </div>
+          <div style="margin-top:12px;background:rgba(255,255,255,0.04);border-radius:10px;
+                      padding:10px 14px;font-size:0.82rem;color:#c8d8ff;">
+            📍 <b>Station:</b> {station or 'N/A'} &nbsp;·&nbsp;
+            🌧️ <b>Rainfall:</b> {rainfall} mm &nbsp;·&nbsp;
+            🌟 <b>Geology:</b> {geology}
+          </div>
+        </div>"""
+
+        return f"🌍 {pred}", fig, summary_html, None  # None = CSV path placeholder
 
     except Exception as e:
         traceback.print_exc()
-        return f"❌ Error: {e}", None
+        return f"❌ Error: {e}", None, "", None
 
 # ─────────────────────────────────────────────
 #  TAB 2: Geospatial Map — highlight selected station
@@ -776,13 +841,15 @@ def update_all_tabs(station, predicted_zone=None):
     return map_fig, map_html, folium_html, discharge_fig, gw_fig, stn_detail_html, summary_df
 
 def predict_and_update_all(*args):
-    """Runs prediction, then updates all tabs based on the new prediction."""
-    station = args[-1]
-    # 1. Predict
-    txt, plot = predict_groundwater(*args)
+    """Runs prediction, then updates all tabs and generates CSV."""
+    station = args[-2]   # station is second-to-last; num_days is last
+    num_days = args[-1]
+    all_but_days = args[:-1]  # geology...station
 
-    # Robustly extract the zone name from result string like "🌍 High" or "❌ Error..."
-    # Match against the known zone labels, regardless of emoji prefix encoding
+    # 1. Predict (returns txt, plot, summary_html, _)
+    txt, plot, summary_html, _ = predict_groundwater(*all_but_days, num_days)
+
+    # 2. Extract predicted zone name
     KNOWN_ZONES = {'Very Low', 'Low', 'Moderate', 'High', 'Very High'}
     predicted_zone = None
     if isinstance(txt, str):
@@ -791,10 +858,36 @@ def predict_and_update_all(*args):
                 predicted_zone = zone
                 break
 
-    # 2. Update dashboard with live prediction override
+    # 3. Build CSV and save to temp file
+    import csv, tempfile, datetime as dt
+    csv_rows = [
+        ['Parameter', 'Value'],
+        ['Station',       station],
+        ['Geology',       all_but_days[0]],
+        ['Geomorphology', all_but_days[1]],
+        ['Soil',          all_but_days[2]],
+        ['Slope (%)',     all_but_days[3]],
+        ['Drainage Density', all_but_days[4]],
+        ['Lineament Density', all_but_days[5]],
+        ['LULC',          all_but_days[6]],
+        ['NDVI',          all_but_days[7]],
+        ['SAVI',          all_but_days[8]],
+        ['Rainfall (mm)', all_but_days[9]],
+        ['Analysis Days', int(num_days)],
+        ['Predicted Zone', predicted_zone or 'N/A'],
+        ['Timestamp',     dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')],
+    ]
+    tmp = tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False,
+                                     newline='', prefix='gw_prediction_')
+    writer = csv.writer(tmp)
+    writer.writerows(csv_rows)
+    tmp.close()
+    csv_path = tmp.name
+
+    # 4. Update dashboard
     map_fig, map_html, folium_html, discharge_fig, gw_fig, stn_detail_html, summary_df = update_all_tabs(station, predicted_zone)
 
-    return txt, plot, map_fig, map_html, folium_html, discharge_fig, gw_fig, stn_detail_html, summary_df
+    return txt, plot, summary_html, csv_path, map_fig, map_html, folium_html, discharge_fig, gw_fig, stn_detail_html, summary_df
 
 
 # ─────────────────────────────────────────────
@@ -844,12 +937,16 @@ with gr.Blocks(title="Groundwater ML — Godavari Basin") as app:
                     feat_ndvi  = gr.Slider(-1, 1,   value=.4, step=.01, label="NDVI (Vegetation)")
                     feat_savi  = gr.Slider(-1, 1,   value=.3, step=.01, label="SAVI (Soil Adjusted)")
                     feat_rain  = gr.Number(value=800, label="Rainfall (mm)")
+                    gr.HTML("<div class='section-title' style='margin-top:16px'>📅 Analysis Duration</div>")
+                    feat_days  = gr.Slider(1, 365, value=30, step=1, label="Number of Days to Project")
                     pred_btn   = gr.Button("🔍 Analyse Groundwater Potential", variant="primary", size="lg")
 
                 with gr.Column(scale=1, elem_classes="card"):
                     gr.HTML("<div class='section-title'>📊 Prediction Results</div>")
-                    result_txt  = gr.Textbox(label="Predicted Zone", interactive=False)
-                    result_plot = gr.Plot(label="Zone Probability Distribution")
+                    result_txt     = gr.Textbox(label="Predicted Zone", interactive=False)
+                    result_plot    = gr.Plot(label="Zone Probability Distribution")
+                    result_summary = gr.HTML(label="Detailed Summary")
+                    csv_out        = gr.File(label="📥 Download Result as CSV", visible=False)
 
         # ── TAB 2: Geospatial Map ─────────────────────────────────────────
         with gr.TabItem("🗺️ Geospatial Map"):
@@ -914,8 +1011,16 @@ with gr.Blocks(title="Groundwater ML — Godavari Basin") as app:
     pred_btn.click(
         fn=predict_and_update_all,
         inputs=[feat_geo, feat_gm, feat_soil, feat_slope, feat_drain,
-                feat_lin, feat_lulc, feat_ndvi, feat_savi, feat_rain, tab1_station],
-        outputs=[result_txt, result_plot, map_plot, _html, folium_out, discharge_plot, gw_plot, stn_out, summary_tbl]
+                feat_lin, feat_lulc, feat_ndvi, feat_savi, feat_rain,
+                tab1_station, feat_days],
+        outputs=[result_txt, result_plot, result_summary, csv_out,
+                 map_plot, _html, folium_out, discharge_plot, gw_plot, stn_out, summary_tbl]
+    )
+    # Make csv_out visible once a prediction is made
+    pred_btn.click(
+        fn=lambda: gr.File(visible=True),
+        inputs=[],
+        outputs=[csv_out]
     )
 
     # ── Wire Tab 1 station dropdown → ALL other tab outputs ─────────────
