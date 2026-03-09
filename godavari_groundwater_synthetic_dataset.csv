@@ -1,0 +1,301 @@
+Station,Geology,Geomorphology,Soil,Slope_percent,Drainage_Density,Lineament_Density,LULC,NDVI,SAVI,Rainfall_mm,Groundwater_Potential_Class
+Bhadrachalam,Gneiss,Flood Plain,Clayey Soil,18.16,1.12,0.17,Water Body,0.287,0.332,912.4,Moderate
+Bhadrachalam,Schist,Structural Hills,Alluvial Soil,21.8,4.25,0.05,Water Body,0.171,0.186,439.5,Very Low
+Bhadrachalam,Schist,Flood Plain,Gravelly Loam,15.98,2.1,0.08,Water Body,0.406,0.357,416.1,Very Low
+Bhadrachalam,Schist,Pediplain,Red Soil,5.53,0.76,0.76,Agricultural Land,0.396,0.351,825.3,High
+Bhadrachalam,Gneiss,Alluvial Plain,Gravelly Loam,20.66,2.94,0.67,Forest,0.108,0.081,568.7,Low
+Bhadrachalam,Granodiorite,Denudational Hills,Red Soil,16.63,1.24,0.78,Forest,0.431,0.412,764.0,Moderate
+Bhadrachalam,Basalt,Structural Hills,Red Soil,3.11,1.28,0.08,Fallow Land,0.547,0.557,1045.3,High
+Bhadrachalam,Granite,Alluvial Plain,Alluvial Soil,8.64,1.69,0.17,Water Body,0.393,0.44,824.9,Moderate
+Bhadrachalam,Granodiorite,Pediplain,Alluvial Soil,21.48,3.66,0.5,Water Body,0.247,0.198,539.2,Low
+Bhadrachalam,Gneiss,Denudational Hills,Black Cotton Soil,2.37,1.74,0.29,Built-up,0.532,0.544,631.6,Moderate
+Bhadrachalam,Gneiss,Alluvial Plain,Red Soil,22.94,2.75,0.63,Forest,0.336,0.298,899.3,Moderate
+Bhadrachalam,Basalt,Structural Hills,Black Cotton Soil,14.52,2.75,0.57,Fallow Land,0.32,0.29,1027.0,Moderate
+Bhadrachalam,Granite,Structural Hills,Gravelly Loam,5.26,4.22,0.66,Water Body,0.214,0.172,602.8,Moderate
+Bhadrachalam,Granite,Alluvial Plain,Alluvial Soil,10.07,0.99,0.32,Built-up,0.209,0.201,1018.3,Moderate
+Bhadrachalam,Basalt,Alluvial Plain,Black Cotton Soil,0.71,2.54,0.36,Forest,0.314,0.346,1002.5,High
+Bhadrachalam,Granite,Pediplain,Gravelly Loam,15.8,3.31,0.32,Water Body,0.269,0.313,626.2,Moderate
+Bhadrachalam,Granodiorite,Denudational Hills,Clayey Soil,8.9,0.65,0.51,Agricultural Land,0.226,0.226,610.6,Moderate
+Bhadrachalam,Gneiss,Flood Plain,Alluvial Soil,13.71,2.71,0.49,Fallow Land,0.417,0.435,771.7,Moderate
+Bhadrachalam,Basalt,Flood Plain,Gravelly Loam,3.16,3.84,0.29,Water Body,0.416,0.429,775.0,High
+Bhadrachalam,Granite,Pediplain,Alluvial Soil,7.18,3.08,0.18,Built-up,0.439,0.391,758.5,High
+Bhadrachalam,Granodiorite,Alluvial Plain,Gravelly Loam,26.38,1.53,0.54,Water Body,0.271,0.232,1047.3,Moderate
+Bhadrachalam,Granite,Flood Plain,Black Cotton Soil,16.97,4.03,0.19,Built-up,0.23,0.28,1075.8,Moderate
+Bhadrachalam,Schist,Flood Plain,Alluvial Soil,25.6,4.24,0.64,Built-up,0.528,0.518,1021.4,Moderate
+Bhadrachalam,Schist,Alluvial Plain,Gravelly Loam,14.83,2.29,0.8,Agricultural Land,0.587,0.565,613.8,Moderate
+Bhadrachalam,Schist,Flood Plain,Black Cotton Soil,22.45,3.38,0.28,Fallow Land,0.347,0.315,656.5,Moderate
+Bhadrachalam,Granite,Structural Hills,Gravelly Loam,10.83,3.08,0.55,Fallow Land,0.343,0.384,704.1,Moderate
+Bhadrachalam,Basalt,Flood Plain,Gravelly Loam,1.79,4.48,0.4,Agricultural Land,0.35,0.357,938.0,High
+Bhadrachalam,Basalt,Structural Hills,Alluvial Soil,17.38,4.42,0.11,Built-up,0.577,0.56,786.9,Moderate
+Bhadrachalam,Granodiorite,Flood Plain,Red Soil,21.03,2.78,0.12,Forest,0.185,0.191,1055.3,Moderate
+Bhadrachalam,Granodiorite,Flood Plain,Red Soil,21.41,2.71,0.27,Agricultural Land,0.261,0.296,495.6,Low
+Bhadrachalam,Schist,Flood Plain,Gravelly Loam,19.02,1.28,0.1,Forest,0.406,0.364,403.6,Very Low
+Bhadrachalam,Granodiorite,Pediplain,Alluvial Soil,14.24,2.67,0.26,Water Body,0.147,0.155,425.2,Very Low
+Bhadrachalam,Schist,Structural Hills,Gravelly Loam,10.14,3.81,0.25,Fallow Land,0.119,0.099,776.0,Moderate
+Bhadrachalam,Granodiorite,Flood Plain,Alluvial Soil,4.58,1.03,0.78,Built-up,0.197,0.188,889.7,High
+Bhadrachalam,Basalt,Alluvial Plain,Red Soil,28.9,3.84,0.57,Forest,0.319,0.277,417.7,Very Low
+Bhadrachalam,Basalt,Structural Hills,Clayey Soil,21.58,3.14,0.26,Built-up,0.178,0.153,784.5,Moderate
+Bhadrachalam,Granite,Denudational Hills,Clayey Soil,0.92,0.96,0.08,Water Body,0.224,0.21,930.5,High
+Bhadrachalam,Granodiorite,Pediplain,Clayey Soil,10.72,2.36,0.54,Water Body,0.109,0.135,964.8,Moderate
+Bhadrachalam,Schist,Pediplain,Alluvial Soil,15.34,3.93,0.54,Water Body,0.123,0.11,838.1,Moderate
+Bhadrachalam,Gneiss,Flood Plain,Clayey Soil,11.95,3.07,0.39,Water Body,0.393,0.437,802.8,Moderate
+Bhadrachalam,Granodiorite,Structural Hills,Black Cotton Soil,6.28,0.78,0.13,Forest,0.293,0.339,1033.7,High
+Bhadrachalam,Granite,Denudational Hills,Red Soil,25.42,0.59,0.66,Fallow Land,0.442,0.399,623.3,Moderate
+Bhadrachalam,Basalt,Alluvial Plain,Black Cotton Soil,12.83,4.37,0.46,Agricultural Land,0.274,0.318,427.4,Very Low
+Bhadrachalam,Schist,Alluvial Plain,Clayey Soil,17.63,3.97,0.47,Agricultural Land,0.466,0.429,575.0,Low
+Bhadrachalam,Gneiss,Alluvial Plain,Gravelly Loam,15.15,2.06,0.27,Water Body,0.219,0.207,774.0,Moderate
+Bhadrachalam,Granodiorite,Structural Hills,Clayey Soil,28.73,3.21,0.41,Built-up,0.579,0.614,648.4,Moderate
+Bhadrachalam,Basalt,Pediplain,Red Soil,28.41,3.63,0.14,Forest,0.401,0.406,548.9,Low
+Bhadrachalam,Schist,Alluvial Plain,Clayey Soil,3.95,1.07,0.62,Fallow Land,0.321,0.36,645.6,Moderate
+Bhadrachalam,Basalt,Alluvial Plain,Gravelly Loam,4.82,2.55,0.22,Agricultural Land,0.211,0.201,1024.3,High
+Bhadrachalam,Gneiss,Pediplain,Red Soil,11.6,0.83,0.63,Built-up,0.574,0.623,927.4,Moderate
+Bhadrachalam,Basalt,Alluvial Plain,Alluvial Soil,14.33,0.73,0.14,Built-up,0.156,0.155,407.9,Very Low
+Bhadrachalam,Granodiorite,Denudational Hills,Clayey Soil,8.93,3.97,0.22,Fallow Land,0.392,0.438,662.4,Moderate
+Bhadrachalam,Schist,Alluvial Plain,Red Soil,29.79,0.8,0.47,Agricultural Land,0.122,0.161,769.4,Moderate
+Bhadrachalam,Gneiss,Denudational Hills,Red Soil,21.06,2.04,0.6,Water Body,0.208,0.187,1097.1,Moderate
+Bhadrachalam,Schist,Denudational Hills,Clayey Soil,19.58,2.05,0.22,Agricultural Land,0.153,0.137,518.8,Low
+Bhadrachalam,Basalt,Structural Hills,Black Cotton Soil,8.75,2.14,0.5,Fallow Land,0.23,0.225,422.6,Very Low
+Bhadrachalam,Gneiss,Structural Hills,Clayey Soil,27.62,0.83,0.71,Agricultural Land,0.57,0.562,806.8,Moderate
+Bhadrachalam,Gneiss,Flood Plain,Alluvial Soil,11.61,3.5,0.34,Fallow Land,0.489,0.487,1089.7,Moderate
+Bhadrachalam,Basalt,Structural Hills,Black Cotton Soil,0.9,0.8,0.57,Fallow Land,0.132,0.086,493.7,Low
+Bhadrachalam,Granite,Flood Plain,Clayey Soil,11.65,1.46,0.2,Fallow Land,0.393,0.416,930.0,Moderate
+Ramagundam NTPC,Granodiorite,Pediplain,Black Cotton Soil,1.88,1.57,0.07,Built-up,0.204,0.242,929.9,High
+Ramagundam NTPC,Basalt,Structural Hills,Red Soil,3.11,3.67,0.49,Built-up,0.254,0.286,1077.6,Very High
+Ramagundam NTPC,Gneiss,Flood Plain,Red Soil,10.84,2.86,0.34,Water Body,0.206,0.17,410.2,Very Low
+Ramagundam NTPC,Basalt,Denudational Hills,Red Soil,9.29,2.59,0.57,Agricultural Land,0.374,0.369,1037.3,Moderate
+Ramagundam NTPC,Gneiss,Flood Plain,Black Cotton Soil,29.41,2.47,0.3,Built-up,0.346,0.322,721.4,Moderate
+Ramagundam NTPC,Schist,Alluvial Plain,Black Cotton Soil,12.31,3.29,0.19,Built-up,0.369,0.365,809.3,Moderate
+Ramagundam NTPC,Granodiorite,Structural Hills,Clayey Soil,7.1,3.79,0.31,Agricultural Land,0.358,0.405,821.4,High
+Ramagundam NTPC,Granodiorite,Alluvial Plain,Alluvial Soil,4.3,1.82,0.29,Built-up,0.367,0.353,1026.0,High
+Ramagundam NTPC,Granodiorite,Denudational Hills,Red Soil,24.28,3.49,0.19,Fallow Land,0.56,0.516,593.8,Low
+Ramagundam NTPC,Schist,Structural Hills,Red Soil,20.77,3.88,0.61,Forest,0.131,0.096,493.2,Low
+Ramagundam NTPC,Granite,Pediplain,Gravelly Loam,22.25,1.23,0.47,Agricultural Land,0.277,0.267,473.4,Low
+Ramagundam NTPC,Granodiorite,Alluvial Plain,Gravelly Loam,23.78,2.49,0.12,Built-up,0.545,0.554,875.4,Moderate
+Ramagundam NTPC,Basalt,Alluvial Plain,Alluvial Soil,18.42,1.48,0.42,Fallow Land,0.289,0.273,1029.8,Moderate
+Ramagundam NTPC,Granite,Flood Plain,Black Cotton Soil,5.24,1.25,0.26,Fallow Land,0.151,0.116,572.2,Low
+Ramagundam NTPC,Granite,Flood Plain,Alluvial Soil,29.1,3.96,0.66,Forest,0.591,0.552,678.5,Moderate
+Ramagundam NTPC,Gneiss,Denudational Hills,Alluvial Soil,23.2,1.25,0.29,Water Body,0.378,0.385,596.0,Low
+Ramagundam NTPC,Schist,Structural Hills,Black Cotton Soil,9.01,2.82,0.17,Built-up,0.221,0.182,827.4,Moderate
+Ramagundam NTPC,Granodiorite,Denudational Hills,Alluvial Soil,2.37,4.46,0.29,Fallow Land,0.126,0.11,494.1,Low
+Ramagundam NTPC,Basalt,Denudational Hills,Gravelly Loam,18.38,3.68,0.13,Forest,0.101,0.063,731.2,Moderate
+Ramagundam NTPC,Schist,Structural Hills,Black Cotton Soil,5.85,0.77,0.61,Agricultural Land,0.162,0.185,1056.8,High
+Ramagundam NTPC,Schist,Alluvial Plain,Clayey Soil,6.0,1.44,0.53,Forest,0.475,0.505,977.6,High
+Ramagundam NTPC,Granite,Alluvial Plain,Alluvial Soil,11.62,2.35,0.28,Agricultural Land,0.296,0.328,707.4,Moderate
+Ramagundam NTPC,Gneiss,Flood Plain,Red Soil,7.26,2.67,0.37,Water Body,0.296,0.299,446.6,Very Low
+Ramagundam NTPC,Granite,Structural Hills,Clayey Soil,26.87,3.65,0.16,Built-up,0.497,0.509,773.4,Moderate
+Ramagundam NTPC,Basalt,Denudational Hills,Clayey Soil,22.99,4.01,0.31,Water Body,0.472,0.425,798.9,Moderate
+Ramagundam NTPC,Gneiss,Flood Plain,Gravelly Loam,7.26,3.39,0.59,Water Body,0.299,0.329,504.9,Low
+Ramagundam NTPC,Granodiorite,Flood Plain,Gravelly Loam,28.79,1.87,0.22,Forest,0.458,0.468,978.8,Moderate
+Ramagundam NTPC,Schist,Denudational Hills,Clayey Soil,1.03,3.99,0.75,Fallow Land,0.393,0.394,828.0,High
+Ramagundam NTPC,Granite,Flood Plain,Alluvial Soil,18.4,2.2,0.6,Fallow Land,0.454,0.419,803.4,Moderate
+Ramagundam NTPC,Basalt,Alluvial Plain,Clayey Soil,27.66,3.98,0.44,Agricultural Land,0.592,0.626,487.3,Low
+Ramagundam NTPC,Granodiorite,Pediplain,Black Cotton Soil,3.87,2.16,0.7,Forest,0.203,0.232,822.6,High
+Ramagundam NTPC,Schist,Structural Hills,Alluvial Soil,27.43,1.49,0.48,Agricultural Land,0.559,0.568,423.0,Very Low
+Ramagundam NTPC,Granite,Alluvial Plain,Gravelly Loam,6.77,2.56,0.78,Water Body,0.49,0.468,554.1,Low
+Ramagundam NTPC,Gneiss,Structural Hills,Alluvial Soil,9.64,2.09,0.37,Fallow Land,0.368,0.336,609.7,Moderate
+Ramagundam NTPC,Schist,Alluvial Plain,Red Soil,9.17,3.36,0.45,Built-up,0.289,0.323,811.2,Moderate
+Ramagundam NTPC,Granodiorite,Denudational Hills,Alluvial Soil,28.41,1.99,0.25,Water Body,0.178,0.146,1003.2,Moderate
+Ramagundam NTPC,Basalt,Alluvial Plain,Clayey Soil,16.78,1.52,0.2,Built-up,0.52,0.557,685.6,Moderate
+Ramagundam NTPC,Gneiss,Denudational Hills,Gravelly Loam,24.26,4.45,0.5,Fallow Land,0.544,0.55,904.6,Moderate
+Ramagundam NTPC,Basalt,Flood Plain,Clayey Soil,3.06,3.03,0.6,Built-up,0.171,0.162,626.8,Moderate
+Ramagundam NTPC,Granodiorite,Flood Plain,Gravelly Loam,24.61,1.87,0.24,Water Body,0.392,0.384,1024.9,Moderate
+Ramagundam NTPC,Schist,Alluvial Plain,Red Soil,13.37,1.68,0.76,Built-up,0.412,0.403,786.4,Moderate
+Ramagundam NTPC,Basalt,Alluvial Plain,Alluvial Soil,1.16,1.57,0.46,Built-up,0.547,0.577,697.6,Moderate
+Ramagundam NTPC,Basalt,Pediplain,Gravelly Loam,20.89,3.23,0.67,Agricultural Land,0.311,0.274,1030.4,Moderate
+Ramagundam NTPC,Basalt,Flood Plain,Alluvial Soil,24.98,1.33,0.06,Built-up,0.237,0.242,856.0,Moderate
+Ramagundam NTPC,Schist,Pediplain,Red Soil,5.67,4.16,0.36,Water Body,0.399,0.409,865.5,High
+Ramagundam NTPC,Gneiss,Denudational Hills,Alluvial Soil,23.24,0.77,0.68,Built-up,0.579,0.547,463.2,Low
+Ramagundam NTPC,Granite,Pediplain,Gravelly Loam,20.08,4.25,0.6,Water Body,0.249,0.256,733.2,Moderate
+Ramagundam NTPC,Granodiorite,Structural Hills,Alluvial Soil,28.68,1.12,0.52,Agricultural Land,0.181,0.215,992.5,Moderate
+Ramagundam NTPC,Granodiorite,Structural Hills,Gravelly Loam,18.15,2.34,0.11,Water Body,0.276,0.267,893.4,Moderate
+Ramagundam NTPC,Granite,Pediplain,Alluvial Soil,9.78,3.73,0.77,Agricultural Land,0.584,0.535,472.2,Low
+Ramagundam NTPC,Granite,Pediplain,Alluvial Soil,22.1,3.73,0.54,Water Body,0.193,0.197,1011.1,Moderate
+Ramagundam NTPC,Granodiorite,Structural Hills,Red Soil,1.66,3.32,0.74,Fallow Land,0.211,0.26,1060.8,Very High
+Ramagundam NTPC,Schist,Flood Plain,Red Soil,12.94,3.68,0.61,Built-up,0.466,0.435,480.7,Low
+Ramagundam NTPC,Basalt,Flood Plain,Red Soil,7.29,0.98,0.11,Water Body,0.514,0.468,817.4,High
+Ramagundam NTPC,Basalt,Pediplain,Gravelly Loam,20.02,3.45,0.44,Forest,0.386,0.416,776.9,Moderate
+Ramagundam NTPC,Gneiss,Flood Plain,Gravelly Loam,26.3,2.62,0.75,Fallow Land,0.112,0.149,414.9,Very Low
+Ramagundam NTPC,Granodiorite,Alluvial Plain,Gravelly Loam,19.01,3.99,0.79,Fallow Land,0.484,0.474,735.9,Moderate
+Ramagundam NTPC,Basalt,Alluvial Plain,Alluvial Soil,9.26,3.91,0.59,Fallow Land,0.466,0.416,727.1,Moderate
+Ramagundam NTPC,Basalt,Structural Hills,Black Cotton Soil,20.55,1.37,0.76,Water Body,0.594,0.587,669.0,Moderate
+Ramagundam NTPC,Schist,Denudational Hills,Black Cotton Soil,14.29,2.95,0.18,Water Body,0.309,0.347,1061.3,Moderate
+Dowleswaram,Granite,Alluvial Plain,Red Soil,4.05,0.69,0.34,Built-up,0.519,0.492,981.4,High
+Dowleswaram,Granite,Structural Hills,Black Cotton Soil,6.88,2.57,0.5,Forest,0.513,0.543,840.8,High
+Dowleswaram,Basalt,Alluvial Plain,Alluvial Soil,26.97,2.35,0.52,Water Body,0.358,0.357,1097.4,Moderate
+Dowleswaram,Granite,Pediplain,Gravelly Loam,8.34,1.02,0.72,Forest,0.39,0.349,1014.2,Moderate
+Dowleswaram,Gneiss,Structural Hills,Red Soil,3.07,2.13,0.33,Forest,0.505,0.521,785.6,High
+Dowleswaram,Basalt,Flood Plain,Red Soil,2.75,3.9,0.42,Built-up,0.141,0.113,878.3,High
+Dowleswaram,Schist,Alluvial Plain,Black Cotton Soil,8.38,4.01,0.65,Built-up,0.274,0.292,796.0,Moderate
+Dowleswaram,Schist,Structural Hills,Black Cotton Soil,27.94,0.92,0.57,Fallow Land,0.18,0.163,567.1,Low
+Dowleswaram,Granodiorite,Denudational Hills,Red Soil,4.3,1.84,0.61,Fallow Land,0.536,0.489,978.1,Very High
+Dowleswaram,Granodiorite,Denudational Hills,Clayey Soil,18.7,4.42,0.52,Built-up,0.354,0.305,600.9,Moderate
+Dowleswaram,Basalt,Structural Hills,Gravelly Loam,13.25,3.86,0.34,Water Body,0.164,0.142,412.9,Very Low
+Dowleswaram,Granite,Pediplain,Black Cotton Soil,21.39,0.77,0.49,Forest,0.444,0.401,610.7,Moderate
+Dowleswaram,Basalt,Flood Plain,Alluvial Soil,22.61,1.02,0.62,Built-up,0.536,0.583,1078.2,Moderate
+Dowleswaram,Granite,Structural Hills,Clayey Soil,14.32,4.28,0.13,Built-up,0.226,0.176,511.3,Low
+Dowleswaram,Schist,Denudational Hills,Clayey Soil,19.81,1.59,0.76,Fallow Land,0.21,0.168,876.3,Moderate
+Dowleswaram,Granodiorite,Denudational Hills,Red Soil,22.92,2.27,0.28,Fallow Land,0.555,0.591,1075.2,Moderate
+Dowleswaram,Schist,Alluvial Plain,Alluvial Soil,17.1,2.39,0.46,Fallow Land,0.2,0.237,900.4,Moderate
+Dowleswaram,Basalt,Denudational Hills,Red Soil,22.95,3.0,0.15,Built-up,0.488,0.515,991.3,Moderate
+Dowleswaram,Granite,Alluvial Plain,Gravelly Loam,18.15,2.93,0.24,Fallow Land,0.193,0.189,400.9,Very Low
+Dowleswaram,Granodiorite,Flood Plain,Clayey Soil,13.93,0.55,0.1,Agricultural Land,0.234,0.264,617.3,Moderate
+Dowleswaram,Granite,Denudational Hills,Gravelly Loam,14.67,0.92,0.23,Agricultural Land,0.53,0.558,427.7,Very Low
+Dowleswaram,Granite,Structural Hills,Gravelly Loam,15.77,0.85,0.31,Forest,0.38,0.331,628.5,Moderate
+Dowleswaram,Schist,Alluvial Plain,Black Cotton Soil,20.84,3.7,0.2,Fallow Land,0.298,0.261,797.3,Moderate
+Dowleswaram,Granodiorite,Denudational Hills,Gravelly Loam,2.03,2.67,0.58,Built-up,0.453,0.406,1055.3,Very High
+Dowleswaram,Granite,Denudational Hills,Red Soil,18.13,3.64,0.41,Built-up,0.342,0.358,787.1,Moderate
+Dowleswaram,Schist,Structural Hills,Clayey Soil,14.64,2.96,0.3,Fallow Land,0.462,0.471,855.2,Moderate
+Dowleswaram,Granite,Flood Plain,Black Cotton Soil,21.72,1.41,0.8,Water Body,0.429,0.429,788.8,Moderate
+Dowleswaram,Basalt,Pediplain,Clayey Soil,1.4,1.53,0.4,Water Body,0.2,0.218,450.5,Low
+Dowleswaram,Granite,Denudational Hills,Red Soil,15.39,2.67,0.44,Fallow Land,0.414,0.438,937.4,Moderate
+Dowleswaram,Granodiorite,Structural Hills,Gravelly Loam,23.89,3.12,0.79,Built-up,0.298,0.309,818.4,Moderate
+Dowleswaram,Granodiorite,Denudational Hills,Red Soil,4.38,3.36,0.73,Fallow Land,0.411,0.424,913.2,Very High
+Dowleswaram,Granite,Denudational Hills,Red Soil,26.19,2.28,0.44,Agricultural Land,0.527,0.526,573.1,Low
+Dowleswaram,Schist,Structural Hills,Black Cotton Soil,19.87,1.8,0.63,Forest,0.296,0.343,580.7,Low
+Dowleswaram,Schist,Flood Plain,Gravelly Loam,10.44,3.82,0.37,Agricultural Land,0.137,0.104,763.8,Moderate
+Dowleswaram,Granite,Alluvial Plain,Gravelly Loam,18.36,1.93,0.45,Water Body,0.226,0.212,665.6,Moderate
+Dowleswaram,Basalt,Denudational Hills,Red Soil,1.51,4.45,0.14,Fallow Land,0.532,0.538,777.9,High
+Dowleswaram,Schist,Pediplain,Gravelly Loam,3.11,0.91,0.49,Fallow Land,0.42,0.392,526.0,Low
+Dowleswaram,Gneiss,Pediplain,Gravelly Loam,10.03,4.39,0.49,Water Body,0.34,0.359,412.2,Very Low
+Dowleswaram,Basalt,Alluvial Plain,Clayey Soil,28.22,3.43,0.17,Fallow Land,0.163,0.126,500.5,Low
+Dowleswaram,Granodiorite,Alluvial Plain,Red Soil,29.37,2.0,0.06,Agricultural Land,0.582,0.558,863.1,Moderate
+Dowleswaram,Basalt,Structural Hills,Alluvial Soil,20.46,1.36,0.54,Forest,0.115,0.158,882.7,Moderate
+Dowleswaram,Basalt,Alluvial Plain,Clayey Soil,9.88,3.97,0.8,Fallow Land,0.274,0.24,823.5,Moderate
+Dowleswaram,Granodiorite,Pediplain,Clayey Soil,23.07,4.2,0.38,Agricultural Land,0.244,0.205,855.4,Moderate
+Dowleswaram,Granite,Denudational Hills,Red Soil,9.26,3.1,0.3,Fallow Land,0.259,0.296,663.0,Moderate
+Dowleswaram,Gneiss,Flood Plain,Red Soil,16.6,2.28,0.06,Forest,0.29,0.295,817.5,Moderate
+Dowleswaram,Granodiorite,Alluvial Plain,Gravelly Loam,15.81,2.42,0.07,Fallow Land,0.332,0.32,1004.3,Moderate
+Dowleswaram,Granodiorite,Denudational Hills,Black Cotton Soil,18.43,3.56,0.66,Built-up,0.299,0.307,773.5,Moderate
+Dowleswaram,Gneiss,Flood Plain,Gravelly Loam,19.6,4.09,0.23,Fallow Land,0.109,0.079,405.3,Very Low
+Dowleswaram,Basalt,Denudational Hills,Black Cotton Soil,18.71,2.59,0.55,Forest,0.34,0.309,516.4,Low
+Dowleswaram,Schist,Pediplain,Clayey Soil,12.7,0.99,0.19,Agricultural Land,0.405,0.427,590.8,Low
+Dowleswaram,Basalt,Pediplain,Black Cotton Soil,14.76,3.72,0.46,Fallow Land,0.384,0.36,1074.0,Moderate
+Dowleswaram,Granodiorite,Alluvial Plain,Clayey Soil,7.23,1.35,0.51,Forest,0.401,0.433,1018.9,High
+Dowleswaram,Schist,Pediplain,Alluvial Soil,23.53,1.6,0.67,Forest,0.55,0.535,565.8,Low
+Dowleswaram,Granite,Structural Hills,Alluvial Soil,5.01,1.44,0.7,Fallow Land,0.483,0.448,696.8,Moderate
+Dowleswaram,Granite,Pediplain,Black Cotton Soil,7.34,2.06,0.5,Fallow Land,0.421,0.432,782.7,High
+Dowleswaram,Gneiss,Denudational Hills,Red Soil,21.87,0.56,0.31,Forest,0.438,0.432,712.1,Moderate
+Dowleswaram,Granite,Flood Plain,Alluvial Soil,19.54,2.88,0.35,Water Body,0.553,0.58,585.4,Low
+Dowleswaram,Granodiorite,Flood Plain,Gravelly Loam,2.56,3.06,0.25,Fallow Land,0.321,0.354,868.7,High
+Dowleswaram,Schist,Denudational Hills,Red Soil,11.67,1.95,0.8,Water Body,0.328,0.297,436.6,Very Low
+Dowleswaram,Schist,Alluvial Plain,Gravelly Loam,5.53,2.14,0.37,Water Body,0.581,0.594,928.4,High
+Pattiseema,Schist,Alluvial Plain,Alluvial Soil,29.24,0.58,0.6,Fallow Land,0.337,0.325,483.9,Low
+Pattiseema,Schist,Pediplain,Clayey Soil,26.01,2.93,0.43,Water Body,0.146,0.122,951.5,Moderate
+Pattiseema,Gneiss,Flood Plain,Gravelly Loam,3.09,4.25,0.47,Forest,0.252,0.228,652.1,Moderate
+Pattiseema,Granodiorite,Denudational Hills,Alluvial Soil,15.16,4.47,0.69,Forest,0.4,0.402,1043.6,Moderate
+Pattiseema,Schist,Alluvial Plain,Clayey Soil,16.21,3.39,0.16,Built-up,0.37,0.383,872.0,Moderate
+Pattiseema,Granite,Structural Hills,Alluvial Soil,29.28,3.06,0.67,Water Body,0.187,0.206,642.3,Moderate
+Pattiseema,Granite,Structural Hills,Clayey Soil,24.97,1.77,0.76,Forest,0.403,0.367,1028.8,Moderate
+Pattiseema,Schist,Structural Hills,Gravelly Loam,28.91,2.7,0.77,Forest,0.134,0.087,494.6,Low
+Pattiseema,Gneiss,Structural Hills,Black Cotton Soil,1.02,2.91,0.32,Forest,0.239,0.274,400.2,Very Low
+Pattiseema,Gneiss,Alluvial Plain,Black Cotton Soil,2.2,3.28,0.79,Fallow Land,0.33,0.286,1096.4,Very High
+Pattiseema,Granite,Structural Hills,Gravelly Loam,20.92,0.75,0.43,Water Body,0.161,0.141,470.7,Low
+Pattiseema,Basalt,Flood Plain,Black Cotton Soil,21.87,3.67,0.35,Water Body,0.187,0.203,993.6,Moderate
+Pattiseema,Basalt,Structural Hills,Red Soil,28.93,1.49,0.15,Forest,0.341,0.309,671.0,Moderate
+Pattiseema,Basalt,Structural Hills,Gravelly Loam,25.11,3.02,0.2,Agricultural Land,0.195,0.207,626.5,Moderate
+Pattiseema,Schist,Pediplain,Gravelly Loam,25.41,0.89,0.42,Water Body,0.155,0.16,718.1,Moderate
+Pattiseema,Granite,Alluvial Plain,Alluvial Soil,25.86,2.07,0.77,Agricultural Land,0.426,0.457,829.9,Moderate
+Pattiseema,Basalt,Denudational Hills,Black Cotton Soil,8.74,4.22,0.24,Forest,0.571,0.602,453.5,Low
+Pattiseema,Basalt,Denudational Hills,Alluvial Soil,26.74,2.3,0.71,Fallow Land,0.293,0.288,558.9,Low
+Pattiseema,Granite,Structural Hills,Gravelly Loam,19.94,3.71,0.13,Fallow Land,0.124,0.078,922.3,Moderate
+Pattiseema,Gneiss,Flood Plain,Red Soil,29.14,4.27,0.64,Fallow Land,0.294,0.29,1094.1,Moderate
+Pattiseema,Granite,Alluvial Plain,Alluvial Soil,13.02,0.83,0.44,Forest,0.375,0.408,448.1,Very Low
+Pattiseema,Granodiorite,Pediplain,Clayey Soil,8.19,0.78,0.77,Water Body,0.434,0.385,578.8,Low
+Pattiseema,Schist,Pediplain,Black Cotton Soil,17.68,3.49,0.66,Forest,0.246,0.294,821.3,Moderate
+Pattiseema,Granite,Pediplain,Gravelly Loam,11.48,2.23,0.38,Water Body,0.269,0.312,557.2,Low
+Pattiseema,Granite,Denudational Hills,Alluvial Soil,19.55,1.64,0.66,Forest,0.161,0.131,1020.8,Moderate
+Pattiseema,Gneiss,Flood Plain,Alluvial Soil,22.57,2.73,0.19,Water Body,0.418,0.39,1084.9,Moderate
+Pattiseema,Gneiss,Denudational Hills,Clayey Soil,21.92,3.77,0.21,Built-up,0.122,0.088,492.2,Low
+Pattiseema,Schist,Alluvial Plain,Clayey Soil,3.62,1.11,0.12,Forest,0.479,0.503,828.4,High
+Pattiseema,Granodiorite,Pediplain,Black Cotton Soil,26.5,1.61,0.2,Agricultural Land,0.379,0.41,919.2,Moderate
+Pattiseema,Schist,Denudational Hills,Red Soil,6.05,1.92,0.64,Forest,0.378,0.401,831.2,High
+Pattiseema,Gneiss,Flood Plain,Clayey Soil,22.61,3.53,0.56,Forest,0.52,0.553,407.7,Very Low
+Pattiseema,Basalt,Structural Hills,Red Soil,26.64,2.87,0.34,Water Body,0.284,0.279,905.4,Moderate
+Pattiseema,Basalt,Pediplain,Gravelly Loam,26.29,2.54,0.59,Water Body,0.191,0.18,681.6,Moderate
+Pattiseema,Gneiss,Structural Hills,Gravelly Loam,18.26,0.59,0.29,Forest,0.126,0.125,819.6,Moderate
+Pattiseema,Granite,Pediplain,Gravelly Loam,13.49,1.09,0.3,Agricultural Land,0.454,0.483,762.1,Moderate
+Pattiseema,Schist,Denudational Hills,Black Cotton Soil,28.03,3.07,0.37,Water Body,0.399,0.423,1098.8,Moderate
+Pattiseema,Basalt,Flood Plain,Alluvial Soil,5.94,1.95,0.3,Fallow Land,0.292,0.299,811.4,High
+Pattiseema,Basalt,Structural Hills,Clayey Soil,2.16,3.91,0.22,Water Body,0.449,0.492,947.8,High
+Pattiseema,Granodiorite,Flood Plain,Alluvial Soil,4.44,0.82,0.6,Agricultural Land,0.501,0.497,738.1,Moderate
+Pattiseema,Granite,Denudational Hills,Clayey Soil,4.37,2.1,0.74,Water Body,0.104,0.06,557.7,Low
+Pattiseema,Granodiorite,Alluvial Plain,Clayey Soil,8.63,3.65,0.78,Water Body,0.122,0.076,593.0,Low
+Pattiseema,Granodiorite,Alluvial Plain,Black Cotton Soil,18.78,2.75,0.31,Forest,0.178,0.213,432.6,Very Low
+Pattiseema,Granite,Structural Hills,Red Soil,26.52,2.07,0.67,Fallow Land,0.466,0.471,489.6,Low
+Pattiseema,Schist,Alluvial Plain,Clayey Soil,17.18,2.36,0.78,Agricultural Land,0.228,0.243,538.7,Low
+Pattiseema,Basalt,Structural Hills,Red Soil,3.12,3.24,0.46,Water Body,0.111,0.133,692.6,Moderate
+Pattiseema,Granite,Pediplain,Clayey Soil,16.53,0.83,0.39,Fallow Land,0.461,0.418,895.5,Moderate
+Pattiseema,Schist,Denudational Hills,Black Cotton Soil,14.14,2.15,0.54,Forest,0.573,0.608,868.3,Moderate
+Pattiseema,Schist,Denudational Hills,Clayey Soil,10.52,3.99,0.46,Water Body,0.589,0.618,748.1,Moderate
+Pattiseema,Granite,Flood Plain,Gravelly Loam,29.56,3.59,0.07,Agricultural Land,0.535,0.509,715.9,Moderate
+Pattiseema,Basalt,Flood Plain,Black Cotton Soil,13.83,2.09,0.12,Water Body,0.295,0.325,660.4,Moderate
+Pattiseema,Granodiorite,Pediplain,Gravelly Loam,17.54,3.04,0.65,Water Body,0.362,0.341,955.0,Moderate
+Pattiseema,Granite,Denudational Hills,Alluvial Soil,11.21,4.09,0.18,Fallow Land,0.379,0.346,829.4,Moderate
+Pattiseema,Granite,Denudational Hills,Black Cotton Soil,24.06,4.37,0.69,Agricultural Land,0.466,0.498,619.2,Moderate
+Pattiseema,Gneiss,Flood Plain,Clayey Soil,19.22,1.16,0.71,Agricultural Land,0.309,0.357,867.5,Moderate
+Pattiseema,Schist,Structural Hills,Alluvial Soil,6.69,2.02,0.78,Water Body,0.147,0.1,976.1,High
+Pattiseema,Granite,Structural Hills,Red Soil,29.65,4.11,0.54,Built-up,0.559,0.52,931.7,Moderate
+Pattiseema,Gneiss,Denudational Hills,Red Soil,3.83,0.85,0.59,Agricultural Land,0.54,0.543,571.0,Low
+Pattiseema,Schist,Flood Plain,Black Cotton Soil,13.35,2.81,0.6,Built-up,0.47,0.439,829.6,Moderate
+Pattiseema,Granite,Denudational Hills,Gravelly Loam,9.79,0.52,0.56,Agricultural Land,0.116,0.14,474.4,Low
+Pattiseema,Basalt,Flood Plain,Alluvial Soil,20.98,2.55,0.28,Fallow Land,0.519,0.497,850.0,Moderate
+Rajahmundry,Granodiorite,Flood Plain,Alluvial Soil,7.37,3.73,0.09,Built-up,0.304,0.33,1032.5,High
+Rajahmundry,Gneiss,Flood Plain,Black Cotton Soil,11.7,1.41,0.34,Water Body,0.1,0.067,672.8,Moderate
+Rajahmundry,Gneiss,Flood Plain,Red Soil,29.0,1.01,0.58,Built-up,0.109,0.101,419.0,Very Low
+Rajahmundry,Schist,Flood Plain,Gravelly Loam,21.94,1.72,0.67,Fallow Land,0.502,0.454,1074.0,Moderate
+Rajahmundry,Gneiss,Structural Hills,Black Cotton Soil,0.87,2.38,0.28,Agricultural Land,0.37,0.33,569.3,Low
+Rajahmundry,Granite,Structural Hills,Alluvial Soil,27.14,3.91,0.55,Water Body,0.25,0.274,433.7,Very Low
+Rajahmundry,Gneiss,Denudational Hills,Alluvial Soil,15.88,0.75,0.67,Fallow Land,0.391,0.441,999.0,Moderate
+Rajahmundry,Basalt,Denudational Hills,Gravelly Loam,24.96,4.02,0.48,Agricultural Land,0.147,0.188,868.4,Moderate
+Rajahmundry,Gneiss,Denudational Hills,Gravelly Loam,28.47,2.28,0.64,Water Body,0.27,0.236,519.4,Low
+Rajahmundry,Granite,Alluvial Plain,Alluvial Soil,8.25,1.59,0.4,Forest,0.217,0.246,1079.5,Moderate
+Rajahmundry,Basalt,Structural Hills,Alluvial Soil,4.63,1.61,0.78,Built-up,0.281,0.278,432.0,Very Low
+Rajahmundry,Granite,Flood Plain,Gravelly Loam,6.61,2.57,0.05,Water Body,0.198,0.209,596.5,Low
+Rajahmundry,Granite,Alluvial Plain,Clayey Soil,6.95,2.09,0.08,Agricultural Land,0.242,0.238,707.0,Moderate
+Rajahmundry,Gneiss,Flood Plain,Black Cotton Soil,15.47,4.0,0.42,Fallow Land,0.409,0.37,641.7,Moderate
+Rajahmundry,Basalt,Denudational Hills,Clayey Soil,22.03,4.03,0.55,Agricultural Land,0.565,0.532,672.9,Moderate
+Rajahmundry,Basalt,Alluvial Plain,Gravelly Loam,0.55,3.05,0.09,Forest,0.512,0.558,974.8,High
+Rajahmundry,Schist,Alluvial Plain,Alluvial Soil,20.05,0.87,0.5,Water Body,0.228,0.245,960.2,Moderate
+Rajahmundry,Gneiss,Structural Hills,Red Soil,20.22,3.21,0.32,Forest,0.14,0.125,1059.2,Moderate
+Rajahmundry,Basalt,Flood Plain,Red Soil,5.57,3.05,0.61,Agricultural Land,0.169,0.131,508.0,Low
+Rajahmundry,Granite,Alluvial Plain,Alluvial Soil,2.99,2.1,0.73,Water Body,0.447,0.45,714.2,Moderate
+Rajahmundry,Schist,Denudational Hills,Red Soil,2.79,2.67,0.7,Built-up,0.294,0.329,682.7,Moderate
+Rajahmundry,Gneiss,Alluvial Plain,Gravelly Loam,3.42,4.06,0.06,Water Body,0.325,0.333,931.5,High
+Rajahmundry,Granite,Denudational Hills,Black Cotton Soil,13.2,1.07,0.72,Fallow Land,0.444,0.431,516.8,Low
+Rajahmundry,Granite,Structural Hills,Red Soil,11.88,3.67,0.5,Water Body,0.359,0.347,404.7,Very Low
+Rajahmundry,Gneiss,Flood Plain,Black Cotton Soil,5.44,4.39,0.22,Fallow Land,0.39,0.396,473.7,Low
+Rajahmundry,Gneiss,Structural Hills,Clayey Soil,11.95,1.14,0.07,Forest,0.292,0.246,421.7,Very Low
+Rajahmundry,Schist,Alluvial Plain,Alluvial Soil,9.76,4.05,0.5,Fallow Land,0.55,0.512,1069.1,Moderate
+Rajahmundry,Basalt,Alluvial Plain,Alluvial Soil,11.87,1.86,0.46,Fallow Land,0.244,0.29,672.6,Moderate
+Rajahmundry,Gneiss,Pediplain,Alluvial Soil,13.49,1.71,0.24,Fallow Land,0.371,0.397,983.6,Moderate
+Rajahmundry,Basalt,Flood Plain,Clayey Soil,16.95,1.89,0.49,Forest,0.271,0.248,1076.5,Moderate
+Rajahmundry,Granodiorite,Flood Plain,Clayey Soil,26.47,2.99,0.48,Fallow Land,0.344,0.334,1095.7,Moderate
+Rajahmundry,Granodiorite,Flood Plain,Clayey Soil,27.25,1.03,0.49,Water Body,0.174,0.209,897.6,Moderate
+Rajahmundry,Granodiorite,Denudational Hills,Alluvial Soil,2.2,3.22,0.4,Built-up,0.119,0.144,784.5,High
+Rajahmundry,Gneiss,Alluvial Plain,Black Cotton Soil,25.97,2.85,0.33,Built-up,0.331,0.379,738.4,Moderate
+Rajahmundry,Schist,Structural Hills,Black Cotton Soil,26.89,2.32,0.38,Agricultural Land,0.559,0.545,908.0,Moderate
+Rajahmundry,Gneiss,Flood Plain,Clayey Soil,9.3,1.46,0.28,Fallow Land,0.13,0.08,848.1,Moderate
+Rajahmundry,Gneiss,Pediplain,Red Soil,23.0,4.22,0.07,Fallow Land,0.586,0.558,913.8,Moderate
+Rajahmundry,Gneiss,Pediplain,Red Soil,6.72,4.33,0.06,Agricultural Land,0.279,0.309,595.1,Low
+Rajahmundry,Basalt,Structural Hills,Gravelly Loam,10.58,3.03,0.1,Agricultural Land,0.145,0.095,430.9,Very Low
+Rajahmundry,Schist,Flood Plain,Black Cotton Soil,3.11,2.45,0.11,Built-up,0.483,0.518,829.5,High
+Rajahmundry,Granodiorite,Alluvial Plain,Red Soil,0.68,0.9,0.7,Forest,0.416,0.424,888.4,High
+Rajahmundry,Granodiorite,Flood Plain,Black Cotton Soil,21.45,3.17,0.21,Fallow Land,0.221,0.219,501.6,Low
+Rajahmundry,Gneiss,Alluvial Plain,Alluvial Soil,6.97,0.63,0.21,Agricultural Land,0.392,0.426,784.3,High
+Rajahmundry,Granodiorite,Pediplain,Gravelly Loam,24.73,2.72,0.53,Water Body,0.46,0.497,717.8,Moderate
+Rajahmundry,Schist,Pediplain,Red Soil,4.04,4.17,0.59,Forest,0.252,0.231,794.3,High
+Rajahmundry,Granodiorite,Alluvial Plain,Red Soil,3.53,1.26,0.64,Agricultural Land,0.461,0.438,681.7,Moderate
+Rajahmundry,Granite,Flood Plain,Red Soil,27.96,3.81,0.15,Water Body,0.27,0.314,457.9,Low
+Rajahmundry,Gneiss,Structural Hills,Alluvial Soil,12.96,2.01,0.75,Forest,0.386,0.427,1060.1,Moderate
+Rajahmundry,Basalt,Structural Hills,Black Cotton Soil,25.41,3.2,0.15,Fallow Land,0.121,0.127,1051.1,Moderate
+Rajahmundry,Schist,Flood Plain,Black Cotton Soil,20.45,4.28,0.25,Water Body,0.191,0.169,490.7,Low
+Rajahmundry,Granodiorite,Flood Plain,Gravelly Loam,11.86,3.96,0.41,Agricultural Land,0.6,0.56,749.0,Moderate
+Rajahmundry,Granite,Flood Plain,Alluvial Soil,24.75,3.9,0.21,Water Body,0.126,0.153,691.6,Moderate
+Rajahmundry,Schist,Denudational Hills,Gravelly Loam,4.53,3.11,0.6,Fallow Land,0.439,0.45,606.7,Moderate
+Rajahmundry,Granite,Pediplain,Clayey Soil,3.02,0.67,0.55,Water Body,0.441,0.438,805.4,High
+Rajahmundry,Granodiorite,Flood Plain,Alluvial Soil,27.38,3.85,0.58,Built-up,0.15,0.169,569.3,Low
+Rajahmundry,Schist,Pediplain,Alluvial Soil,0.79,2.36,0.77,Water Body,0.302,0.305,816.6,High
+Rajahmundry,Granodiorite,Flood Plain,Alluvial Soil,4.38,3.93,0.48,Forest,0.327,0.304,553.9,Low
+Rajahmundry,Granite,Denudational Hills,Black Cotton Soil,10.58,3.46,0.22,Fallow Land,0.191,0.185,632.5,Moderate
+Rajahmundry,Granite,Structural Hills,Black Cotton Soil,1.2,4.09,0.64,Water Body,0.423,0.47,992.9,Very High
+Rajahmundry,Schist,Pediplain,Gravelly Loam,18.3,2.39,0.09,Forest,0.55,0.571,1056.2,Moderate
