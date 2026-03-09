@@ -780,13 +780,20 @@ def predict_and_update_all(*args):
     station = args[-1]
     # 1. Predict
     txt, plot = predict_groundwater(*args)
-    
-    # Extract just the string predicted zone (removing the '🌍 ' prefix)
-    predicted_zone = txt.replace('🌍 ', '') if type(txt) == str else None
-    
+
+    # Robustly extract the zone name from result string like "🌍 High" or "❌ Error..."
+    # Match against the known zone labels, regardless of emoji prefix encoding
+    KNOWN_ZONES = {'Very Low', 'Low', 'Moderate', 'High', 'Very High'}
+    predicted_zone = None
+    if isinstance(txt, str):
+        for zone in KNOWN_ZONES:
+            if zone in txt:
+                predicted_zone = zone
+                break
+
     # 2. Update dashboard with live prediction override
     map_fig, map_html, folium_html, discharge_fig, gw_fig, stn_detail_html, summary_df = update_all_tabs(station, predicted_zone)
-    
+
     return txt, plot, map_fig, map_html, folium_html, discharge_fig, gw_fig, stn_detail_html, summary_df
 
 
