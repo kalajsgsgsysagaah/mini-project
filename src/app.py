@@ -350,43 +350,34 @@ def generate_map(selected_station="", predicted_zone=None):
         else:
             df['Prediction'] = df['Groundwater_Potential_Class']
 
-        def get_mode(s): m = s.mode(); return m.iloc[0] if len(m) > 0 else "Unknown"
-        sc_df   = df.groupby('Station')['Prediction'].agg(get_mode).reset_index()
+        # We no longer plot the 60 scattered points with jitter.
+        # Just set up the figure and plot EXACT station locations.
+        sc_df   = df.groupby('Station')['Prediction'].agg(lambda s: s.mode().iloc[0] if len(s)>0 else "Unknown").reset_index()
         sc_dict = dict(zip(sc_df['Station'], sc_df['Prediction']))
         cnt     = df.groupby('Station').size().to_dict()
-
-        np.random.seed(42)
-        df['lat_j']   = df['lat'] + np.random.normal(0, .04, len(df))
-        df['lon_j']   = df['lon'] + np.random.normal(0, .04, len(df))
-        df['pot_num'] = df['Prediction'].map(ORDER_MAP)
-
-        from matplotlib.colors import ListedColormap
-        dark_map = ListedColormap(['#ff4040','#ff9f40','#ffd700','#667eea','#4ecdc4'])
 
         fig = plt.figure(figsize=(12, 6), facecolor='#060b18')
         ax  = fig.add_axes([0.04, 0.08, 0.61, 0.84], facecolor='#0d1a35')
 
-        try:
-            from scipy.interpolate import griddata
-            from scipy.ndimage     import gaussian_filter
-            gx, gy = np.mgrid[df['lon_j'].min():df['lon_j'].max():130j,
-                               df['lat_j'].min():df['lat_j'].max():130j]
-            gz   = griddata((df['lon_j'], df['lat_j']), df['pot_num'], (gx, gy), method='nearest')
-            gz_b = gaussian_filter(gz.astype(float), sigma=4)
-            ax.contourf(gx, gy, gz_b, levels=np.arange(-.5, 5, 1),
-                        cmap=dark_map, alpha=.35, zorder=1, vmin=0, vmax=4)
-        except Exception: pass
-
-        ax.scatter(df['lon_j'], df['lat_j'], c=df['pot_num'], cmap=dark_map,
-                   s=40, edgecolors='#060b18', linewidths=.5, zorder=2, alpha=.65, vmin=0, vmax=4)
-
+        # Define offsets for the labels so they don't overlap
         label_offsets = {
-            'Bhadrachalam':    (-0.32,  0.14),
-            'Ramagundam NTPC': (-0.30,  0.14),
-            'Dowleswaram':     ( 0.28, -0.15),
-            'Pattiseema':      (-0.32, -0.15),
-            'Rajahmundry':     ( 0.28,  0.13),
+            'Bhadrachalam':    (-0.10,  0.08),
+            'Ramagundam NTPC': (-0.10,  0.08),
+            'Dowleswaram':     ( 0.08, -0.08),
+            'Pattiseema':      (-0.10, -0.08),
+            'Rajahmundry':     ( 0.08,  0.08),
         }
+        
+        # Determine the bounding box to set axes limits cleanly around the stations
+        lats = [info['lat'] for info in STATIONS.values()]
+        lons = [info['lon'] for info in STATIONS.values()]
+        
+        # Padding
+        lat_pad = (max(lats) - min(lats)) * 0.4
+        lon_pad = (max(lons) - min(lons)) * 0.4
+        ax.set_ylim(min(lats) - lat_pad, max(lats) + lat_pad)
+        ax.set_xlim(min(lons) - lon_pad, max(lons) + lon_pad)
+
         for stn, info in STATIONS.items():
             lat, lon = info['lat'], info['lon']
             dom = sc_dict.get(stn, 'N/A')
@@ -396,26 +387,30 @@ def generate_map(selected_station="", predicted_zone=None):
                 dom = predicted_zone
                 
             bc  = CLASS_COLOR.get(dom, '#667eea')
-            lo, la = label_offsets.get(stn, (0.2, 0.12))
+            lo, la = label_offsets.get(stn, (0.05, 0.05))
             is_selected = (stn == selected_station)
-            marker_size = 22 if is_selected else 15
+            marker_size = 28 if is_selected else 18
             marker_edge = '#ffffff' if is_selected else '#060b18'
-            ax.plot(lon, lat, marker='*', markersize=marker_size, color='#ffd700',
-                    markeredgecolor=marker_edge, markeredgewidth=1.5 if is_selected else 0.8, zorder=5)
+            
+            # Plot the exact station point
+            ax.plot(lon, lat, marker='*', markersize=marker_size, color='#ffd700' if is_selected else bc,
+                    markeredgecolor=marker_edge, markeredgewidth=1.8 if is_selected else 0.8, zorder=5)
+            
+            # Draw the label using annotate to point to the exact origin
             label_text = f" ★ {stn}\n [{dom}]" if is_selected else f" {stn}\n [{dom}]"
             ax.annotate(label_text, xy=(lon, lat),
                         xytext=(lon + lo, lat + la),
-                        fontsize=7.5, fontweight='bold',
+                        fontsize=8.5 if is_selected else 7.5, fontweight='bold',
                         ha='left' if lo >= 0 else 'right', va='center',
                         bbox=dict(facecolor='#0d1530', alpha=.90,
                                   edgecolor='#ffd700' if is_selected else bc,
                                   boxstyle='round,pad=0.4', linewidth=2.5 if is_selected else 1.5),
-                        color='#ffd700' if is_selected else bc,
-                        arrowprops=dict(arrowstyle='->', color='#ffd700' if is_selected else bc, lw=1.2,
+                        color='#ffd700' if is_selected else '#c8d8ff',
+                        arrowprops=dict(arrowstyle='->', color='#ffd700' if is_selected else bc, lw=1.5,
                                         connectionstyle='arc3,rad=0.2'), zorder=6)
 
         title_stn = f" — Highlighted: {selected_station}" if selected_station else ""
-        ax.set_title(f"Groundwater Zoning — Godavari Basin{title_stn}",
+        ax.set_title(f"Exact Station Locations — Godavari Basin{title_stn}",
                      fontsize=12, fontweight='bold', color='#e0e8ff', pad=10)
         ax.set_xlabel("Longitude", fontsize=9, color='#7a8ab0')
         ax.set_ylabel("Latitude",  fontsize=9, color='#7a8ab0')
@@ -423,20 +418,19 @@ def generate_map(selected_station="", predicted_zone=None):
         ax.grid(True, linestyle='--', alpha=.2, color='#667eea')
         for sp in ax.spines.values(): sp.set_color('#667eea'); sp.set_linewidth(.5)
 
-        legend_els = [mpatches.Patch(facecolor=CLASS_COLOR[l], edgecolor='#060b18', label=l)
-                      for l in ['Very Low','Low','Moderate','High','Very High']]
-        star_p = plt.Line2D([0],[0], marker='*', color='w', markerfacecolor='#ffd700',
-                            markersize=10, label='Station')
-        ax.legend(handles=legend_els + [star_p], loc='lower left',
-                  title='Legend', fontsize=7.5, title_fontsize=8.5,
-                  framealpha=.85, facecolor='#0d1530', edgecolor='#667eea',
-                  labelcolor='#c8d8ff')
-
         # Right: station table
         tax = fig.add_axes([0.67, 0.08, 0.31, 0.84], facecolor='#0d1530')
         tax.axis('off')
-        col_lbls = ['Station', 'Zone', 'Records']
-        tdata = [[stn, sc_dict.get(stn, 'N/A'), str(cnt.get(stn, 0))] for stn in STATIONS]
+        col_lbls = ['Station', 'Live Zone', 'Historical Data']
+        
+        # Build table data, taking into account the live override
+        tdata = []
+        for stn in STATIONS:
+            dom = sc_dict.get(stn, 'N/A')
+            if stn == selected_station and predicted_zone is not None:
+                dom = predicted_zone
+            tdata.append([stn, dom, f"{cnt.get(stn, 0)} records"])
+            
         tbl = tax.table(cellText=tdata, colLabels=col_lbls, cellLoc='center', loc='center')
         tbl.auto_set_font_size(False); tbl.set_fontsize(7.5); tbl.scale(1, 1.9)
         for ci in range(len(col_lbls)):
@@ -448,8 +442,9 @@ def generate_map(selected_station="", predicted_zone=None):
             for ci in range(len(col_lbls)):
                 tbl[ri, ci].set_facecolor('#1a2a60' if is_sel_row else ('#0d1a35' if ri % 2 == 0 else '#0d1530'))
                 tbl[ri, ci].set_text_props(
-                    color=CLASS_COLOR.get(dom,'#c8d8ff') if ci==1 else ('#ffd700' if is_sel_row else '#c8d8ff'),
-                    fontweight='bold' if (ci==1 or is_sel_row) else 'normal')
+                    color='#ffd700' if is_sel_row else CLASS_COLOR.get(dom, '#c8d8ff'),
+                    fontweight='bold' if is_sel_row or ci == 1 else 'normal'
+                )
                 tbl[ri, ci].set_edgecolor('#ffd700' if is_sel_row else '#667eea')
         tax.set_title("📍 Stations", fontsize=9, fontweight='bold', pad=6, color='#4ecdc4')
         return fig, ""
@@ -852,11 +847,8 @@ with gr.Blocks(title="Groundwater ML — Godavari Basin") as app:
         # ── TAB 2: Geospatial Map ─────────────────────────────────────────
         with gr.TabItem("🗺️ Geospatial Map"):
             with gr.Column(elem_classes="card"):
-                gr.HTML("<div class='section-title'>🛰️ ML Groundwater Potential Zones</div>")
-                gr.Markdown("*Colour-coded ML zones across the Godavari basin. "
-                             "⭐ markers = monitoring stations. "
-                             "Labels show ML-predicted dominant groundwater class.*")
-                map_plot = gr.Plot(label="Zoning Map")
+                gr.HTML("<div class='section-title'>🛰️ Exact Station Locations</div>")
+                map_plot = gr.Plot(label="Station Map")
                 _html    = gr.HTML(visible=False)
                 map_btn  = gr.Button("🔄 Refresh Map", variant="secondary")
             map_btn.click(fn=lambda s: generate_map(s), inputs=[tab1_station], outputs=[map_plot, _html])
