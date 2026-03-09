@@ -1,4 +1,5 @@
 import gradio as gr
+from fastapi import FastAPI
 import pandas as pd
 import numpy as np
 import pickle
@@ -639,6 +640,129 @@ def make_summary_df(selected_station=""):
 
 
 # ─────────────────────────────────────────────
+#  TAB 4: Model Accuracy
+# ─────────────────────────────────────────────
+def get_accuracy_html():
+    """Compute model accuracy, classification report from CSV and return styled HTML."""
+    if model is None:
+        return "<p style='color:#ff6b6b;padding:20px'>Model not loaded.</p>"
+    try:
+        from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+        df = pd.read_csv(DATA_PATH)
+        features = ['Geology','Geomorphology','Soil','Slope_percent','Drainage_Density',
+                    'Lineament_Density','LULC','NDVI','SAVI','Rainfall_mm']
+        target   = 'Groundwater_Potential_Class'
+        if not all(f in df.columns for f in features) or target not in df.columns:
+            return "<p style='color:#ff6b6b;padding:20px'>Dataset columns mismatch.</p>"
+
+        X = df[features]
+        y = df[target]
+        y_pred = model.predict(X)
+
+        acc = accuracy_score(y, y_pred)
+        report = classification_report(y, y_pred, output_dict=True, zero_division=0)
+
+        # Remove non-class keys
+        classes = [k for k in report if k not in ('accuracy','macro avg','weighted avg')]
+        classes_sorted = sorted(classes, key=lambda x: ORDER_MAP.get(x, -1))
+
+        # ── HTML ──
+        acc_color = '#4ecdc4' if acc >= 0.90 else ('#ffd700' if acc >= 0.75 else '#ff9f40')
+        html = f"""
+        <div style="font-family:Inter,sans-serif;padding:20px;">
+          <div style="text-align:center;margin-bottom:24px;">
+            <div style="font-size:3.5rem;font-weight:800;color:{acc_color};
+                        font-family:'Orbitron',monospace;letter-spacing:2px;">
+              {acc*100:.2f}%
+            </div>
+            <div style="color:#c8d8ff;font-size:1.1rem;margin-top:6px;">Overall Model Accuracy</div>
+            <div style="color:#7a8ab0;font-size:0.85rem;margin-top:4px;">
+              Evaluated on all {len(df):,} records from the Godavari dataset
+            </div>
+          </div>
+
+          <div style="background:rgba(102,126,234,0.08);border:1px solid rgba(102,126,234,0.3);
+                      border-radius:14px;padding:16px;margin-bottom:20px;">
+            <div style="color:#667eea;font-family:'Orbitron',monospace;font-size:0.85rem;
+                        letter-spacing:1.5px;text-transform:uppercase;border-left:3px solid #4ecdc4;
+                        padding-left:10px;margin-bottom:14px;">📊 Per-Class Metrics</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+                        font-size:0.8rem;color:#7a8ab0;font-weight:700;
+                        padding:0 6px 8px;border-bottom:1px solid rgba(102,126,234,0.2);">
+              <span>Class</span><span style="text-align:center;">Precision</span>
+              <span style="text-align:center;">Recall</span>
+            </div>
+        """
+        for cls in classes_sorted:
+            r       = report[cls]
+            prec    = r['precision']
+            rec     = r['recall']
+            bc      = CLASS_COLOR.get(cls, '#667eea')
+            prec_w  = min(int(prec*100), 100)
+            rec_w   = min(int(rec*100),  100)
+            html += f"""
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+                        align-items:center;padding:8px 6px;
+                        border-bottom:1px solid rgba(102,126,234,0.1);">
+              <span style="color:{bc};font-weight:700;font-size:0.85rem;">{cls}</span>
+              <div>
+                <div style="background:rgba(255,255,255,0.08);border-radius:999px;
+                            height:8px;overflow:hidden;margin-bottom:2px;">
+                  <div style="width:{prec_w}%;height:100%;background:{bc};
+                              border-radius:999px;"></div>
+                </div>
+                <div style="text-align:center;color:#c8d8ff;font-size:0.78rem;">{prec:.3f}</div>
+              </div>
+              <div>
+                <div style="background:rgba(255,255,255,0.08);border-radius:999px;
+                            height:8px;overflow:hidden;margin-bottom:2px;">
+                  <div style="width:{rec_w}%;height:100%;background:{bc};
+                              border-radius:999px;"></div>
+                </div>
+                <div style="text-align:center;color:#c8d8ff;font-size:0.78rem;">{rec:.3f}</div>
+              </div>
+            </div>"""
+
+        # Weighted avg row
+        wa = report['weighted avg']
+        html += f"""
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+                        align-items:center;padding:10px 6px;
+                        background:rgba(102,126,234,0.1);border-radius:8px;margin-top:4px;">
+              <span style="color:#ffd700;font-weight:700;font-size:0.85rem;">Weighted Avg</span>
+              <div style="text-align:center;color:#ffd700;font-weight:700;">{wa['precision']:.3f}</div>
+              <div style="text-align:center;color:#ffd700;font-weight:700;">{wa['recall']:.3f}</div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+            <div style="background:rgba(102,126,234,0.08);border:1px solid rgba(102,126,234,0.3);
+                        border-radius:12px;padding:14px;text-align:center;">
+              <div style="color:#7a8ab0;font-size:0.78rem;text-transform:uppercase;
+                          letter-spacing:1px;margin-bottom:6px;">Algorithm</div>
+              <div style="color:#c8d8ff;font-weight:700;">Random Forest</div>
+            </div>
+            <div style="background:rgba(78,205,196,0.08);border:1px solid rgba(78,205,196,0.3);
+                        border-radius:12px;padding:14px;text-align:center;">
+              <div style="color:#7a8ab0;font-size:0.78rem;text-transform:uppercase;
+                          letter-spacing:1px;margin-bottom:6px;">Training Records</div>
+              <div style="color:#4ecdc4;font-weight:700;">{len(df):,}</div>
+            </div>
+            <div style="background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.3);
+                        border-radius:12px;padding:14px;text-align:center;">
+              <div style="color:#7a8ab0;font-size:0.78rem;text-transform:uppercase;
+                          letter-spacing:1px;margin-bottom:6px;">Classes</div>
+              <div style="color:#ffd700;font-weight:700;">{len(classes_sorted)}</div>
+            </div>
+          </div>
+        </div>"""
+        return html
+    except Exception as e:
+        traceback.print_exc()
+        return f"<p style='color:#ff6b6b;padding:20px'>Error computing accuracy: {e}</p>"
+
+
+# ─────────────────────────────────────────────
 #  Master update: called when station changes in Tab 1
 # ─────────────────────────────────────────────
 def update_all_tabs(station):
@@ -768,6 +892,14 @@ with gr.Blocks(title="Groundwater ML — Godavari Basin") as app:
                         gr.Markdown("*⭐ marks the station selected in Tab 1.*")
                         summary_tbl = gr.Dataframe(make_summary_df(list(STATIONS.keys())[0]), interactive=False)
 
+        # ── TAB 4: Model Accuracy ─────────────────────────────────────────
+        with gr.TabItem("🎯 Model Accuracy"):
+            with gr.Column(elem_classes="card"):
+                gr.HTML("<div class='section-title'>🏆 Random Forest Model Performance</div>")
+                accuracy_out = gr.HTML(get_accuracy_html())
+                refresh_acc_btn = gr.Button("🔄 Refresh Accuracy", variant="secondary")
+                refresh_acc_btn.click(fn=get_accuracy_html, inputs=[], outputs=[accuracy_out])
+
     # ── Wire Tab 1 station dropdown → ALL other tab outputs ─────────────
     tab1_station.change(
         fn=update_all_tabs,
@@ -785,6 +917,13 @@ with gr.Blocks(title="Groundwater ML — Godavari Basin") as app:
     <div class="gw-footer">
       <span>🌊 Groundwater ML · Godavari Basin · Powered by Random Forest & Gradio</span>
     </div>""")
+
+# ─────────────────────────────────────────────
+#  Vercel: mount Gradio inside FastAPI
+#  (same pattern as admission chance predictor)
+# ─────────────────────────────────────────────
+fast_app = FastAPI(title="Groundwater ML — Godavari Basin")
+app_vercel = gr.mount_gradio_app(fast_app, app, path="/")
 
 if __name__ == "__main__":
     print("🚀 Launching Groundwater ML — Godavari Dark Edition …")

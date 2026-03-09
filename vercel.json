@@ -1,0 +1,27 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "src/app.py",
+            "use": "@vercel/python",
+            "config": {
+                "maxLambdaSize": "50mb"
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "src/app.py"
+        }
+    ],
+    "env": {
+        "GRADIO_ANALYTICS_ENABLED": "false",
+        "GRADIO_SERVER_NAME": "0.0.0.0",
+        "PYTHONPATH": ".",
+        "PYTHON_VERSION": "3.11"
+    },
+    "regions": [
+        "bom1"
+    ]
+}

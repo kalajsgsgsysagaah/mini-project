@@ -1,0 +1,10 @@
+.venv/
+.gradio/
+.dist/
+.git/
+.vscode/
+__pycache__/
+*.pyc
+sustainability-17-03851-v2.pdf
+run.py
+node_modules/
