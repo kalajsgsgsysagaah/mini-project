@@ -334,7 +334,7 @@ def predict_groundwater(geology, geomorphology, soil, slope, drainage,
 # ─────────────────────────────────────────────
 #  TAB 2: Geospatial Map — highlight selected station
 # ─────────────────────────────────────────────
-def generate_map(selected_station=""):
+def generate_map(selected_station="", predicted_zone=None):
     if model is None:
         return None, "<p>Model not loaded.</p>"
     try:
@@ -390,6 +390,11 @@ def generate_map(selected_station=""):
         for stn, info in STATIONS.items():
             lat, lon = info['lat'], info['lon']
             dom = sc_dict.get(stn, 'N/A')
+            
+            # OVERRIDE historical Prediction with Live Prediction from Tab 1
+            if stn == selected_station and predicted_zone is not None:
+                dom = predicted_zone
+                
             bc  = CLASS_COLOR.get(dom, '#667eea')
             lo, la = label_offsets.get(stn, (0.2, 0.12))
             is_selected = (stn == selected_station)
@@ -763,17 +768,31 @@ def get_accuracy_html():
 
 
 # ─────────────────────────────────────────────
-#  Master update: called when station changes in Tab 1
+#  Master update: called when station changes or on Predict
 # ─────────────────────────────────────────────
-def update_all_tabs(station):
+def update_all_tabs(station, predicted_zone=None):
     """Update Geospatial Map, Folium map HTML, Discharge chart, GW chart, Station detail, Summary table."""
-    map_fig, map_html    = generate_map(station)
+    map_fig, map_html    = generate_map(station, predicted_zone)
     folium_html          = make_folium_map(station)
     discharge_fig        = make_discharge_chart(station)
     gw_fig               = make_gw_chart(station)
     stn_detail_html      = station_detail(station)
     summary_df           = make_summary_df(station)
     return map_fig, map_html, folium_html, discharge_fig, gw_fig, stn_detail_html, summary_df
+
+def predict_and_update_all(*args):
+    """Runs prediction, then updates all tabs based on the new prediction."""
+    station = args[-1]
+    # 1. Predict
+    txt, plot = predict_groundwater(*args)
+    
+    # Extract just the string predicted zone (removing the '🌍 ' prefix)
+    predicted_zone = txt.replace('🌍 ', '') if type(txt) == str else None
+    
+    # 2. Update dashboard with live prediction override
+    map_fig, map_html, folium_html, discharge_fig, gw_fig, stn_detail_html, summary_df = update_all_tabs(station, predicted_zone)
+    
+    return txt, plot, map_fig, map_html, folium_html, discharge_fig, gw_fig, stn_detail_html, summary_df
 
 
 # ─────────────────────────────────────────────
@@ -801,7 +820,7 @@ with gr.Blocks(title="Groundwater ML — Godavari Basin") as app:
                     tab1_station = gr.Dropdown(
                         choices=list(STATIONS.keys()),
                         value=list(STATIONS.keys())[0],
-                        label="Station (syncs all tabs)",
+                        label="Station",
                     )
                     gr.HTML("<div class='section-title' style='margin-top:16px'>🌍 Hydro-Geological Parameters</div>")
                     feat_geo  = gr.Dropdown(choices=unique_values.get('Geology',[]),
@@ -830,21 +849,13 @@ with gr.Blocks(title="Groundwater ML — Godavari Basin") as app:
                     result_txt  = gr.Textbox(label="Predicted Zone", interactive=False)
                     result_plot = gr.Plot(label="Zone Probability Distribution")
 
-            pred_btn.click(
-                fn=predict_groundwater,
-                inputs=[feat_geo, feat_gm, feat_soil, feat_slope, feat_drain,
-                        feat_lin, feat_lulc, feat_ndvi, feat_savi, feat_rain, tab1_station],
-                outputs=[result_txt, result_plot]
-            )
-
         # ── TAB 2: Geospatial Map ─────────────────────────────────────────
         with gr.TabItem("🗺️ Geospatial Map"):
             with gr.Column(elem_classes="card"):
                 gr.HTML("<div class='section-title'>🛰️ ML Groundwater Potential Zones</div>")
                 gr.Markdown("*Colour-coded ML zones across the Godavari basin. "
                              "⭐ markers = monitoring stations. "
-                             "Labels show ML-predicted dominant groundwater class. "
-                             "Selected station from Tab 1 is highlighted.*")
+                             "Labels show ML-predicted dominant groundwater class.*")
                 map_plot = gr.Plot(label="Zoning Map")
                 _html    = gr.HTML(visible=False)
                 map_btn  = gr.Button("🔄 Refresh Map", variant="secondary")
@@ -858,7 +869,7 @@ with gr.Blocks(title="Groundwater ML — Godavari Basin") as app:
                 with gr.TabItem("📍 Interactive Map"):
                     with gr.Column(elem_classes="card"):
                         gr.HTML("<div class='section-title'>🗺️ Live Station Map — Click Markers for Details</div>")
-                        gr.Markdown("*White map background · Selected station from Tab 1 is highlighted with an orange border.*")
+                        
                         folium_out = gr.HTML(
                             make_folium_map(list(STATIONS.keys())[0]) if HAS_FOLIUM
                             else "<p style='color:#ff6b6b'>Install: pip install folium</p>"
@@ -867,19 +878,19 @@ with gr.Blocks(title="Groundwater ML — Godavari Basin") as app:
                 with gr.TabItem("📊 Discharge Analysis"):
                     with gr.Column(elem_classes="card"):
                         gr.HTML("<div class='section-title'>⚡ Water Discharge by Station</div>")
-                        gr.Markdown("*Bars highlighted in gold = station selected in Tab 1.*")
+                        
                         discharge_plot = gr.Plot(make_discharge_chart(list(STATIONS.keys())[0]))
 
                 with gr.TabItem("💧 GW Parameters"):
                     with gr.Column(elem_classes="card"):
                         gr.HTML("<div class='section-title'>🔬 Groundwater Parameters</div>")
-                        gr.Markdown("*White markers = station selected in Tab 1.*")
+                        
                         gw_plot = gr.Plot(make_gw_chart(list(STATIONS.keys())[0]))
 
                 with gr.TabItem("🔍 Station Details"):
                     with gr.Column(elem_classes="card"):
                         gr.HTML("<div class='section-title'>📍 Station Deep-Dive</div>")
-                        gr.Markdown("*Auto-synced with station selected in Tab 1. You can also pick manually below.*")
+                        
                         stn_sel = gr.Dropdown(choices=list(STATIONS.keys()),
                                               value=list(STATIONS.keys())[0],
                                               label="Select Station")
@@ -889,7 +900,7 @@ with gr.Blocks(title="Groundwater ML — Godavari Basin") as app:
                 with gr.TabItem("📈 Summary Table"):
                     with gr.Column(elem_classes="card"):
                         gr.HTML("<div class='section-title'>📋 All Stations at a Glance</div>")
-                        gr.Markdown("*⭐ marks the station selected in Tab 1.*")
+                        
                         summary_tbl = gr.Dataframe(make_summary_df(list(STATIONS.keys())[0]), interactive=False)
 
         # ── TAB 4: Model Accuracy ─────────────────────────────────────────
@@ -899,6 +910,14 @@ with gr.Blocks(title="Groundwater ML — Godavari Basin") as app:
                 accuracy_out = gr.HTML(get_accuracy_html())
                 refresh_acc_btn = gr.Button("🔄 Refresh Accuracy", variant="secondary")
                 refresh_acc_btn.click(fn=get_accuracy_html, inputs=[], outputs=[accuracy_out])
+
+    # ── Wire Prediction Button to update ALL tabs ─────────────
+    pred_btn.click(
+        fn=predict_and_update_all,
+        inputs=[feat_geo, feat_gm, feat_soil, feat_slope, feat_drain,
+                feat_lin, feat_lulc, feat_ndvi, feat_savi, feat_rain, tab1_station],
+        outputs=[result_txt, result_plot, map_plot, _html, folium_out, discharge_plot, gw_plot, stn_out, summary_tbl]
+    )
 
     # ── Wire Tab 1 station dropdown → ALL other tab outputs ─────────────
     tab1_station.change(
