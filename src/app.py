@@ -9,17 +9,9 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import os, traceback
 
-try:
-    import folium
-    HAS_FOLIUM = True
-except ImportError:
-    HAS_FOLIUM = False
-
-try:
-    import plotly.graph_objects as go
-    HAS_PLOTLY = True
-except ImportError:
-    HAS_PLOTLY = False
+# Folium and Plotly removed for Vercel size optimization
+HAS_FOLIUM = False
+HAS_PLOTLY = False
 
 # ─────────────────────────────────────────────────────
 #  DARK GODAVARI THEME  – no white anywhere
@@ -521,126 +513,94 @@ def generate_map(selected_station="", predicted_zone=None):
 #  TAB 3: Godavari Dashboard
 # ─────────────────────────────────────────────
 def make_folium_map(selected_station=""):
-    """Render Folium map with WHITE tile background. Highlights selected station."""
-    if not HAS_FOLIUM: return "<p>pip install folium</p>"
-    # Use CartoDB Positron (white/light map) instead of dark_matter
-    m = folium.Map(location=[17.8, 80.5], zoom_start=7, tiles='CartoDB positron')
+    """
+    Folium is disabled for Vercel size optimization. 
+    Returning a rich 'Static Map' using Matplotlib instead.
+    """
+    fig, ax = plt.subplots(figsize=(10, 8))
+    fig.patch.set_facecolor('#060b18')
+    ax.set_facecolor('#0d1530')
+    
+    # Simple bounding box for Godavari basin approx
+    ax.set_xlim(77, 83)
+    ax.set_ylim(16, 20)
+    
     for stn, d in STATIONS.items():
-        col  = ZONE_COLOR.get(d['groundwater_zone'], '#667eea')
-        size = 12 + d['avg_discharge'] / 110
-        is_selected = (stn == selected_station)
-        border_color = '#ff6b00' if is_selected else col
-        border_width = 5 if is_selected else 3
-        html = f"""
-        <div style="font-family:Inter,sans-serif;width:380px;
-                    background:linear-gradient(135deg,#0d1530,#1a2050);
-                    padding:16px;border-radius:14px;color:#c8d8ff;
-                    border:1px solid rgba(102,126,234,0.4);
-                    box-shadow:0 8px 32px rgba(0,0,0,0.7);">
-          <h3 style="margin:0 0 12px;font-size:17px;color:#ffd700;">🎯 {stn} {'⭐ SELECTED' if is_selected else ''}</h3>
-          <div style="background:rgba(255,255,255,0.05);padding:10px;border-radius:10px;margin-bottom:10px;">
-            <h4 style="margin:0 0 8px;color:#4ecdc4;font-size:13px;">💧 Water Discharge</h4>
-            <table style="width:100%;font-size:12px;">
-              <tr><td>Avg Discharge:</td><td align="right"><b style="color:#ffd700">{d['avg_discharge']} MCM</b></td></tr>
-              <tr><td>Peak:</td><td align="right"><b>{d['peak_discharge']} MCM</b></td></tr>
-              <tr><td>Minimum:</td><td align="right"><b>{d['min_discharge']} MCM</b></td></tr>
-              <tr><td>Monsoon Flow:</td><td align="right"><b>{d['monsoon_flow']} MCM</b></td></tr>
-              <tr><td>Water Level:</td><td align="right"><b>{d['current_level']} m</b></td></tr>
-            </table>
-          </div>
-          <div style="background:rgba(255,255,255,0.05);padding:10px;border-radius:10px;">
-            <h4 style="margin:0 0 8px;font-size:13px;color:#667eea;">🌍 Groundwater Zone</h4>
-            <table style="width:100%;font-size:12px;">
-              <tr><td>Zone:</td><td align="right"><b style="color:{col}">{d['groundwater_zone']}</b></td></tr>
-              <tr><td>Aquifer:</td><td align="right"><b>{d['aquifer_type']}</b></td></tr>
-              <tr><td>Depth:</td><td align="right"><b>{d['depth_to_water']} m</b></td></tr>
-              <tr><td>Quality:</td><td align="right"><b>{d['water_quality']}</b></td></tr>
-              <tr><td>Yield:</td><td align="right"><b>{d['yield_potential']}</b></td></tr>
-              <tr><td>Recharge:</td><td align="right"><b>{d['recharge_rate']}</b></td></tr>
-              <tr><td>Well Density:</td><td align="right"><b>{d['density']}</b></td></tr>
-              <tr><td>Soil:</td><td align="right"><b>{d['soil_type']}</b></td></tr>
-              <tr><td>Geology:</td><td align="right"><b>{d['geological_formation']}</b></td></tr>
-            </table>
-            <div style="background:rgba(102,126,234,0.2);padding:8px;margin-top:8px;
-                        border-radius:8px;border:1px solid rgba(102,126,234,0.4);
-                        color:#ffd700;font-weight:bold;font-size:12px;">
-              ✅ {d['recommendation']}
-            </div>
-          </div>
-        </div>"""
-        folium.CircleMarker(
-            location=[d['lat'], d['lon']],
-            radius=size + (4 if is_selected else 0),
-            popup=folium.Popup(html, max_width=430),
-            tooltip=f"<b style='font-size:13px'>{stn}</b><br>{d['groundwater_zone']}<br>Avg: {d['avg_discharge']} MCM",
-            color=border_color, fill=True, fillColor=col, fillOpacity=0.85, weight=border_width
-        ).add_to(m)
-    return m._repr_html_()
+        is_sel = (stn == selected_station)
+        col = ZONE_COLOR.get(d['groundwater_zone'], '#667eea')
+        size = 150 + (d['avg_discharge'] / 5)
+        ax.scatter(d['lon'], d['lat'], s=size, c=col, alpha=0.8, edgecolors='white' if is_sel else 'none', linewidth=2 if is_sel else 0)
+        
+        if is_sel:
+            ax.annotate(stn, (d['lon'], d['lat']), xytext=(10, 10), textcoords='offset points', color='#ffd700', fontweight='bold', arrowprops=dict(arrowstyle='->', color='#ffd700'))
+        else:
+            ax.text(d['lon'], d['lat']-0.08, stn, color='#7a8ab0', fontsize=8, ha='center')
+
+    ax.set_title("Station Network Overview (Godavari Basin)", color='#e0e8ff', fontsize=14, pad=20)
+    ax.grid(True, alpha=0.1, color='#667eea')
+    for sp in ax.spines.values(): sp.set_color('#667eea')
+    
+    import io, base64
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png', bbox_inches='tight', dpi=100)
+    buf.seek(0)
+    img_str = base64.b64encode(buf.read()).decode()
+    plt.close(fig)
+    return f'<div style="text-align:center;padding:10px"><img src="data:image/png;base64,{img_str}" style="border-radius:15px;border:1px solid #667eea;max-width:100%"><p style="color:#7a8ab0;font-size:12px;margin-top:8px">Folium interactive map disabled for Vercel size optimization. Using static high-res overview.</p></div>'
 
 
-def make_discharge_chart(selected_station=""):
-    if not HAS_PLOTLY: return None
+def make_discharge_chart(selected_station="", live_pred=None, num_days=30):
     stns = list(STATIONS.keys())
-    fig  = go.Figure()
-    for label, key, col in [('Average','avg_discharge','#667eea'),
-                              ('Peak','peak_discharge','#4ecdc4'),
-                              ('Minimum','min_discharge','#ff6b6b')]:
-        marker_colors = []
-        marker_lines  = []
-        for s in stns:
-            if s == selected_station:
-                marker_colors.append('#ffd700')
-                marker_lines.append(dict(color='#ffffff', width=2))
-            else:
-                marker_colors.append(col)
-                marker_lines.append(dict(color='#060b18', width=1))
-        fig.add_trace(go.Bar(name=label, x=stns,
-                             y=[STATIONS[s][key] for s in stns],
-                             marker_color=marker_colors,
-                             marker_line_color=[ml['color'] for ml in marker_lines],
-                             marker_line_width=[ml['width'] for ml in marker_lines]))
-    title_text = f'<b>Discharge Comparison (MCM)</b>' + (f' — {selected_station} highlighted' if selected_station else '')
-    fig.update_layout(
-        title=dict(text=title_text, font=dict(family='Inter',size=16,color='#e0e8ff'),x=.5),
-        barmode='group', bargap=.18,
-        plot_bgcolor='#0d1530', paper_bgcolor='#060b18',
-        font=dict(color='#c8d8ff', family='Inter'),
-        xaxis=dict(gridcolor='rgba(102,126,234,0.15)', linecolor='#667eea'),
-        yaxis=dict(title='MCM', gridcolor='rgba(102,126,234,0.15)', linecolor='#667eea'),
-        legend=dict(bgcolor='rgba(13,21,48,0.8)', bordercolor='rgba(102,126,234,.4)', borderwidth=1),
-        margin=dict(t=55,b=50,l=55,r=20), hovermode='x unified',
-    )
+    fig, ax = dark_fig(10, 6)
+    
+    x = np.arange(len(stns))
+    width = 0.25
+    
+    avg_y = [STATIONS[s]['avg_discharge'] for s in stns]
+    peak_y = [STATIONS[s]['peak_discharge'] for s in stns]
+    min_y = [STATIONS[s]['min_discharge'] for s in stns]
+    
+    ax.bar(x - width, avg_y, width, label='Average', color='#667eea', alpha=0.8)
+    ax.bar(x, peak_y, width, label='Peak', color='#4ecdc4', alpha=0.8)
+    ax.bar(x + width, min_y, width, label='Minimum', color='#ff6b6b', alpha=0.8)
+    
+    if selected_station and live_pred:
+        idx = stns.index(selected_station)
+        zone_mult = {'Very Low':0.4, 'Low':0.7, 'Moderate':1.0, 'High':1.6, 'Very High':2.5}
+        mult = zone_mult.get(live_pred, 1.0)
+        proj_val = STATIONS[selected_station]['avg_discharge'] * mult
+        ax.bar(idx, proj_val, width * 1.5, color='none', edgecolor='#ffd700', linewidth=2, label='Projected', hatch='//')
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(stns, rotation=45, ha='right')
+    ax.set_ylabel('MCM')
+    ax.set_title("Water Discharge Analysis (MCM)")
+    ax.legend(facecolor='#0d1530', edgecolor='#667eea', labelcolor='#c8d8ff')
+    plt.tight_layout()
     return fig
 
 
-def make_gw_chart(selected_station=""):
-    if not HAS_PLOTLY: return None
+def make_gw_chart(selected_station="", live_pred=None, num_days=30):
     stns  = list(STATIONS.keys())
     depth = [STATIONS[s]['depth_to_water'] for s in stns]
-    rech  = [float(STATIONS[s]['recharge_rate'].split('(')[1].split('-')[0].strip()) for s in stns]
     level = [STATIONS[s]['current_level'] for s in stns]
-    fig   = go.Figure()
-    for lbl, vals, col, dash in [
-        ('Depth to Water (m)', depth, '#ff6b6b', 'solid'),
-        ('Min Recharge(mm/yr)', rech, '#4ecdc4', 'solid'),
-        ('Water Level (m)',    level, '#ffd700', 'dot'),
-    ]:
-        marker_colors = ['#ffffff' if s == selected_station else col for s in stns]
-        marker_sizes  = [14 if s == selected_station else 9 for s in stns]
-        fig.add_trace(go.Scatter(x=stns, y=vals, mode='lines+markers', name=lbl,
-                                 line=dict(color=col, width=2.5, dash=dash),
-                                 marker=dict(size=marker_sizes, color=marker_colors,
-                                             line=dict(color='#060b18', width=1.5))))
-    title_text = '<b>Groundwater Parameters</b>' + (f' — {selected_station} highlighted' if selected_station else '')
-    fig.update_layout(
-        title=dict(text=title_text, font=dict(family='Inter',size=16,color='#e0e8ff'),x=.5),
-        plot_bgcolor='#0d1530', paper_bgcolor='#060b18',
-        font=dict(color='#c8d8ff', family='Inter'),
-        xaxis=dict(gridcolor='rgba(102,126,234,0.15)', linecolor='#667eea'),
-        yaxis=dict(title='Value', gridcolor='rgba(102,126,234,0.15)', linecolor='#667eea'),
-        legend=dict(bgcolor='rgba(13,21,48,0.8)', bordercolor='rgba(102,126,234,.4)', borderwidth=1),
-        margin=dict(t=55,b=50,l=55,r=20), hovermode='x unified',
-    )
+    
+    fig, ax = dark_fig(10, 5)
+    ax.plot(stns, depth, marker='o', label='Depth to Water (m)', color='#ff6b6b', linewidth=2)
+    ax.plot(stns, level, marker='o', label='Water Level (m)', color='#ffd700', linestyle='--')
+    
+    if selected_station and live_pred:
+        idx = stns.index(selected_station)
+        zone_shift = {'Very Low': 5.0, 'Low': 2.0, 'Moderate': 0, 'High': -2.0, 'Very High': -4.0}
+        shift = zone_shift.get(live_pred, 0)
+        proj_depth = max(1, STATIONS[selected_station]['depth_to_water'] + shift)
+        ax.plot(selected_station, proj_depth, marker='*', markersize=15, color='#4ecdc4', label=f'Projected ({num_days}d)')
+
+    ax.set_ylabel('Meters')
+    ax.set_title("Groundwater Parameter Projections")
+    ax.legend(facecolor='#0d1530', edgecolor='#667eea', labelcolor='#c8d8ff')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
     return fig
 
 
@@ -830,12 +790,12 @@ def get_accuracy_html():
 # ─────────────────────────────────────────────
 #  Master update: called when station changes or on Predict
 # ─────────────────────────────────────────────
-def update_all_tabs(station, predicted_zone=None):
+def update_all_tabs(station, predicted_zone=None, num_days=30):
     """Update Geospatial Map, Folium map HTML, Discharge chart, GW chart, Station detail, Summary table."""
     map_fig, map_html    = generate_map(station, predicted_zone)
     folium_html          = make_folium_map(station)
-    discharge_fig        = make_discharge_chart(station)
-    gw_fig               = make_gw_chart(station)
+    discharge_fig        = make_discharge_chart(station, predicted_zone, num_days)
+    gw_fig               = make_gw_chart(station, predicted_zone, num_days)
     stn_detail_html      = station_detail(station)
     summary_df           = make_summary_df(station)
     return map_fig, map_html, folium_html, discharge_fig, gw_fig, stn_detail_html, summary_df
@@ -858,34 +818,48 @@ def predict_and_update_all(*args):
                 predicted_zone = zone
                 break
 
-    # 3. Build CSV and save to temp file
+    # 3. Build VERTICAL CSV Report
     import csv, tempfile, datetime as dt
+    # Heuristics for the CSV report values
+    zone_yield = {'Very Low': 2, 'Low': 5, 'Moderate': 10, 'High': 20, 'Very High': 35}
+    lpm = zone_yield.get(predicted_zone, 10)
+    total_l = lpm * 60 * 8 * int(num_days)
+
     csv_rows = [
-        ['Parameter', 'Value'],
-        ['Station',       station],
-        ['Geology',       all_but_days[0]],
-        ['Geomorphology', all_but_days[1]],
-        ['Soil',          all_but_days[2]],
-        ['Slope (%)',     all_but_days[3]],
-        ['Drainage Density', all_but_days[4]],
-        ['Lineament Density', all_but_days[5]],
-        ['LULC',          all_but_days[6]],
-        ['NDVI',          all_but_days[7]],
-        ['SAVI',          all_but_days[8]],
-        ['Rainfall (mm)', all_but_days[9]],
-        ['Analysis Days', int(num_days)],
-        ['Predicted Zone', predicted_zone or 'N/A'],
-        ['Timestamp',     dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')],
+        ['--- GROUNDWATER ANALYSIS VERTICAL REPORT ---'],
+        ['Report ID',    f"GW-{dt.datetime.now().strftime('%Y%m%d%H%M%S')}"],
+        ['Timestamp',    dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')],
+        [''],
+        ['--- STATION INFORMATION ---'],
+        ['Station Name', station],
+        ['Target Days',  f"{num_days} days"],
+        [''],
+        ['--- INPUT PARAMETERS ---'],
+        ['Geology',      all_but_days[0]],
+        ['Geomorphology',all_but_days[1]],
+        ['Soil Type',    all_but_days[2]],
+        ['Slope (%)',    all_but_days[3]],
+        ['Drainage Den', all_but_days[4]],
+        ['Lineament Den',all_but_days[5]],
+        ['LULC',         all_but_days[6]],
+        ['Rainfall (mm)',all_but_days[9]],
+        [''],
+        ['--- PREDICTION RESULTS ---'],
+        ['POTENTIAL ZONE', predicted_zone or 'N/A'],
+        ['EST. YIELD',     f"{lpm} lpm"],
+        ['EST. VOLUME',    f"{total_l:,} Liters"],
+        [''],
+        ['--- END OF REPORT ---']
     ]
     tmp = tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False,
-                                     newline='', prefix='gw_prediction_')
+                                     newline='', prefix='gw_report_')
     writer = csv.writer(tmp)
     writer.writerows(csv_rows)
     tmp.close()
     csv_path = tmp.name
 
     # 4. Update dashboard
-    map_fig, map_html, folium_html, discharge_fig, gw_fig, stn_detail_html, summary_df = update_all_tabs(station, predicted_zone)
+    map_fig, map_html, folium_html, discharge_fig, gw_fig, stn_detail_html, summary_df = update_all_tabs(station, predicted_zone, num_days)
 
     return txt, plot, summary_html, csv_path, map_fig, map_html, folium_html, discharge_fig, gw_fig, stn_detail_html, summary_df
 

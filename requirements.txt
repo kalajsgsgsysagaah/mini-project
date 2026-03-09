@@ -6,19 +6,17 @@ scipy>=1.11
 
 # Visualization
 matplotlib>=3.7
-seaborn>=0.12
-plotly>=5.18
-folium>=0.15
 
 # Web UI
 gradio>=4.20
 
 # FastAPI Backend
 fastapi>=0.110
-uvicorn[standard]>=0.29
+uvicorn>=0.29
 pydantic>=2.0
 httpx>=0.27
 python-multipart>=0.0.9
 
 # Utilities
 requests>=2.31
+
