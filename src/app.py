@@ -261,7 +261,6 @@ ZONE_COLOR = {'Very High Potential Zone':'#4ecdc4','High Potential Zone':'#667ee
 CLASS_COLOR = {'Very Low':'#ff4040','Low':'#ff9f40','Moderate':'#ffd700','High':'#667eea','Very High':'#4ecdc4'}
 
 def dark_fig(w=8, h=4.5):
-    """Create a matplotlib figure with dark background."""
     fig, ax = plt.subplots(figsize=(w, h))
     fig.set_facecolor('#060b18')
     ax.set_facecolor('#0d1530')
@@ -274,11 +273,11 @@ def dark_fig(w=8, h=4.5):
     return fig, ax
 
 # ─────────────────────────────────────────────
-#  TAB 1: Prediction (Matplotlib – reliable)
+#  TAB 1: Prediction
 # ─────────────────────────────────────────────
 def predict_groundwater(geology, geomorphology, soil, slope, drainage,
-                        lineament, lulc, ndvi, savi, rainfall):
-    print(f"[PREDICT] called: geo={geology}, rain={rainfall}")
+                        lineament, lulc, ndvi, savi, rainfall, station):
+    print(f"[PREDICT] called: geo={geology}, rain={rainfall}, station={station}")
     if model is None:
         return "⚠️ Model not loaded", None
     try:
@@ -307,9 +306,7 @@ def predict_groundwater(geology, geomorphology, soil, slope, drainage,
         fig, ax = dark_fig(7, 4)
         bars = ax.bar(sc, sp, color=col, width=0.5, alpha=0.85,
                       edgecolor='none', linewidth=0)
-        # Glow shadow bars
         ax.bar(sc, sp, color=col, width=0.58, alpha=0.18, linewidth=0)
-        # Predicted class highlight
         if pred in sc:
             hi = sc.index(pred)
             bars[hi].set_edgecolor('#ffd700')
@@ -321,7 +318,8 @@ def predict_groundwater(geology, geomorphology, soil, slope, drainage,
 
         ax.set_ylim(0, 1.2)
         ax.set_ylabel('Probability', color='#c8d8ff', fontsize=10)
-        ax.set_title(f'Predicted Zone: {pred}', fontsize=13, color='#ffd700',
+        station_label = f" — {station}" if station else ""
+        ax.set_title(f'Predicted Zone: {pred}{station_label}', fontsize=13, color='#ffd700',
                      fontweight='bold', pad=14, fontfamily='sans-serif')
         ax.set_xticks(range(len(sc)))
         ax.set_xticklabels(sc, fontsize=10, color='#c8d8ff')
@@ -333,9 +331,9 @@ def predict_groundwater(geology, geomorphology, soil, slope, drainage,
         return f"❌ Error: {e}", None
 
 # ─────────────────────────────────────────────
-#  TAB 2: Geospatial Map (Matplotlib, dark)
+#  TAB 2: Geospatial Map — highlight selected station
 # ─────────────────────────────────────────────
-def generate_map():
+def generate_map(selected_station=""):
     if model is None:
         return None, "<p>Model not loaded.</p>"
     try:
@@ -343,17 +341,14 @@ def generate_map():
         df['lat'] = df['Station'].map(lambda x: STATIONS.get(x, {}).get('lat', 17.0))
         df['lon'] = df['Station'].map(lambda x: STATIONS.get(x, {}).get('lon', 80.0))
 
-        # Get live predictions from the model for the map
-        features = ['Geology', 'Geomorphology', 'Soil', 'Slope_percent', 'Drainage_Density', 
+        features = ['Geology', 'Geomorphology', 'Soil', 'Slope_percent', 'Drainage_Density',
                     'Lineament_Density', 'LULC', 'NDVI', 'SAVI', 'Rainfall_mm']
-        
-        # Ensure only the expected 10 features are passed to the model
+
         if all(f in df.columns for f in features):
             df['Prediction'] = model.predict(df[features])
         else:
-            # Fallback if structure doesn't match
             df['Prediction'] = df['Groundwater_Potential_Class']
-            
+
         def get_mode(s): m = s.mode(); return m.iloc[0] if len(m) > 0 else "Unknown"
         sc_df   = df.groupby('Station')['Prediction'].agg(get_mode).reset_index()
         sc_dict = dict(zip(sc_df['Station'], sc_df['Prediction']))
@@ -396,19 +391,25 @@ def generate_map():
             dom = sc_dict.get(stn, 'N/A')
             bc  = CLASS_COLOR.get(dom, '#667eea')
             lo, la = label_offsets.get(stn, (0.2, 0.12))
-            ax.plot(lon, lat, marker='*', markersize=15, color='#ffd700',
-                    markeredgecolor='#060b18', markeredgewidth=.8, zorder=5)
-            ax.annotate(f" {stn}\n [{dom}]", xy=(lon, lat),
+            is_selected = (stn == selected_station)
+            marker_size = 22 if is_selected else 15
+            marker_edge = '#ffffff' if is_selected else '#060b18'
+            ax.plot(lon, lat, marker='*', markersize=marker_size, color='#ffd700',
+                    markeredgecolor=marker_edge, markeredgewidth=1.5 if is_selected else 0.8, zorder=5)
+            label_text = f" ★ {stn}\n [{dom}]" if is_selected else f" {stn}\n [{dom}]"
+            ax.annotate(label_text, xy=(lon, lat),
                         xytext=(lon + lo, lat + la),
                         fontsize=7.5, fontweight='bold',
                         ha='left' if lo >= 0 else 'right', va='center',
                         bbox=dict(facecolor='#0d1530', alpha=.90,
-                                  edgecolor=bc, boxstyle='round,pad=0.4', linewidth=1.5),
-                        color=bc,
-                        arrowprops=dict(arrowstyle='->', color=bc, lw=1.2,
+                                  edgecolor='#ffd700' if is_selected else bc,
+                                  boxstyle='round,pad=0.4', linewidth=2.5 if is_selected else 1.5),
+                        color='#ffd700' if is_selected else bc,
+                        arrowprops=dict(arrowstyle='->', color='#ffd700' if is_selected else bc, lw=1.2,
                                         connectionstyle='arc3,rad=0.2'), zorder=6)
 
-        ax.set_title("Groundwater Zoning — Godavari Basin",
+        title_stn = f" — Highlighted: {selected_station}" if selected_station else ""
+        ax.set_title(f"Groundwater Zoning — Godavari Basin{title_stn}",
                      fontsize=12, fontweight='bold', color='#e0e8ff', pad=10)
         ax.set_xlabel("Longitude", fontsize=9, color='#7a8ab0')
         ax.set_ylabel("Latitude",  fontsize=9, color='#7a8ab0')
@@ -423,7 +424,7 @@ def generate_map():
         ax.legend(handles=legend_els + [star_p], loc='lower left',
                   title='Legend', fontsize=7.5, title_fontsize=8.5,
                   framealpha=.85, facecolor='#0d1530', edgecolor='#667eea',
-                  labelcolor='#c8d8ff', title_fontsize_=8)
+                  labelcolor='#c8d8ff')
 
         # Right: station table
         tax = fig.add_axes([0.67, 0.08, 0.31, 0.84], facecolor='#0d1530')
@@ -437,12 +438,13 @@ def generate_map():
             tbl[0, ci].set_text_props(color='#e0e8ff', fontweight='bold')
         for ri, row in enumerate(tdata, 1):
             dom = row[1]
+            is_sel_row = (row[0] == selected_station)
             for ci in range(len(col_lbls)):
-                tbl[ri, ci].set_facecolor('#0d1a35' if ri % 2 == 0 else '#0d1530')
+                tbl[ri, ci].set_facecolor('#1a2a60' if is_sel_row else ('#0d1a35' if ri % 2 == 0 else '#0d1530'))
                 tbl[ri, ci].set_text_props(
-                    color=CLASS_COLOR.get(dom,'#c8d8ff') if ci==1 else '#c8d8ff',
-                    fontweight='bold' if ci==1 else 'normal')
-                tbl[ri, ci].set_edgecolor('#667eea')
+                    color=CLASS_COLOR.get(dom,'#c8d8ff') if ci==1 else ('#ffd700' if is_sel_row else '#c8d8ff'),
+                    fontweight='bold' if (ci==1 or is_sel_row) else 'normal')
+                tbl[ri, ci].set_edgecolor('#ffd700' if is_sel_row else '#667eea')
         tax.set_title("📍 Stations", fontsize=9, fontweight='bold', pad=6, color='#4ecdc4')
         return fig, ""
     except Exception as e:
@@ -452,19 +454,24 @@ def generate_map():
 # ─────────────────────────────────────────────
 #  TAB 3: Godavari Dashboard
 # ─────────────────────────────────────────────
-def make_folium_map():
+def make_folium_map(selected_station=""):
+    """Render Folium map with WHITE tile background. Highlights selected station."""
     if not HAS_FOLIUM: return "<p>pip install folium</p>"
-    m = folium.Map(location=[17.8, 80.5], zoom_start=7, tiles='CartoDB dark_matter')
+    # Use CartoDB Positron (white/light map) instead of dark_matter
+    m = folium.Map(location=[17.8, 80.5], zoom_start=7, tiles='CartoDB positron')
     for stn, d in STATIONS.items():
         col  = ZONE_COLOR.get(d['groundwater_zone'], '#667eea')
         size = 12 + d['avg_discharge'] / 110
+        is_selected = (stn == selected_station)
+        border_color = '#ff6b00' if is_selected else col
+        border_width = 5 if is_selected else 3
         html = f"""
         <div style="font-family:Inter,sans-serif;width:380px;
                     background:linear-gradient(135deg,#0d1530,#1a2050);
                     padding:16px;border-radius:14px;color:#c8d8ff;
                     border:1px solid rgba(102,126,234,0.4);
                     box-shadow:0 8px 32px rgba(0,0,0,0.7);">
-          <h3 style="margin:0 0 12px;font-size:17px;color:#ffd700;">🎯 {stn}</h3>
+          <h3 style="margin:0 0 12px;font-size:17px;color:#ffd700;">🎯 {stn} {'⭐ SELECTED' if is_selected else ''}</h3>
           <div style="background:rgba(255,255,255,0.05);padding:10px;border-radius:10px;margin-bottom:10px;">
             <h4 style="margin:0 0 8px;color:#4ecdc4;font-size:13px;">💧 Water Discharge</h4>
             <table style="width:100%;font-size:12px;">
@@ -476,7 +483,7 @@ def make_folium_map():
             </table>
           </div>
           <div style="background:rgba(255,255,255,0.05);padding:10px;border-radius:10px;">
-            <h4 style="margin:0 0 8px;font-size:13px;" style="color:#667eea;">🌍 Groundwater Zone</h4>
+            <h4 style="margin:0 0 8px;font-size:13px;color:#667eea;">🌍 Groundwater Zone</h4>
             <table style="width:100%;font-size:12px;">
               <tr><td>Zone:</td><td align="right"><b style="color:{col}">{d['groundwater_zone']}</b></td></tr>
               <tr><td>Aquifer:</td><td align="right"><b>{d['aquifer_type']}</b></td></tr>
@@ -497,41 +504,50 @@ def make_folium_map():
         </div>"""
         folium.CircleMarker(
             location=[d['lat'], d['lon']],
-            radius=size,
+            radius=size + (4 if is_selected else 0),
             popup=folium.Popup(html, max_width=430),
             tooltip=f"<b style='font-size:13px'>{stn}</b><br>{d['groundwater_zone']}<br>Avg: {d['avg_discharge']} MCM",
-            color=col, fill=True, fillColor=col, fillOpacity=0.85, weight=3
+            color=border_color, fill=True, fillColor=col, fillOpacity=0.85, weight=border_width
         ).add_to(m)
     return m._repr_html_()
 
 
-def make_discharge_chart():
+def make_discharge_chart(selected_station=""):
     if not HAS_PLOTLY: return None
     stns = list(STATIONS.keys())
     fig  = go.Figure()
     for label, key, col in [('Average','avg_discharge','#667eea'),
                               ('Peak','peak_discharge','#4ecdc4'),
                               ('Minimum','min_discharge','#ff6b6b')]:
+        marker_colors = []
+        marker_lines  = []
+        for s in stns:
+            if s == selected_station:
+                marker_colors.append('#ffd700')
+                marker_lines.append(dict(color='#ffffff', width=2))
+            else:
+                marker_colors.append(col)
+                marker_lines.append(dict(color='#060b18', width=1))
         fig.add_trace(go.Bar(name=label, x=stns,
                              y=[STATIONS[s][key] for s in stns],
-                             marker_color=col, marker_line_color='#060b18',
-                             marker_line_width=1))
+                             marker_color=marker_colors,
+                             marker_line_color=[ml['color'] for ml in marker_lines],
+                             marker_line_width=[ml['width'] for ml in marker_lines]))
+    title_text = f'<b>Discharge Comparison (MCM)</b>' + (f' — {selected_station} highlighted' if selected_station else '')
     fig.update_layout(
-        title=dict(text='<b>Discharge Comparison (MCM)</b>',
-                   font=dict(family='Inter',size=16,color='#e0e8ff'),x=.5),
+        title=dict(text=title_text, font=dict(family='Inter',size=16,color='#e0e8ff'),x=.5),
         barmode='group', bargap=.18,
         plot_bgcolor='#0d1530', paper_bgcolor='#060b18',
         font=dict(color='#c8d8ff', family='Inter'),
         xaxis=dict(gridcolor='rgba(102,126,234,0.15)', linecolor='#667eea'),
         yaxis=dict(title='MCM', gridcolor='rgba(102,126,234,0.15)', linecolor='#667eea'),
-        legend=dict(bgcolor='rgba(13,21,48,0.8)', bordercolor='rgba(102,126,234,.4)',
-                    borderwidth=1),
+        legend=dict(bgcolor='rgba(13,21,48,0.8)', bordercolor='rgba(102,126,234,.4)', borderwidth=1),
         margin=dict(t=55,b=50,l=55,r=20), hovermode='x unified',
     )
     return fig
 
 
-def make_gw_chart():
+def make_gw_chart(selected_station=""):
     if not HAS_PLOTLY: return None
     stns  = list(STATIONS.keys())
     depth = [STATIONS[s]['depth_to_water'] for s in stns]
@@ -543,12 +559,15 @@ def make_gw_chart():
         ('Min Recharge(mm/yr)', rech, '#4ecdc4', 'solid'),
         ('Water Level (m)',    level, '#ffd700', 'dot'),
     ]:
+        marker_colors = ['#ffffff' if s == selected_station else col for s in stns]
+        marker_sizes  = [14 if s == selected_station else 9 for s in stns]
         fig.add_trace(go.Scatter(x=stns, y=vals, mode='lines+markers', name=lbl,
                                  line=dict(color=col, width=2.5, dash=dash),
-                                 marker=dict(size=9, color=col, line=dict(color='#060b18', width=1.5))))
+                                 marker=dict(size=marker_sizes, color=marker_colors,
+                                             line=dict(color='#060b18', width=1.5))))
+    title_text = '<b>Groundwater Parameters</b>' + (f' — {selected_station} highlighted' if selected_station else '')
     fig.update_layout(
-        title=dict(text='<b>Groundwater Parameters</b>',
-                   font=dict(family='Inter',size=16,color='#e0e8ff'),x=.5),
+        title=dict(text=title_text, font=dict(family='Inter',size=16,color='#e0e8ff'),x=.5),
         plot_bgcolor='#0d1530', paper_bgcolor='#060b18',
         font=dict(color='#c8d8ff', family='Inter'),
         xaxis=dict(gridcolor='rgba(102,126,234,0.15)', linecolor='#667eea'),
@@ -605,12 +624,33 @@ def station_detail(name):
     </div>"""
 
 
-def make_summary_df():
-    return pd.DataFrame([{
-        "Station": s, "Avg Discharge(MCM)": d['avg_discharge'],
-        "Zone": d['groundwater_zone'], "Depth(m)": d['depth_to_water'],
-        "Quality": d['water_quality'], "Yield": d['yield_potential'],
-    } for s, d in STATIONS.items()])
+def make_summary_df(selected_station=""):
+    rows = []
+    for s, d in STATIONS.items():
+        rows.append({
+            "Station": ("⭐ " + s) if s == selected_station else s,
+            "Avg Discharge(MCM)": d['avg_discharge'],
+            "Zone": d['groundwater_zone'],
+            "Depth(m)": d['depth_to_water'],
+            "Quality": d['water_quality'],
+            "Yield": d['yield_potential'],
+        })
+    return pd.DataFrame(rows)
+
+
+# ─────────────────────────────────────────────
+#  Master update: called when station changes in Tab 1
+# ─────────────────────────────────────────────
+def update_all_tabs(station):
+    """Update Geospatial Map, Folium map HTML, Discharge chart, GW chart, Station detail, Summary table."""
+    map_fig, map_html    = generate_map(station)
+    folium_html          = make_folium_map(station)
+    discharge_fig        = make_discharge_chart(station)
+    gw_fig               = make_gw_chart(station)
+    stn_detail_html      = station_detail(station)
+    summary_df           = make_summary_df(station)
+    return map_fig, map_html, folium_html, discharge_fig, gw_fig, stn_detail_html, summary_df
+
 
 # ─────────────────────────────────────────────
 #  Gradio App
@@ -624,13 +664,22 @@ with gr.Blocks(title="Groundwater ML — Godavari Basin") as app:
       <div class="gw-divider"></div>
     </div>""")
 
+    # Shared station state (drives all tabs)
+    shared_station = gr.State(value=list(STATIONS.keys())[0])
+
     with gr.Tabs(elem_classes="tab-nav"):
 
         # ── TAB 1: Prediction ─────────────────────────────────────────────
         with gr.TabItem("🔍 Prediction"):
             with gr.Row():
                 with gr.Column(scale=1, elem_classes="card"):
-                    gr.HTML("<div class='section-title'>🌍 Hydro-Geological Parameters</div>")
+                    gr.HTML("<div class='section-title'>📍 Select Station</div>")
+                    tab1_station = gr.Dropdown(
+                        choices=list(STATIONS.keys()),
+                        value=list(STATIONS.keys())[0],
+                        label="Station (syncs all tabs)",
+                    )
+                    gr.HTML("<div class='section-title' style='margin-top:16px'>🌍 Hydro-Geological Parameters</div>")
                     feat_geo  = gr.Dropdown(choices=unique_values.get('Geology',[]),
                                             label="Geology",
                                             value=unique_values.get('Geology',[''])[0])
@@ -660,7 +709,7 @@ with gr.Blocks(title="Groundwater ML — Godavari Basin") as app:
             pred_btn.click(
                 fn=predict_groundwater,
                 inputs=[feat_geo, feat_gm, feat_soil, feat_slope, feat_drain,
-                        feat_lin, feat_lulc, feat_ndvi, feat_savi, feat_rain],
+                        feat_lin, feat_lulc, feat_ndvi, feat_savi, feat_rain, tab1_station],
                 outputs=[result_txt, result_plot]
             )
 
@@ -670,12 +719,13 @@ with gr.Blocks(title="Groundwater ML — Godavari Basin") as app:
                 gr.HTML("<div class='section-title'>🛰️ ML Groundwater Potential Zones</div>")
                 gr.Markdown("*Colour-coded ML zones across the Godavari basin. "
                              "⭐ markers = monitoring stations. "
-                             "Labels show ML-predicted dominant groundwater class.*")
+                             "Labels show ML-predicted dominant groundwater class. "
+                             "Selected station from Tab 1 is highlighted.*")
                 map_plot = gr.Plot(label="Zoning Map")
                 _html    = gr.HTML(visible=False)
                 map_btn  = gr.Button("🔄 Refresh Map", variant="secondary")
-            map_btn.click(fn=generate_map, inputs=[], outputs=[map_plot, _html])
-            app.load(fn=generate_map, inputs=[], outputs=[map_plot, _html])
+            map_btn.click(fn=lambda s: generate_map(s), inputs=[tab1_station], outputs=[map_plot, _html])
+            app.load(fn=lambda: generate_map(list(STATIONS.keys())[0]), inputs=[], outputs=[map_plot, _html])
 
         # ── TAB 3: Godavari Dashboard ─────────────────────────────────────
         with gr.TabItem("🌊 Godavari Dashboard"):
@@ -684,32 +734,52 @@ with gr.Blocks(title="Groundwater ML — Godavari Basin") as app:
                 with gr.TabItem("📍 Interactive Map"):
                     with gr.Column(elem_classes="card"):
                         gr.HTML("<div class='section-title'>🗺️ Live Station Map — Click Markers for Details</div>")
-                        gr.HTML(make_folium_map() if HAS_FOLIUM
-                                else "<p style='color:#ff6b6b'>Install: pip install folium</p>")
+                        gr.Markdown("*White map background · Selected station from Tab 1 is highlighted with an orange border.*")
+                        folium_out = gr.HTML(
+                            make_folium_map(list(STATIONS.keys())[0]) if HAS_FOLIUM
+                            else "<p style='color:#ff6b6b'>Install: pip install folium</p>"
+                        )
 
                 with gr.TabItem("📊 Discharge Analysis"):
                     with gr.Column(elem_classes="card"):
                         gr.HTML("<div class='section-title'>⚡ Water Discharge by Station</div>")
-                        gr.Plot(make_discharge_chart())
+                        gr.Markdown("*Bars highlighted in gold = station selected in Tab 1.*")
+                        discharge_plot = gr.Plot(make_discharge_chart(list(STATIONS.keys())[0]))
 
                 with gr.TabItem("💧 GW Parameters"):
                     with gr.Column(elem_classes="card"):
                         gr.HTML("<div class='section-title'>🔬 Groundwater Parameters</div>")
-                        gr.Plot(make_gw_chart())
+                        gr.Markdown("*White markers = station selected in Tab 1.*")
+                        gw_plot = gr.Plot(make_gw_chart(list(STATIONS.keys())[0]))
 
                 with gr.TabItem("🔍 Station Details"):
                     with gr.Column(elem_classes="card"):
                         gr.HTML("<div class='section-title'>📍 Station Deep-Dive</div>")
-                        stn_sel  = gr.Dropdown(choices=list(STATIONS.keys()),
-                                               value=list(STATIONS.keys())[0],
-                                               label="Select Station")
-                        stn_out  = gr.HTML(station_detail(list(STATIONS.keys())[0]))
+                        gr.Markdown("*Auto-synced with station selected in Tab 1. You can also pick manually below.*")
+                        stn_sel = gr.Dropdown(choices=list(STATIONS.keys()),
+                                              value=list(STATIONS.keys())[0],
+                                              label="Select Station")
+                        stn_out = gr.HTML(station_detail(list(STATIONS.keys())[0]))
                         stn_sel.change(fn=station_detail, inputs=stn_sel, outputs=stn_out)
 
                 with gr.TabItem("📈 Summary Table"):
                     with gr.Column(elem_classes="card"):
                         gr.HTML("<div class='section-title'>📋 All Stations at a Glance</div>")
-                        gr.Dataframe(make_summary_df(), interactive=False)
+                        gr.Markdown("*⭐ marks the station selected in Tab 1.*")
+                        summary_tbl = gr.Dataframe(make_summary_df(list(STATIONS.keys())[0]), interactive=False)
+
+    # ── Wire Tab 1 station dropdown → ALL other tab outputs ─────────────
+    tab1_station.change(
+        fn=update_all_tabs,
+        inputs=[tab1_station],
+        outputs=[map_plot, _html, folium_out, discharge_plot, gw_plot, stn_out, summary_tbl]
+    )
+    # Also sync station detail dropdown with Tab 1
+    tab1_station.change(
+        fn=lambda s: s,
+        inputs=[tab1_station],
+        outputs=[stn_sel]
+    )
 
     gr.HTML("""
     <div class="gw-footer">
