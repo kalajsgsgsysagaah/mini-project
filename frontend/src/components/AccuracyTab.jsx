@@ -19,10 +19,10 @@ const AccuracyTab = () => {
                         <table style={{ background: 'transparent' }}>
                             <thead>
                                 <tr>
-                                    <th style={{ background: '#1a73e8', border: 'none' }}>Class</th>
-                                    <th style={{ background: '#667eea', border: 'none' }}>Precision</th>
-                                    <th style={{ background: '#667eea', border: 'none' }}>Recall</th>
-                                    <th style={{ background: '#667eea', border: 'none' }}>F1-Score</th>
+                                    <th style={{ background: '#1a73e8', border: 'none', color: '#e0e8ff' }}>Class</th>
+                                    <th style={{ background: '#1a73e8', border: 'none', color: '#e0e8ff' }}>Precision</th>
+                                    <th style={{ background: '#1a73e8', border: 'none', color: '#e0e8ff' }}>Recall</th>
+                                    <th style={{ background: '#1a73e8', border: 'none', color: '#e0e8ff' }}>F1-Score</th>
                                 </tr>
                             </thead>
                             <tbody>
