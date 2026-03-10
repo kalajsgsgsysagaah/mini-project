@@ -130,7 +130,16 @@ const DashboardTab = ({ selectedStation, setSelectedStation, stations, livePredi
             case 'details':
                 return (
                     <div className="card">
-                        <div className="section-title">📍 Station Deep-Dive: {selectedStation}</div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+                            <div className="section-title" style={{ marginBottom: 0 }}>📍 Station Deep-Dive</div>
+                            <select
+                                value={selectedStation}
+                                onChange={(e) => setSelectedStation(e.target.value)}
+                                style={{ width: '200px', background: 'rgba(102,126,234,0.1)', border: '1px solid var(--accent1)', color: '#ffd700', fontWeight: 'bold' }}
+                            >
+                                {stationList.map(([name]) => <option key={name} value={name} style={{ color: '#060b18' }}>{name}</option>)}
+                            </select>
+                        </div>
 
                         <div style={{ marginBottom: '20px', borderRadius: '15px', overflow: 'hidden', height: '280px', border: '1px solid var(--border)', background: '#0a0f1e' }}>
                             <img
@@ -139,6 +148,12 @@ const DashboardTab = ({ selectedStation, setSelectedStation, stations, livePredi
                                 alt={selectedStation}
                                 style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9, transition: 'opacity 0.5s' }}
                             />
+                        </div>
+
+                        <div className="card" style={{ background: 'rgba(102,126,234,0.05)', marginBottom: '20px', border: '1px dashed var(--accent1)' }}>
+                            <p style={{ fontStyle: 'italic', color: '#c8d8ff', lineHeight: '1.6' }}>
+                                "{selectedData.description || 'Monitoring core groundwater levels and recharge patterns across the Godavari basin.'}"
+                            </p>
                         </div>
 
                         <div className="grid-2">

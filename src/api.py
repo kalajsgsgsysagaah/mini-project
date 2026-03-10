@@ -153,10 +153,45 @@ def get_stations():
     """Returns static metadata for all Godavari monitoring stations."""
     # Hardcode stations to avoid dependency on src.app which uses Gradio
     STATIONS = {
-        "Bhadrachalam":    {"lat":17.668,"lon":80.893,"avg_discharge":1340,"peak_discharge":3400,"min_discharge":370,"current_level":46.5,"monsoon_flow":3200,"groundwater_zone":"High Potential Zone","aquifer_type":"Basalt with Granitic Gneiss","depth_to_water":8.5,"water_quality":"Good","yield_potential":"High (15-25 lpm)","recharge_rate":"Medium (500-750 mm/year)","density":"Moderate - 1 well/2 ha","soil_type":"Black Soil & Red Soil","geological_formation":"Deccan Basalt & Archean Granite","recommendation":"Suitable for irrigation wells"},
-        "Ramagundam NTPC": {"lat":18.755,"lon":79.513,"avg_discharge":1158,"peak_discharge":3000,"min_discharge":280,"current_level":43.2,"monsoon_flow":2800,"groundwater_zone":"Moderate Potential Zone","aquifer_type":"Granite with Quartzite","depth_to_water":12.3,"water_quality":"Good","yield_potential":"Moderate (8-15 lpm)","recharge_rate":"Low (350-500 mm/year)","density":"Low - 1 well/3-4 ha","soil_type":"Red Soil & Laterite","geological_formation":"Archean Granite & Pegmatite","recommendation":"Suitable for domestic wells"},
-        "Dowleswaram":     {"lat":16.934,"lon":81.771,"avg_discharge":1492,"peak_discharge":3700,"min_discharge":410,"current_level":47.5,"monsoon_flow":3500,"groundwater_zone":"Very High Potential Zone","aquifer_type":"Alluvium & Basalt","depth_to_water":6.2,"water_quality":"Excellent","yield_potential":"Very High (25-40 lpm)","recharge_rate":"High (750-1000 mm/year)","density":"High - 1 well/1.5 ha","soil_type":"Alluvial Soil","geological_formation":"Recent Alluvium","recommendation":"Highly suitable for large scale irrigation"},
-        "Pattiseema":      {"lat":17.136,"lon":81.609,"avg_discharge":1280,"peak_discharge":3300,"min_discharge":360,"current_level":46.2,"monsoon_flow":3150,"groundwater_zone":"High Potential Zone","aquifer_type":"Basalt & Alluvium","depth_to_water":7.8,"water_quality":"Good","yield_potential":"High (18-28 lpm)","recharge_rate":"High (650-850 mm/year)","density":"Moderate-High - 1 well/2 ha","soil_type":"Black Soil & Alluvial","geological_formation":"Deccan Basalt & Alluvium","recommendation":"Suitable for irrigation & domestic use"},
-        "Rajahmundry":     {"lat":17.000,"lon":81.804,"avg_discharge":1420,"peak_discharge":3620,"min_discharge":395,"current_level":47.2,"monsoon_flow":3400,"groundwater_zone":"Very High Potential Zone","aquifer_type":"Alluvium & Basalt","depth_to_water":5.8,"water_quality":"Excellent","yield_potential":"Very High (28-42 lpm)","recharge_rate":"High (780-1050 mm/year)","density":"High - 1 well/1.2 ha","soil_type":"Deep Alluvial Soil","geological_formation":"Recent Alluvium & Basalt","recommendation":"Highly suitable for large-scale irrigation and industrial use"},
+        "Bhadrachalam":    {
+            "lat":17.668,"lon":80.893,"avg_discharge":1340,"peak_discharge":3400,"min_discharge":370,"current_level":46.5,"monsoon_flow":3200,
+            "groundwater_zone":"High Potential Zone","aquifer_type":"Basalt with Granitic Gneiss","depth_to_water":8.5,"water_quality":"Good",
+            "yield_potential":"High (15-25 lpm)","recharge_rate":"Medium (500-750 mm/year)","density":"Moderate - 1 well/2 ha",
+            "soil_type":"Black Soil & Red Soil","geological_formation":"Deccan Basalt & Archean Granite",
+            "recommendation":"Suitable for irrigation wells",
+            "description": "Known for its historic temple on the banks of the Godavari, this station monitors a critical bend in the river. The groundwater here is influenced by the surrounding basaltic layers, offering moderate to high yield for local agriculture."
+        },
+        "Ramagundam NTPC": {
+            "lat":18.755,"lon":79.513,"avg_discharge":1158,"peak_discharge":3000,"min_discharge":280,"current_level":43.2,"monsoon_flow":2800,
+            "groundwater_zone":"Moderate Potential Zone","aquifer_type":"Granite with Quartzite","depth_to_water":12.3,"water_quality":"Good",
+            "yield_potential":"Moderate (8-15 lpm)","recharge_rate":"Low (350-500 mm/year)","density":"Low - 1 well/3-4 ha",
+            "soil_type":"Red Soil & Laterite","geological_formation":"Archean Granite & Pegmatite",
+            "recommendation":"Suitable for domestic wells",
+            "description": "Located near one of India's largest power plants, this station tracks water levels in an industrial zone. The groundwater management here is vital for maintaining the balance between industrial cooling needs and domestic availability for nearby townships."
+        },
+        "Dowleswaram":     {
+            "lat":16.934,"lon":81.771,"avg_discharge":1492,"peak_discharge":3700,"min_discharge":410,"current_level":47.5,"monsoon_flow":3500,
+            "groundwater_zone":"Very High Potential Zone","aquifer_type":"Alluvium & Basalt","depth_to_water":6.2,"water_quality":"Excellent",
+            "yield_potential":"Very High (25-40 lpm)","recharge_rate":"High (750-1000 mm/year)","density":"High - 1 well/1.5 ha",
+            "soil_type":"Alluvial Soil","geological_formation":"Recent Alluvium",
+            "recommendation":"Highly suitable for large scale irrigation",
+            "description": "Site of the famous Cotton Barrage, this location is a hub for irrigation control in the fertile delta region. The alluvium-rich soil here provides exceptional groundwater potential, supporting vast hectares of paddy fields."
+        },
+        "Pattiseema":      {
+            "lat":17.136,"lon":81.609,"avg_discharge":1280,"peak_discharge":3300,"min_discharge":360,"current_level":46.2,"monsoon_flow":3150,
+            "groundwater_zone":"High Potential Zone","aquifer_type":"Basalt & Alluvium","depth_to_water":7.8,"water_quality":"Good",
+            "yield_potential":"High (18-28 lpm)","recharge_rate":"High (650-850 mm/year)","density":"Moderate-High - 1 well/2 ha",
+            "soil_type":"Black Soil & Alluvial","geological_formation":"Deccan Basalt & Alluvium",
+            "recommendation":"Suitable for irrigation & domestic use",
+            "description": "A modern engineering marvel, this station is part of the first-ever river linking project. It monitors the diversion of Godavari water to the Krishna delta, playing a key role in regional water security and groundwater recharge."
+        },
+        "Rajahmundry":     {
+            "lat":17.000,"lon":81.804,"avg_discharge":1420,"peak_discharge":3620,"min_discharge":395,"current_level":47.2,"monsoon_flow":3400,
+            "groundwater_zone":"Very High Potential Zone","aquifer_type":"Alluvium & Basalt","depth_to_water":5.8,"water_quality":"Excellent",
+            "yield_potential":"Very High (28-42 lpm)","recharge_rate":"High (780-1050 mm/year)","density":"High - 1 well/1.2 ha",
+            "soil_type":"Deep Alluvial Soil","geological_formation":"Recent Alluvium & Basalt",
+            "recommendation":"Highly suitable for large-scale irrigation and industrial use",
+            "description": "Situated by the widest point of the Godavari, this station overlooks the iconic Rail-cum-Road bridge. The deep alluvial deposits in this area make it one of the most productive groundwater zones in the entire basin."
+        },
     }
     return {"stations": STATIONS}
