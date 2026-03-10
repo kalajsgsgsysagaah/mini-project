@@ -137,7 +137,7 @@ const DashboardTab = ({ selectedStation, setSelectedStation, stations, livePredi
                                 onChange={(e) => setSelectedStation(e.target.value)}
                                 style={{ width: '200px', background: 'rgba(102,126,234,0.1)', border: '1px solid var(--accent1)', color: '#ffd700', fontWeight: 'bold' }}
                             >
-                                {stationList.map(([name]) => <option key={name} value={name} style={{ color: '#060b18' }}>{name}</option>)}
+                                {stationList.map(([name]) => <option key={name} value={name}>{name}</option>)}
                             </select>
                         </div>
 
