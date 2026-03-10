@@ -1,0 +1,281 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600;700&display=swap');
+
+:root {
+  --bg-deep: #060b18;
+  --bg-mid: #0d1530;
+  --bg-card: rgba(255, 255, 255, 0.05);
+  --border: rgba(102, 126, 234, 0.25);
+  --accent1: #667eea;
+  --accent2: #4ecdc4;
+  --accent3: #ffd700;
+  --text: #c8d8ff;
+  --text-dim: #7a8ab0;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(78, 205, 196, 0.12) 0%, transparent 50%),
+    linear-gradient(160deg, #060b18 0%, #0d1530 50%, #06101f 100%) !important;
+  font-family: 'Inter', sans-serif !important;
+  color: var(--text) !important;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Container ── */
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ── Animated header ── */
+.gw-header {
+  text-align: center;
+  padding: 36px 20px 8px;
+  position: relative;
+}
+
+.gw-header h1 {
+  font-family: 'Orbitron', monospace !important;
+  font-size: clamp(1.5rem, 3.5vw, 2.6rem) !important;
+  background: linear-gradient(90deg, #667eea, #4ecdc4, #ffd700, #667eea);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+  letter-spacing: 2px;
+  margin-bottom: 6px !important;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% center
+  }
+
+  100% {
+    background-position: 300% center
+  }
+}
+
+.gw-header p {
+  font-size: .95rem;
+  color: var(--text-dim);
+  letter-spacing: .8px;
+}
+
+/* ── Divider ── */
+.gw-divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #667eea 20%, #4ecdc4 50%, #667eea 80%, transparent);
+  margin: 12px auto 28px;
+  width: 60%;
+  opacity: .7;
+  box-shadow: 0 0 12px rgba(102, 126, 234, 0.6);
+}
+
+/* ── Glass cards ── */
+.card {
+  background: var(--bg-card) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 20px !important;
+  box-shadow: var(--shadow), inset 0 1px 0 rgba(102, 126, 234, 0.15) !important;
+  padding: 22px !important;
+  transition: border-color .3s, box-shadow .3s;
+  margin-bottom: 20px;
+}
+
+.card:hover {
+  border-color: var(--accent1) !important;
+  box-shadow: 0 0 30px rgba(102, 126, 234, 0.25) !important;
+}
+
+/* ── Tabs ── */
+.tabs-nav {
+  display: flex;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 50px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  margin-bottom: 20px;
+  list-style: none;
+  position: relative;
+  z-index: 1000;
+}
+
+.tabs-nav button {
+  background: transparent;
+  border: none;
+  border-radius: 45px;
+  padding: 10px 20px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--text-dim);
+  transition: all .3s;
+  letter-spacing: .5px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1001;
+}
+
+.tabs-nav button:hover {
+  color: var(--accent2);
+}
+
+.tabs-nav button.active {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #e0e8ff;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.5);
+}
+
+/* ── Form Elements ── */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: var(--text);
+  font-size: .9rem;
+}
+
+select,
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(102, 126, 234, 0.3) !important;
+  border-radius: 10px !important;
+  color: var(--text) !important;
+  padding: 10px;
+  font-family: 'Inter', sans-serif !important;
+  transition: border .3s, box-shadow .3s !important;
+  cursor: pointer;
+}
+
+select:focus,
+input:focus {
+  border-color: #667eea !important;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2) !important;
+  outline: none !important;
+}
+
+/* ── SLIDER ── */
+input[type="range"] {
+  width: 100%;
+  accent-color: #667eea;
+  cursor: pointer;
+}
+
+/* ── BUTTONS ── */
+.btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border: none !important;
+  border-radius: 50px !important;
+  color: #e0e8ff !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  padding: 13px 36px !important;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.45) !important;
+  transition: all .3s ease !important;
+  cursor: pointer;
+  margin-top: 10px;
+  position: relative;
+  z-index: 100;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(102, 126, 234, 0.6) !important;
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+  filter: brightness(1.1);
+}
+
+/* ── Section Title ── */
+.section-title {
+  font-family: 'Orbitron', monospace;
+  color: #667eea;
+  font-size: .95rem;
+  letter-spacing: 1.5px;
+  border-left: 3px solid #4ecdc4;
+  padding-left: 10px;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+/* ── Leaflet Container ── */
+.leaflet-container {
+  filter: saturate(1.1) contrast(1.1);
+  border-radius: 12px;
+}
+
+/* ── Prediction Result Box ── */
+.result-box {
+  background: rgba(102, 126, 234, 0.08);
+  border: 1px solid rgba(102, 126, 234, 0.4);
+  border-radius: 14px;
+  color: #ffd700;
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-family: 'Orbitron', monospace;
+  text-align: center;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+/* ── Tables ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+th {
+  background: #667eea;
+  color: #e0e8ff;
+  font-weight: bold;
+  padding: 10px;
+  text-align: left;
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* ── Leaflet Popup Fixes ── */
+.leaflet-popup-content-wrapper {
+  background: #0d1530 !important;
+  color: #c8d8ff !important;
+  border: 1px solid var(--accent1) !important;
+}
+
+.leaflet-popup-tip {
+  background: #0d1530 !important;
+}

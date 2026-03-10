@@ -15,7 +15,10 @@ from typing import Optional
 #  Load model & unique values
 # ─────────────────────────────────────────────
 BASE_DIR           = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH         = os.path.join(BASE_DIR, "models", "groundwater_model.pkl")
+# On Vercel, the models directory is relative to the root or current file
+MODEL_PATH         = os.path.join(BASE_DIR, "models", "model.pkl")
+if not os.path.exists(MODEL_PATH):
+    MODEL_PATH     = os.path.join(BASE_DIR, "models", "groundwater_model.pkl")
 UNIQUE_VALUES_PATH = os.path.join(BASE_DIR, "models", "unique_values.pkl")
 
 model        = None
@@ -53,7 +56,7 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Allow Gradio (localhost:7866) to call this API
+# Allow React (Vite dev) and production domains to call this API
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -98,6 +101,7 @@ def root():
         "message": "Groundwater Prediction API is running. Visit /docs for Swagger UI.",
     }
 
+@app.get("/api/meta", response_model=MetaResponse, summary="Get valid dropdown values")
 @app.get("/meta", response_model=MetaResponse, summary="Get valid dropdown values")
 def get_meta():
     """Returns the allowed categorical values for the prediction inputs."""
@@ -108,6 +112,7 @@ def get_meta():
         "lulc":          unique_values.get("LULC", []),
     }
 
+@app.post("/api/predict", response_model=PredictResponse, summary="Predict groundwater zone")
 @app.post("/predict", response_model=PredictResponse, summary="Predict groundwater zone")
 def predict(data: PredictRequest):
     """
@@ -142,8 +147,16 @@ def predict(data: PredictRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction error: {str(e)}")
 
+@app.get("/api/stations", summary="Get all station data")
 @app.get("/stations", summary="Get all station data")
 def get_stations():
     """Returns static metadata for all Godavari monitoring stations."""
-    from src.app import STATIONS
+    # Hardcode stations to avoid dependency on src.app which uses Gradio
+    STATIONS = {
+        "Bhadrachalam":    {"lat":17.668,"lon":80.893,"avg_discharge":1340,"peak_discharge":3400,"min_discharge":370,"current_level":46.5,"monsoon_flow":3200,"groundwater_zone":"High Potential Zone","aquifer_type":"Basalt with Granitic Gneiss","depth_to_water":8.5,"water_quality":"Good","yield_potential":"High (15-25 lpm)","recharge_rate":"Medium (500-750 mm/year)","density":"Moderate - 1 well/2 ha","soil_type":"Black Soil & Red Soil","geological_formation":"Deccan Basalt & Archean Granite","recommendation":"Suitable for irrigation wells"},
+        "Ramagundam NTPC": {"lat":18.755,"lon":79.513,"avg_discharge":1158,"peak_discharge":3000,"min_discharge":280,"current_level":43.2,"monsoon_flow":2800,"groundwater_zone":"Moderate Potential Zone","aquifer_type":"Granite with Quartzite","depth_to_water":12.3,"water_quality":"Good","yield_potential":"Moderate (8-15 lpm)","recharge_rate":"Low (350-500 mm/year)","density":"Low - 1 well/3-4 ha","soil_type":"Red Soil & Laterite","geological_formation":"Archean Granite & Pegmatite","recommendation":"Suitable for domestic wells"},
+        "Dowleswaram":     {"lat":16.934,"lon":81.771,"avg_discharge":1492,"peak_discharge":3700,"min_discharge":410,"current_level":47.5,"monsoon_flow":3500,"groundwater_zone":"Very High Potential Zone","aquifer_type":"Alluvium & Basalt","depth_to_water":6.2,"water_quality":"Excellent","yield_potential":"Very High (25-40 lpm)","recharge_rate":"High (750-1000 mm/year)","density":"High - 1 well/1.5 ha","soil_type":"Alluvial Soil","geological_formation":"Recent Alluvium","recommendation":"Highly suitable for large scale irrigation"},
+        "Pattiseema":      {"lat":17.136,"lon":81.609,"avg_discharge":1280,"peak_discharge":3300,"min_discharge":360,"current_level":46.2,"monsoon_flow":3150,"groundwater_zone":"High Potential Zone","aquifer_type":"Basalt & Alluvium","depth_to_water":7.8,"water_quality":"Good","yield_potential":"High (18-28 lpm)","recharge_rate":"High (650-850 mm/year)","density":"Moderate-High - 1 well/2 ha","soil_type":"Black Soil & Alluvial","geological_formation":"Deccan Basalt & Alluvium","recommendation":"Suitable for irrigation & domestic use"},
+        "Rajahmundry":     {"lat":17.000,"lon":81.804,"avg_discharge":1420,"peak_discharge":3620,"min_discharge":395,"current_level":47.2,"monsoon_flow":3400,"groundwater_zone":"Very High Potential Zone","aquifer_type":"Alluvium & Basalt","depth_to_water":5.8,"water_quality":"Excellent","yield_potential":"Very High (28-42 lpm)","recharge_rate":"High (780-1050 mm/year)","density":"High - 1 well/1.2 ha","soil_type":"Deep Alluvial Soil","geological_formation":"Recent Alluvium & Basalt","recommendation":"Highly suitable for large-scale irrigation and industrial use"},
+    }
     return {"stations": STATIONS}

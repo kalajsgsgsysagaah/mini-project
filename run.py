@@ -1,6 +1,5 @@
 """
-run.py — Start both FastAPI (port 8000) and Gradio (port 7866) together.
-Usage:  python run.py
+run.py — Launch both FastAPI Backend and React Frontend.
 """
 
 import subprocess
@@ -11,29 +10,33 @@ import time
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
-def run_api():
+def run_backend():
+    print("🚀  Starting FastAPI Backend...")
     subprocess.run(
         [sys.executable, "-m", "uvicorn", "src.api:app",
          "--host", "0.0.0.0", "--port", "8000", "--reload"],
         cwd=ROOT,
     )
 
-def run_gradio():
-    time.sleep(2)  # Let FastAPI start first
-    subprocess.run(
-        [sys.executable, "src/app.py"],
-        cwd=ROOT,
-    )
+def run_frontend():
+    print("🚀  Starting React Frontend (Vite)...")
+    # Ensure dependencies are installed if node_modules is missing
+    frontend_dir = os.path.join(ROOT, "frontend")
+    if not os.path.exists(os.path.join(frontend_dir, "node_modules")):
+        print("📦  Installing frontend dependencies...")
+        subprocess.run(["npm", "install"], cwd=frontend_dir, shell=True)
+    
+    subprocess.run(["npm", "run", "dev"], cwd=frontend_dir, shell=True)
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("🚀  Groundwater ML — Launching Services")
-    print("    FastAPI  →  http://localhost:8000")
-    print("    API Docs →  http://localhost:8000/docs")
-    print("    Gradio   →  http://localhost:7866")
+    print("🌊  Groundwater ML — Local Launch")
+    print("    Backend  →  http://localhost:8000")
+    print("    Frontend →  http://localhost:5173")
     print("=" * 60)
 
-    api_thread = threading.Thread(target=run_api, daemon=True)
-    api_thread.start()
+    backend_thread = threading.Thread(target=run_backend, daemon=True)
+    backend_thread.start()
 
-    run_gradio()
+    time.sleep(2) # Allow backend to initialize
+    run_frontend()
