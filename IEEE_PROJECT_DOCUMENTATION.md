@@ -48,6 +48,6 @@ To obtain this documentation in PDF format:
 3. Use the **"Save as PDF"** or **"Print to PDF"** functionality for the final submission document.
 
 ---
-**Project Lead**: Gaurav Kalyan
+**Project Lead**: 
 **Technology Stack**: Python (FastAPI), React, Random Forest
 **Area of Study**: Godavari Basin, Telangana
