@@ -129,7 +129,7 @@ const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePred
                             onChange={(e) => setSelectedStation(e.target.value)}
                             style={{ fontWeight: 'bold', color: '#ffd700' }}
                         >
-                            {Object.keys(stations).map(s => <option key={s} value={s} style={{ color: '#060b18' }}>{s}</option>)}
+                            {Object.keys(stations).map(s => <option key={s} value={s}>{s}</option>)}
                         </select>
                     </div>
 
@@ -138,13 +138,13 @@ const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePred
                         <div className="form-group">
                             <label>Geology</label>
                             <select name="geology" value={formData.geology} onChange={handleChange}>
-                                {meta.geology.map(g => <option key={g} value={g} style={{ color: '#060b18' }}>{g}</option>)}
+                                {meta.geology.map(g => <option key={g} value={g}>{g}</option>)}
                             </select>
                         </div>
                         <div className="form-group">
                             <label>Geomorphology</label>
                             <select name="geomorphology" value={formData.geomorphology} onChange={handleChange}>
-                                {meta.geomorphology.map(g => <option key={g} value={g} style={{ color: '#060b18' }}>{g}</option>)}
+                                {meta.geomorphology.map(g => <option key={g} value={g}>{g}</option>)}
                             </select>
                         </div>
                     </div>
@@ -153,13 +153,13 @@ const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePred
                         <div className="form-group">
                             <label>Soil Type</label>
                             <select name="soil" value={formData.soil} onChange={handleChange}>
-                                {meta.soil.map(s => <option key={s} value={s} style={{ color: '#060b18' }}>{s}</option>)}
+                                {meta.soil.map(s => <option key={s} value={s}>{s}</option>)}
                             </select>
                         </div>
                         <div className="form-group">
                             <label>Land Use (LULC)</label>
                             <select name="lulc" value={formData.lulc} onChange={handleChange}>
-                                {meta.lulc.map(l => <option key={l} value={l} style={{ color: '#060b18' }}>{l}</option>)}
+                                {meta.lulc.map(l => <option key={l} value={l}>{l}</option>)}
                             </select>
                         </div>
                     </div>
