@@ -54,7 +54,7 @@ const MapTab = ({ selectedStation, setSelectedStation, stations, livePrediction 
                             >
                                 <Popup>
                                     <div style={{ color: '#060b18', padding: '5px', fontWeight: 'bold' }}>
-                                        <div style={{ color: '#667eea', fontSize: '1.1rem' }}>{name}</div>
+                                        <div style={{ color: '#1a73e8', fontSize: '1.1rem' }}>{name}</div>
                                         <div style={{ color: '#0d1530', marginTop: '5px' }}>Zone: {zone}</div>
                                         {isSelected && livePrediction && <div style={{ color: '#accent2', fontSize: '0.8rem' }}>(Live Updated)</div>}
                                     </div>
@@ -85,7 +85,7 @@ const MapTab = ({ selectedStation, setSelectedStation, stations, livePrediction 
                                     key={name}
                                     style={{
                                         cursor: 'pointer',
-                                        ...(isSelected ? { background: 'rgba(102,126,234,0.3)', borderLeft: '4px solid #ffd700' } : {})
+                                        ...(isSelected ? { background: 'rgba(26, 115, 232, 0.3)', borderLeft: '4px solid #ffd700' } : {})
                                     }}
                                     onClick={() => setSelectedStation(name)}
                                 >

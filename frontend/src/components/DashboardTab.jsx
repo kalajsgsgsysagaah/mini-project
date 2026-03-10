@@ -70,13 +70,13 @@ const DashboardTab = ({ selectedStation, setSelectedStation, stations, livePredi
                                 >
                                     <Popup>
                                         <div style={{ color: '#060b18', padding: '5px' }}>
-                                            <h3 style={{ margin: '0 0 5px', color: '#667eea' }}>{name}</h3>
+                                            <h3 style={{ margin: '0 0 5px', color: '#1a73e8' }}>{name}</h3>
                                             <p style={{ color: '#0d1530', fontWeight: 'bold' }}>
                                                 <b>Zone:</b> {name === selectedStation && livePrediction ? livePrediction : info.groundwater_zone}
                                             </p>
                                             <button
                                                 className="btn-primary"
-                                                style={{ padding: '5px 12px', fontSize: '0.75rem', width: 'auto', marginTop: '10px', background: '#667eea' }}
+                                                style={{ padding: '5px 12px', fontSize: '0.75rem', width: 'auto', marginTop: '10px', background: '#1a73e8' }}
                                                 onClick={() => { setSelectedStation(name); setSubTab('details'); }}
                                             >
                                                 Deep Dive Details
@@ -98,9 +98,9 @@ const DashboardTab = ({ selectedStation, setSelectedStation, stations, livePredi
                                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(102,126,234,0.1)" />
                                     <XAxis dataKey="name" stroke="#7a8ab0" fontSize={11} />
                                     <YAxis stroke="#7a8ab0" />
-                                    <Tooltip contentStyle={{ backgroundColor: '#0d1530', border: '1px solid #667eea' }} />
+                                    <Tooltip contentStyle={{ backgroundColor: '#0d1530', border: '1px solid #1a73e8' }} />
                                     <Legend />
-                                    <Bar dataKey="avg" name="Average" fill="#667eea" onClick={(data) => setSelectedStation(data.name)} style={{ cursor: 'pointer' }} />
+                                    <Bar dataKey="avg" name="Average" fill="#1a73e8" onClick={(data) => setSelectedStation(data.name)} style={{ cursor: 'pointer' }} />
                                     <Bar dataKey="peak" name="Peak" fill="#4ecdc4" onClick={(data) => setSelectedStation(data.name)} style={{ cursor: 'pointer' }} />
                                     <Bar dataKey="min" name="Minimum" fill="#ff6b6b" onClick={(data) => setSelectedStation(data.name)} style={{ cursor: 'pointer' }} />
                                 </BarChart>
@@ -164,7 +164,7 @@ const DashboardTab = ({ selectedStation, setSelectedStation, stations, livePredi
                                 <p><b>Min Discharge:</b> {selectedData.min_discharge} MCM</p>
                             </div>
                             <div style={{ background: 'rgba(255,255,255,0.05)', padding: '15px', borderRadius: '12px', border: '1px solid rgba(102,126,234,0.2)' }}>
-                                <h3 style={{ color: '#667eea', fontSize: '14px', marginBottom: '10px' }}>🌍 Zone Detail</h3>
+                                <h3 style={{ color: '#1a73e8', fontSize: '14px', marginBottom: '10px' }}>🌍 Zone Detail</h3>
                                 <p style={{ color: '#ffd700', fontWeight: 'bold', fontSize: '1.2rem' }}>
                                     {selectedStation === selectedStation && livePrediction ? livePrediction : selectedData.groundwater_zone}
                                 </p>

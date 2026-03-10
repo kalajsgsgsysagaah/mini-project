@@ -4,10 +4,13 @@
   --bg-deep: #060b18;
   --bg-mid: #0d1530;
   --bg-card: rgba(255, 255, 255, 0.05);
-  --border: rgba(102, 126, 234, 0.25);
-  --accent1: #667eea;
+  --border: rgba(26, 115, 232, 0.25);
+  --accent1: #1a73e8;
+  /* Solid Professional Blue */
   --accent2: #4ecdc4;
+  /* Cyan/Teal */
   --accent3: #ffd700;
+  /* Gold */
   --text: #c8d8ff;
   --text-dim: #7a8ab0;
   --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
@@ -20,10 +23,8 @@
 }
 
 body {
-  background:
-    radial-gradient(ellipse at 20% 10%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, rgba(78, 205, 196, 0.12) 0%, transparent 50%),
-    linear-gradient(160deg, #060b18 0%, #0d1530 50%, #06101f 100%) !important;
+  background: #060b18 !important;
+  /* Solid background, no gradients */
   font-family: 'Inter', sans-serif !important;
   color: var(--text) !important;
   min-height: 100vh;
@@ -47,23 +48,19 @@ body {
 .gw-header h1 {
   font-family: 'Orbitron', monospace !important;
   font-size: clamp(1.5rem, 3.5vw, 2.6rem) !important;
-  background: linear-gradient(90deg, #667eea, #4ecdc4, #ffd700, #667eea);
-  background-size: 300% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer 4s linear infinite;
+  color: #1a73e8 !important;
+  /* Static Solid Blue */
   letter-spacing: 2px;
   margin-bottom: 6px !important;
 }
 
 @keyframes shimmer {
   0% {
-    background-position: 0% center
+    opacity: 0.9
   }
 
   100% {
-    background-position: 300% center
+    opacity: 1
   }
 }
 
@@ -76,11 +73,12 @@ body {
 /* ── Divider ── */
 .gw-divider {
   height: 2px;
-  background: linear-gradient(90deg, transparent, #667eea 20%, #4ecdc4 50%, #667eea 80%, transparent);
+  background: #1a73e8;
+  /* Solid color */
   margin: 12px auto 28px;
   width: 60%;
   opacity: .7;
-  box-shadow: 0 0 12px rgba(102, 126, 234, 0.6);
+  box-shadow: 0 0 12px rgba(26, 115, 232, 0.6);
 }
 
 /* ── Glass cards ── */
@@ -136,9 +134,10 @@ body {
 }
 
 .tabs-nav button.active {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: #1a73e8;
+  /* Solid Blue instead of Purple Gradient */
   color: #e0e8ff;
-  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.5);
+  box-shadow: 0 4px 16px rgba(26, 115, 232, 0.5);
 }
 
 /* ── Form Elements ── */
@@ -193,7 +192,8 @@ input[type="range"] {
 /* ── BUTTONS ── */
 .btn-primary {
   width: 100%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  background: #1a73e8 !important;
+  /* Solid Blue instead of Purple Gradient */
   border: none !important;
   border-radius: 50px !important;
   color: #e0e8ff !important;
@@ -201,7 +201,7 @@ input[type="range"] {
   font-weight: 700 !important;
   font-size: 1rem !important;
   padding: 13px 36px !important;
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.45) !important;
+  box-shadow: 0 6px 20px rgba(26, 115, 232, 0.45) !important;
   transition: all .3s ease !important;
   cursor: pointer;
   margin-top: 10px;
@@ -261,7 +261,8 @@ table {
 }
 
 th {
-  background: #667eea;
+  background: #1a73e8;
+  /* Solid color */
   color: #e0e8ff;
   font-weight: bold;
   padding: 10px;

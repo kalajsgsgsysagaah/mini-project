@@ -95,17 +95,17 @@ const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePred
     const getZoneColor = (zone) => {
         const colors = {
             'Very High Potential Zone': '#4ecdc4',
-            'High Potential Zone': '#667eea',
+            'High Potential Zone': '#1a73e8',
             'Moderate Potential Zone': '#ffd700',
             'Low Potential Zone': '#ff6b6b',
             'Very Low Potential Zone': '#ff4040',
             'Very High': '#4ecdc4',
-            'High': '#667eea',
+            'High': '#1a73e8',
             'Moderate': '#ffd700',
             'Low': '#ff6b6b',
             'Very Low': '#ff4040'
         };
-        return colors[zone] || '#667eea';
+        return colors[zone] || '#1a73e8';
     };
 
     const chartData = prediction ? Object.entries(prediction.probabilities).map(([name, value]) => ({
@@ -208,8 +208,8 @@ const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePred
                         position: 'sticky',
                         bottom: '0',
                         zIndex: 10,
-                        background: 'linear-gradient(135deg, #667eea 0%, #4ecdc4 100%)',
-                        boxShadow: '0 -5px 20px rgba(0,0,0,0.3)'
+                        background: '#1a73e8',
+                        boxShadow: '0 4px 14px rgba(26, 115, 232, 0.3)'
                     }}
                 >
                     {loading ? 'Processing...' : '🔍 Analyse Groundwater Potential'}
@@ -220,7 +220,7 @@ const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePred
                 <div className="section-title">📊 Prediction Results</div>
                 {prediction ? (
                     <>
-                        <div className="result-box" style={{ background: `rgba(${getZoneColor(prediction.predicted_zone) === '#ffd700' ? '255,215,0' : '102,126,234'}, 0.1)` }}>
+                        <div className="result-box" style={{ background: `rgba(${getZoneColor(prediction.predicted_zone) === '#ffd700' ? '255,215,0' : '26,115,232'}, 0.1)` }}>
                             🌍 {prediction.predicted_zone}
                         </div>
                         <div style={{ height: '280px', marginBottom: '20px' }}>
@@ -230,7 +230,7 @@ const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePred
                                     <XAxis dataKey="name" stroke="#7a8ab0" fontSize={10} />
                                     <YAxis stroke="#7a8ab0" fontSize={10} />
                                     <Tooltip
-                                        contentStyle={{ backgroundColor: '#0d1530', border: '1px solid #667eea', borderRadius: '10px' }}
+                                        contentStyle={{ backgroundColor: '#0d1530', border: '1px solid #1a73e8', borderRadius: '10px' }}
                                         itemStyle={{ color: '#c8d8ff' }}
                                     />
                                     <Bar dataKey="probability">

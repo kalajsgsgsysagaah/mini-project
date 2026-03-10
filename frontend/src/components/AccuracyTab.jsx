@@ -13,13 +13,13 @@ const AccuracyTab = () => {
                     Evaluated on all 60 records from the Godavari dataset
                 </p>
 
-                <div style={{ marginTop: '30px', background: 'rgba(102,126,234,0.08)', borderRadius: '14px', padding: '20px', border: '1px solid rgba(102,126,234,0.3)' }}>
+                <div style={{ marginTop: '30px', background: 'rgba(26, 115, 232, 0.08)', borderRadius: '14px', padding: '20px', border: '1px solid rgba(26, 115, 232, 0.3)' }}>
                     <div className="section-title" style={{ textAlign: 'left' }}>📊 Per-Class Metrics</div>
                     <div style={{ overflowX: 'auto' }}>
                         <table style={{ background: 'transparent' }}>
                             <thead>
                                 <tr>
-                                    <th style={{ background: '#667eea', border: 'none' }}>Class</th>
+                                    <th style={{ background: '#1a73e8', border: 'none' }}>Class</th>
                                     <th style={{ background: '#667eea', border: 'none' }}>Precision</th>
                                     <th style={{ background: '#667eea', border: 'none' }}>Recall</th>
                                     <th style={{ background: '#667eea', border: 'none' }}>F1-Score</th>
@@ -46,7 +46,7 @@ const AccuracyTab = () => {
                 </div>
 
                 <div style={{ marginTop: '20px', display: 'flex', gap: '15px', justifyContent: 'center' }}>
-                    <div style={{ background: 'rgba(102,126,234,0.1)', padding: '15px', borderRadius: '12px', flex: 1 }}>
+                    <div style={{ background: 'rgba(26, 115, 232, 0.1)', padding: '15px', borderRadius: '12px', flex: 1 }}>
                         <div style={{ color: '#7a8ab0', fontSize: '0.75rem' }}>ALGORITHM</div>
                         <div style={{ color: '#c8d8ff', fontWeight: 'bold' }}>Random Forest</div>
                     </div>
