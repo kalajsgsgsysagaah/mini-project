@@ -1,6 +1,5 @@
 {
     "version": 2,
-    "framework": "vite",
     "builds": [
         {
             "src": "api/index.py",
@@ -21,11 +20,10 @@
         },
         {
             "source": "/(.*)",
-            "destination": "/frontend/dist/$1"
+            "destination": "/$1"
         }
     ],
     "env": {
-        "PYTHONPATH": ".",
         "PYTHON_VERSION": "3.12"
     }
 }
