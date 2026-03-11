@@ -288,3 +288,36 @@ tr:nth-child(even) {
 .leaflet-popup-tip {
   background: #0d1530 !important;
 }
+
+/* ── Geospatial Map Legend ── */
+.map-legend {
+  margin-top: 15px;
+  background: rgba(13, 21, 48, 0.6);
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-bottom: 5px;
+}
+
+.swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.geospatial-map-container svg path {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.geospatial-map-container .svg-wrapper:hover path {
+  opacity: 0.8;
+}

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { Download } from 'lucide-react';
+import GeospatialMap from './GeospatialMap';
+
 
 const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePrediction }) => {
     const [formData, setFormData] = useState({
@@ -217,12 +219,25 @@ const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePred
             </div>
 
             <div className="card" style={{ position: 'sticky', top: '20px' }}>
+                <div className="section-title">🗺️ Geospatial Analysis</div>
+
+                {/* Always show the map */}
+                <GeospatialMap
+                    geomorphology={formData.geomorphology || 'Flood Plain'}
+                    stations={stations}
+                    selectedStation={selectedStation}
+                    prediction={prediction}
+                />
+
+                <div className="gw-divider" style={{ width: '100%', margin: '20px 0', opacity: 0.3 }}></div>
+
                 <div className="section-title">📊 Prediction Results</div>
                 {prediction ? (
                     <>
                         <div className="result-box" style={{ background: `rgba(${getZoneColor(prediction.predicted_zone) === '#ffd700' ? '255,215,0' : '26,115,232'}, 0.1)` }}>
                             🌍 {prediction.predicted_zone}
                         </div>
+
                         <div style={{ height: '280px', marginBottom: '20px' }}>
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart data={chartData}>
@@ -258,6 +273,7 @@ const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePred
                         >
                             <Download size={18} /> Download CSV Dataset Row
                         </button>
+
                     </>
                 ) : (
                     <div style={{ textAlign: 'center', color: '#7a8ab0', padding: '50px' }}>
