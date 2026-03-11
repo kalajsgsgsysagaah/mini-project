@@ -64,43 +64,60 @@ const GeospatialMap = ({ geomorphology, stations, selectedStation, prediction })
                     >
                         {/* Pulse for selected station */}
                         {isSelected && (
-                            <div style={{
-                                position: 'absolute',
-                                width: '30px',
-                                height: '30px',
-                                background: color,
-                                borderRadius: '50%',
-                                opacity: 0.3,
-                                left: '-10px',
-                                top: '-10px',
-                                animation: 'pulse 1.5s infinite ease-out'
-                            }}></div>
+                            <>
+                                <div style={{
+                                    position: 'absolute',
+                                    width: '40px',
+                                    height: '40px',
+                                    background: color,
+                                    borderRadius: '50%',
+                                    opacity: 0.4,
+                                    left: '-12px',
+                                    top: '-12px',
+                                    animation: 'pulse 1.5s infinite ease-out'
+                                }}></div>
+                                <div style={{
+                                    position: 'absolute',
+                                    width: '60px',
+                                    height: '60px',
+                                    background: color,
+                                    borderRadius: '50%',
+                                    opacity: 0.2,
+                                    left: '-22px',
+                                    top: '-22px',
+                                    animation: 'pulse 2s infinite ease-out',
+                                    animationDelay: '0.5s'
+                                }}></div>
+                            </>
                         )}
                         <div style={{
-                            width: isSelected ? '14px' : '10px',
-                            height: isSelected ? '14px' : '10px',
+                            width: isSelected ? '22px' : '16px',
+                            height: isSelected ? '22px' : '16px',
                             background: color,
-                            border: `2px solid ${isSelected ? '#ffd700' : '#fff'}`,
+                            border: `3px solid ${isSelected ? '#ffd700' : '#fff'}`,
                             borderRadius: '50%',
-                            boxShadow: '0 0 5px rgba(0,0,0,0.5)',
-                            transition: 'all 0.3s ease'
+                            boxShadow: '0 0 10px rgba(0,0,0,0.6)',
+                            transition: 'all 0.3s ease',
+                            animation: isSelected ? 'blink 0.8s infinite alternate' : 'none'
                         }}></div>
 
                         {/* Label */}
                         <div style={{
                             position: 'absolute',
-                            left: '15px',
-                            top: isSelected ? '-5px' : '0',
-                            background: isSelected ? 'rgba(13, 21, 48, 0.95)' : 'rgba(255,255,255,0.85)',
-                            color: isSelected ? '#ffd700' : '#000',
-                            padding: '2px 6px',
-                            borderRadius: '4px',
-                            fontSize: '9px',
+                            left: isSelected ? '25px' : '20px',
+                            top: isSelected ? '-8px' : '0',
+                            background: isSelected ? '#1a73e8' : 'rgba(255,255,255,0.9)',
+                            color: isSelected ? '#fff' : '#000',
+                            padding: '3px 8px',
+                            borderRadius: '6px',
+                            fontSize: isSelected ? '11px' : '10px',
+                            fontFamily: 'Orbitron, sans-serif',
                             fontWeight: 'bold',
                             whiteSpace: 'nowrap',
-                            boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                            boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
                             zIndex: 101,
-                            border: isSelected ? '1px solid #ffd700' : 'none'
+                            border: isSelected ? '2px solid #ffd700' : '1px solid #999',
+                            animation: isSelected ? 'textBlink 0.8s infinite alternate' : 'none'
                         }}>
                             {name}
                         </div>
@@ -113,15 +130,17 @@ const GeospatialMap = ({ geomorphology, stations, selectedStation, prediction })
                 position: 'absolute',
                 top: '10px',
                 left: '10px',
-                background: 'rgba(255,255,255,0.9)',
-                padding: '4px 8px',
-                borderRadius: '4px',
-                fontSize: '10px',
+                background: 'rgba(255,255,255,0.95)',
+                padding: '6px 12px',
+                borderRadius: '6px',
+                fontSize: '11px',
+                fontFamily: 'Orbitron, sans-serif',
                 fontWeight: 'bold',
-                color: '#111',
-                border: '1px solid #ccc'
+                color: '#1a73e8',
+                border: '2px solid #1a73e8',
+                boxShadow: '0 4px 10px rgba(0,0,0,0.1)'
             }}>
-                🛰️ GODAVARI BASIN MONITORING
+                🛰️ STATION LIVE MONITORING
             </div>
 
             {/* Potential Scale */}
@@ -130,30 +149,39 @@ const GeospatialMap = ({ geomorphology, stations, selectedStation, prediction })
                 bottom: '10px',
                 right: '10px',
                 background: 'rgba(255,255,255,0.95)',
-                padding: '8px',
-                borderRadius: '8px',
-                fontSize: '9px',
-                border: '1px solid #ddd',
-                color: '#333'
+                padding: '10px',
+                borderRadius: '10px',
+                fontSize: '10px',
+                border: '2px solid #ddd',
+                color: '#333',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
             }}>
-                <div style={{ fontWeight: 'bold', marginBottom: '4px', borderBottom: '1px solid #eee' }}>Zones</div>
+                <div style={{ fontWeight: 'bold', marginBottom: '6px', borderBottom: '1px solid #eee', letterSpacing: '1px' }}>GROUNDWATER</div>
                 {[
                     { label: 'Very High', color: '#4ecdc4' },
                     { label: 'High', color: '#1a73e8' },
                     { label: 'Moderate', color: '#ffd700' },
                     { label: 'Low', color: '#ff6b6b' },
                 ].map(item => (
-                    <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '5px', marginBottom: '2px' }}>
-                        <div style={{ width: '8px', height: '8px', background: item.color, borderRadius: '50%' }}></div>
-                        <div>{item.label}</div>
+                    <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                        <div style={{ width: '10px', height: '10px', background: item.color, borderRadius: '50%', border: '1px solid #999' }}></div>
+                        <div style={{ fontWeight: '600' }}>{item.label}</div>
                     </div>
                 ))}
             </div>
 
             <style>{`
                 @keyframes pulse {
-                    0% { transform: scale(0.95); opacity: 0.7; }
-                    100% { transform: scale(2.5); opacity: 0; }
+                    0% { transform: scale(0.8); opacity: 0.6; }
+                    100% { transform: scale(2.8); opacity: 0; }
+                }
+                @keyframes blink {
+                    from { opacity: 1; transform: scale(1); }
+                    to { opacity: 0.7; transform: scale(1.2); }
+                }
+                @keyframes textBlink {
+                    from { transform: translateX(0); }
+                    to { transform: translateX(3px); }
                 }
             `}</style>
         </div>
