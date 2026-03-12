@@ -4,7 +4,8 @@ const HistoryTab = () => {
     const [history, setHistory] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
+    const fetchHistory = () => {
+        setLoading(true);
         fetch('/api/history')
             .then(res => res.json())
             .then(data => {
@@ -15,14 +16,30 @@ const HistoryTab = () => {
                 console.error("Error fetching history:", err);
                 setLoading(false);
             });
+    };
+
+    useEffect(() => {
+        fetchHistory();
     }, []);
 
-    if (loading) return <div className="loading-spinner">Loading history...</div>;
+    if (loading && history.length === 0) return <div className="loading-spinner">Loading history...</div>;
 
     return (
         <div className="tab-content history-tab">
-            <h2>📜 Prediction History (SQL Store)</h2>
-            <p className="tab-description">All historical predictions stored in the local SQLite database.</p>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+                <div>
+                    <h2>📜 Prediction History (SQL Store)</h2>
+                    <p className="tab-description">All historical predictions stored in the local SQLite database.</p>
+                </div>
+                <button
+                    className="btn-primary"
+                    style={{ width: 'auto', padding: '8px 20px', fontSize: '0.8rem', marginTop: 0 }}
+                    onClick={fetchHistory}
+                    disabled={loading}
+                >
+                    {loading ? '⌛ Refreshing...' : '🔄 Refresh'}
+                </button>
+            </div>
 
             {history.length === 0 ? (
                 <div className="no-data">No history found. Try making a prediction!</div>

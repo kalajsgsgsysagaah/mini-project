@@ -40,6 +40,35 @@ const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePred
         setFormData(prev => ({ ...prev, [name]: name.includes('density') || name.includes('percent') || name.includes('ndvi') || name.includes('savi') || name.includes('rainfall') ? parseFloat(value) : value }));
     };
 
+    // 🔄 Sync inputs when station changes
+    useEffect(() => {
+        if (selectedStation && stations[selectedStation]) {
+            const station = stations[selectedStation];
+
+            // Map station metadata to form fields
+            const matchedGeology = meta.geology.find(g => station.geological_formation?.includes(g)) || formData.geology;
+            const matchedSoil = meta.soil.find(s => station.soil_type?.includes(s)) || formData.soil;
+            const matchedGeomorph = meta.geomorphology.find(g => station.description?.includes(g)) || formData.geomorphology;
+            const matchedLulc = meta.lulc.find(l => station.description?.toLowerCase().includes(l.toLowerCase())) || formData.lulc;
+
+            // Parse rainfall from recharge rate (e.g., "500-750 mm/year" -> 625)
+            let rainfall = formData.rainfall_mm;
+            const rfMatch = station.recharge_rate?.match(/(\d+)-(\d+)/);
+            if (rfMatch) {
+                rainfall = (parseInt(rfMatch[1]) + parseInt(rfMatch[2])) / 2;
+            }
+
+            setFormData(prev => ({
+                ...prev,
+                geology: matchedGeology,
+                soil: matchedSoil,
+                geomorphology: matchedGeomorph,
+                lulc: matchedLulc,
+                rainfall_mm: rainfall
+            }));
+        }
+    }, [selectedStation, stations, meta.geology, meta.soil, meta.geomorphology, meta.lulc]);
+
     const handlePredict = async () => {
         setLoading(true);
         try {

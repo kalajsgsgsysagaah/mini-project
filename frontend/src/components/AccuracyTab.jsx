@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const AccuracyTab = () => {
+    const [refreshing, setRefreshing] = useState(false);
+
+    const handleRefresh = () => {
+        setRefreshing(true);
+        setTimeout(() => setRefreshing(false), 800);
+    };
     return (
         <div className="card">
             <div className="section-title">🏆 Random Forest Model Performance</div>
@@ -60,8 +66,13 @@ const AccuracyTab = () => {
                     </div>
                 </div>
 
-                <button className="btn-primary" style={{ width: 'auto', marginTop: '30px', padding: '12px 30px' }}>
-                    🔄 Refresh Accuracy
+                <button
+                    className="btn-primary"
+                    style={{ width: 'auto', marginTop: '30px', padding: '12px 30px', opacity: refreshing ? 0.7 : 1 }}
+                    onClick={handleRefresh}
+                    disabled={refreshing}
+                >
+                    {refreshing ? '⌛ Recalculating...' : '🔄 Refresh Accuracy'}
                 </button>
             </div>
         </div>
