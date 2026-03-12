@@ -1,0 +1,3 @@
+geology,geomorphology,soil,slope_percent,drainage_density,lineament_density,lulc,ndvi,savi,rainfall_mm,predicted_zone,probabilities
+Basalt,Flood Plain,Alluvial,15.0,2.5,0.5,Agriculture,0.4,0.3,800.0,Moderate,"{'High': 0.04, 'Low': 0.02, 'Moderate': 0.94, 'Very High': 0.0, 'Very Low': 0.0}"
+Basalt,Flood Plain,Alluvial,15.0,2.5,0.5,Agriculture,0.4,0.3,800.0,Moderate,"{'High': 0.04, 'Low': 0.02, 'Moderate': 0.94, 'Very High': 0.0, 'Very Low': 0.0}"

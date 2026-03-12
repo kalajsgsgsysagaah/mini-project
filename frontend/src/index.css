@@ -321,3 +321,97 @@ tr:nth-child(even) {
 .geospatial-map-container .svg-wrapper:hover path {
   opacity: 0.8;
 }
+
+/* ── History Tab ── */
+.history-tab h2 {
+  font-family: 'Orbitron', monospace;
+  color: var(--accent1);
+  margin-bottom: 5px;
+}
+
+.history-table-container {
+  overflow-x: auto;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  margin-top: 20px;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.history-table th {
+  background: rgba(26, 115, 232, 0.15);
+  color: var(--text);
+  padding: 15px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.history-table td {
+  padding: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.9rem;
+}
+
+.history-table tr:hover {
+  background: rgba(26, 115, 232, 0.05);
+}
+
+.zone-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.zone-badge.very-high-potential-zone {
+  background: rgba(78, 205, 196, 0.2);
+  color: #4ecdc4;
+  border: 1px solid #4ecdc4;
+}
+
+.zone-badge.high-potential-zone {
+  background: rgba(26, 115, 232, 0.2);
+  color: #1a73e8;
+  border: 1px solid #1a73e8;
+}
+
+.zone-badge.moderate-potential-zone {
+  background: rgba(255, 215, 0, 0.2);
+  color: #ffd700;
+  border: 1px solid #ffd700;
+}
+
+.zone-badge.low-potential-zone {
+  background: rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+  border: 1px solid #ff6b6b;
+}
+
+.zone-badge.very-low-potential-zone {
+  background: rgba(128, 128, 128, 0.2);
+  color: #808080;
+  border: 1px solid #808080;
+}
+
+.tab-description {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.no-data {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-dim);
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px dashed var(--border);
+}

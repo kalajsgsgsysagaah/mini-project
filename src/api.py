@@ -10,6 +10,8 @@ import pandas as pd
 import pickle
 import os
 from typing import Optional
+import csv
+from .database import init_db, save_prediction_to_sql, DB_PATH
 
 # ─────────────────────────────────────────────
 #  Load model & unique values
@@ -55,6 +57,10 @@ app = FastAPI(
     ),
     version="1.0.0",
 )
+
+@app.on_event("startup")
+def startup_event():
+    init_db()
 
 # Allow React (Vite dev) and production domains to call this API
 app.add_middleware(
@@ -139,13 +145,73 @@ def predict(data: PredictRequest):
         pred  = model.predict(inp)[0]
         probs = model.predict_proba(inp)[0]
         cls   = model.classes_
-        return PredictResponse(
+        
+        response = PredictResponse(
             predicted_zone=str(pred),
             probabilities={str(c): float(round(p, 4)) for c, p in zip(cls, probs)},
             model_loaded=True,
         )
+        
+        print(f"\n🚀 [BACKEND RESPONSE] Predicted: {response.predicted_zone}")
+        print(f"📊 Probabilities: {response.probabilities}\n")
+        
+        # 💾 SAVE TO CSV & SQL
+        storage_data = {
+            "geology": data.geology,
+            "geomorphology": data.geomorphology,
+            "soil": data.soil,
+            "slope_percent": data.slope_percent,
+            "drainage_density": data.drainage_density,
+            "lineament_density": data.lineament_density,
+            "lulc": data.lulc,
+            "ndvi": data.ndvi,
+            "savi": data.savi,
+            "rainfall_mm": data.rainfall_mm,
+            "predicted_zone": response.predicted_zone,
+            "probabilities": response.probabilities
+        }
+        
+        save_prediction_to_csv(storage_data)
+        save_prediction_to_sql(storage_data)
+        
+        return response
     except Exception as e:
+        print(f"❌ Prediction error: {e}")
         raise HTTPException(status_code=500, detail=f"Prediction error: {str(e)}")
+
+def save_prediction_to_csv(data: dict):
+    """Saves a prediction record to a CSV file."""
+    csv_file = os.path.join(os.path.dirname(BASE_DIR), "predictions.csv")
+    file_exists = os.path.isfile(csv_file)
+    
+    try:
+        with open(csv_file, mode='a', newline='') as f:
+            writer = csv.DictWriter(f, fieldnames=data.keys())
+            if not file_exists:
+                writer.writeheader()
+            writer.writerow(data)
+        print("✅ Prediction saved to CSV.")
+    except Exception as e:
+        print(f"❌ Error saving to CSV: {e}")
+
+@app.get("/api/history", summary="Get prediction history from SQL")
+def get_history():
+    """Returns all stored predictions from the SQLite database."""
+    if not os.path.exists(DB_PATH):
+        return {"history": []}
+    
+    try:
+        import sqlite3
+        conn = sqlite3.connect(DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM predictions ORDER BY timestamp DESC")
+        rows = cursor.fetchall()
+        conn.close()
+        
+        return {"history": [dict(row) for row in rows]}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
 
 @app.get("/api/stations", summary="Get all station data")
 @app.get("/stations", summary="Get all station data")

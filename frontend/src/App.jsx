@@ -6,6 +6,7 @@ import PredictTab from './components/PredictTab';
 import MapTab from './components/MapTab';
 import DashboardTab from './components/DashboardTab';
 import AccuracyTab from './components/AccuracyTab';
+import HistoryTab from './components/HistoryTab';
 
 function App() {
   const [activeTab, setActiveTab] = useState('prediction');
@@ -65,6 +66,14 @@ function App() {
               🎯 Model Accuracy
             </button>
           </li>
+          <li>
+            <button
+              className={activeTab === 'history' ? 'active' : ''}
+              onClick={() => setActiveTab('history')}
+            >
+              📜 History
+            </button>
+          </li>
         </ul>
       </nav>
 
@@ -94,6 +103,7 @@ function App() {
           />
         )}
         {activeTab === 'accuracy' && <AccuracyTab />}
+        {activeTab === 'history' && <HistoryTab />}
       </main>
 
       <footer className="gw-footer">
