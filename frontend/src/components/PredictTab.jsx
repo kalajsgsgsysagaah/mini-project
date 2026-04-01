@@ -4,7 +4,7 @@ import { Download } from 'lucide-react';
 import GeospatialMap from './GeospatialMap';
 
 
-const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePrediction, setHistory, fetchHistory }) => {
+const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePrediction, setHistory, fetchHistory, history }) => {
     const [formData, setFormData] = useState({
         geology: 'Basalt',
         geomorphology: 'Flood Plain',
@@ -149,6 +149,45 @@ const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePred
         document.body.removeChild(link);
     };
 
+    const downloadFullCSV = () => {
+        if (!history || history.length === 0) {
+            alert("No history available to download. Please make a prediction first.");
+            return;
+        }
+
+        const headers = [
+            "Timestamp", "Station", "Geology", "Geomorphology", "Soil", "Slope", "Drainage", "Lineament", "LULC", "NDVI", "SAVI", "Rainfall", "Predicted_Zone"
+        ];
+
+        const rows = history.map(item => [
+            item.timestamp,
+            item.station || "Unknown",
+            item.geology,
+            item.geomorphology,
+            item.soil,
+            item.slope_percent,
+            item.drainage_density,
+            item.lineament_density,
+            item.lulc,
+            item.ndvi,
+            item.savi,
+            item.rainfall_mm,
+            item.predicted_zone
+        ]);
+
+        const csvContent = "data:text/csv;charset=utf-8,"
+            + headers.join(",") + "\n"
+            + rows.map(r => r.join(",")).join("\n");
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `groundwater_full_history.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     const getZoneColor = (zone) => {
         const colors = {
             'Very High Potential Zone': '#4ecdc4',
@@ -269,6 +308,23 @@ const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePred
                     }}
                 >
                     {loading ? 'Processing...' : '🔍 Analyse Groundwater Potential'}
+                </button>
+                <button
+                    className="btn-primary"
+                    onClick={downloadFullCSV}
+                    style={{
+                        marginTop: '10px',
+                        background: 'rgba(255,215,0,0.1)',
+                        color: '#ffd700',
+                        border: '1px solid #ffd700',
+                        boxShadow: 'none',
+                        position: 'sticky',
+                        bottom: '0',
+                        zIndex: 10,
+                    }}
+                >
+                    <Download size={18} style={{ display: 'inline', marginRight: '5px', verticalAlign: 'middle' }} /> 
+                    Download Full History CSV
                 </button>
             </div>
 

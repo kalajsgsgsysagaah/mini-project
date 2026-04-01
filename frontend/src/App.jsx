@@ -106,6 +106,7 @@ function App() {
             setLivePrediction={setLivePrediction}
             fetchHistory={fetchHistory}
             setHistory={setHistory}
+            history={history}
           />
         )}
         {activeTab === 'map' && (
