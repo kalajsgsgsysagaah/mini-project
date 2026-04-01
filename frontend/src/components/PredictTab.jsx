@@ -184,7 +184,6 @@ const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePred
                         <select
                             value={selectedStation}
                             onChange={(e) => setSelectedStation(e.target.value)}
-                            style={{ fontWeight: 'bold', width: '100%', padding: '8px', color: '#000' }}
                         >
                             {Object.keys(stations).map(s => <option key={s} value={s}>{s}</option>)}
                         </select>
@@ -194,13 +193,13 @@ const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePred
                     <div className="grid-2" style={{ gap: '10px' }}>
                         <div className="form-group">
                             <label>Geology</label>
-                            <select name="geology" value={formData.geology} onChange={handleChange} style={{ width: '100%', padding: '8px', color: '#000' }}>
+                            <select name="geology" value={formData.geology} onChange={handleChange}>
                                 {meta.geology.map(g => <option key={g} value={g}>{g}</option>)}
                             </select>
                         </div>
                         <div className="form-group">
                             <label>Geomorphology</label>
-                            <select name="geomorphology" value={formData.geomorphology} onChange={handleChange} style={{ width: '100%', padding: '8px', color: '#000' }}>
+                            <select name="geomorphology" value={formData.geomorphology} onChange={handleChange}>
                                 {meta.geomorphology.map(g => <option key={g} value={g}>{g}</option>)}
                             </select>
                         </div>
@@ -209,13 +208,13 @@ const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePred
                     <div className="grid-2" style={{ gap: '10px' }}>
                         <div className="form-group">
                             <label>Soil Type</label>
-                            <select name="soil" value={formData.soil} onChange={handleChange} style={{ width: '100%', padding: '8px', color: '#000' }}>
+                            <select name="soil" value={formData.soil} onChange={handleChange}>
                                 {meta.soil.map(s => <option key={s} value={s}>{s}</option>)}
                             </select>
                         </div>
                         <div className="form-group">
                             <label>Land Use (LULC)</label>
-                            <select name="lulc" value={formData.lulc} onChange={handleChange} style={{ width: '100%', padding: '8px', color: '#000' }}>
+                            <select name="lulc" value={formData.lulc} onChange={handleChange}>
                                 {meta.lulc.map(l => <option key={l} value={l}>{l}</option>)}
                             </select>
                         </div>

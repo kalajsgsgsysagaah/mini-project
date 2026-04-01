@@ -165,7 +165,6 @@ input[type="number"] {
   font-family: 'Inter', sans-serif !important;
   transition: border .3s, box-shadow .3s !important;
   cursor: pointer;
-  appearance: none;
   /* For custom arrow if needed */
 }
 
