@@ -1,27 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const HistoryTab = () => {
-    const [history, setHistory] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    const fetchHistory = () => {
-        setLoading(true);
-        fetch('/api/history')
-            .then(res => res.json())
-            .then(data => {
-                setHistory(data.history || []);
-                setLoading(false);
-            })
-            .catch(err => {
-                console.error("Error fetching history:", err);
-                setLoading(false);
-            });
-    };
-
-    useEffect(() => {
-        fetchHistory();
-    }, []);
-
+const HistoryTab = ({ history, loading, fetchHistory }) => {
     if (loading && history.length === 0) return <div className="loading-spinner">Loading history...</div>;
 
     return (
@@ -64,9 +43,9 @@ const HistoryTab = () => {
 
                                 return (
                                     <tr key={idx}>
-                                        <td>{new Date(item.timestamp).toLocaleString()}</td>
+                                        <td>{new Date(item.timestamp).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</td>
                                         <td>
-                                            <strong>{item.geology}</strong>
+                                            <strong>{item.station ? `${item.station} - ` : ''}{item.geology}</strong>
                                             <br />
                                             <small>{item.lulc} | {item.soil}</small>
                                         </td>

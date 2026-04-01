@@ -74,6 +74,7 @@ app.add_middleware(
 #  Request / Response schemas
 # ─────────────────────────────────────────────
 class PredictRequest(BaseModel):
+    station:           Optional[str] = Field(None, example="Bhadrachalam")
     geology:           str   = Field(..., example="Basalt")
     geomorphology:     str   = Field(..., example="Flood Plain")
     soil:              str   = Field(..., example="Alluvial")
@@ -168,7 +169,8 @@ def predict(data: PredictRequest):
             "savi": data.savi,
             "rainfall_mm": data.rainfall_mm,
             "predicted_zone": response.predicted_zone,
-            "probabilities": response.probabilities
+            "probabilities": response.probabilities,
+            "station": data.station
         }
         
         save_prediction_to_csv(storage_data)

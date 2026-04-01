@@ -1,3 +1,10 @@
 geology,geomorphology,soil,slope_percent,drainage_density,lineament_density,lulc,ndvi,savi,rainfall_mm,predicted_zone,probabilities
 Basalt,Flood Plain,Alluvial,15.0,2.5,0.5,Agriculture,0.4,0.3,800.0,Moderate,"{'High': 0.04, 'Low': 0.02, 'Moderate': 0.94, 'Very High': 0.0, 'Very Low': 0.0}"
 Basalt,Flood Plain,Alluvial,15.0,2.5,0.5,Agriculture,0.4,0.3,800.0,Moderate,"{'High': 0.04, 'Low': 0.02, 'Moderate': 0.94, 'Very High': 0.0, 'Very Low': 0.0}"
+Basalt,Flood Plain,Alluvial,15.0,2.5,0.5,Agriculture,0.4,0.3,800.0,Moderate,"{'High': 0.04, 'Low': 0.02, 'Moderate': 0.94, 'Very High': 0.0, 'Very Low': 0.0}",
+Basalt,Flood Plain,Alluvial,15.0,2.5,0.5,Agriculture,0.4,0.3,800.0,Moderate,"{'High': 0.04, 'Low': 0.02, 'Moderate': 0.94, 'Very High': 0.0, 'Very Low': 0.0}",
+Granodiorite,Flood Plain,Alluvial,15.0,2.5,0.5,Agriculture,0.4,0.3,800.0,Moderate,"{'High': 0.01, 'Low': 0.01, 'Moderate': 0.98, 'Very High': 0.0, 'Very Low': 0.0}",
+Basalt,Denudational Hills,Alluvial,15.0,2.5,0.5,Agriculture,0.4,0.3,800.0,Moderate,"{'High': 0.03, 'Low': 0.04, 'Moderate': 0.92, 'Very High': 0.01, 'Very Low': 0.0}",
+Schist,Flood Plain,Alluvial,15.0,2.5,0.5,Agriculture,0.4,0.3,800.0,Moderate,"{'High': 0.03, 'Low': 0.0, 'Moderate': 0.91, 'Very High': 0.0, 'Very Low': 0.06}",
+Basalt,Flood Plain,Alluvial,6.9,1.1,0.2,Agricultural Land,-0.76,-0.76,344.0,Low,"{'High': 0.02, 'Low': 0.41, 'Moderate': 0.17, 'Very High': 0.0, 'Very Low': 0.4}",
+Granite,Flood Plain,Alluvial,6.9,1.1,0.2,Agricultural Land,-0.76,-0.76,344.0,Low,"{'High': 0.02, 'Low': 0.41, 'Moderate': 0.16, 'Very High': 0.0, 'Very Low': 0.41}",

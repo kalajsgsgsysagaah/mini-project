@@ -4,7 +4,7 @@ import { Download } from 'lucide-react';
 import GeospatialMap from './GeospatialMap';
 
 
-const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePrediction }) => {
+const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePrediction, setHistory, fetchHistory }) => {
     const [formData, setFormData] = useState({
         geology: 'Basalt',
         geomorphology: 'Flood Plain',
@@ -75,11 +75,37 @@ const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePred
             const res = await fetch('/api/predict', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
+                body: JSON.stringify({ ...formData, station: selectedStation })
             });
             const data = await res.json();
             setPrediction(data);
             setLivePrediction(data.predicted_zone);
+
+            // Dynamically add the response to history state so it's instantly available in HistoryTab
+            const newHistoryRecord = {
+                timestamp: new Date().toISOString(),
+                geology: formData.geology,
+                geomorphology: formData.geomorphology,
+                soil: formData.soil,
+                slope_percent: formData.slope_percent,
+                drainage_density: formData.drainage_density,
+                lineament_density: formData.lineament_density,
+                lulc: formData.lulc,
+                ndvi: formData.ndvi,
+                savi: formData.savi,
+                rainfall_mm: formData.rainfall_mm,
+                predicted_zone: data.predicted_zone,
+                probabilities: data.probabilities,
+                station: selectedStation
+            };
+
+            if (setHistory) {
+                setHistory(prev => [newHistoryRecord, ...prev]);
+            }
+            if (fetchHistory) {
+                // optionally re-fetch from backend to make sure id is updated
+                setTimeout(fetchHistory, 500); 
+            }
         } catch (err) {
             console.error("Prediction error:", err);
         } finally {
@@ -158,7 +184,7 @@ const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePred
                         <select
                             value={selectedStation}
                             onChange={(e) => setSelectedStation(e.target.value)}
-                            style={{ fontWeight: 'bold', color: '#ffd700' }}
+                            style={{ fontWeight: 'bold', width: '100%', padding: '8px', color: '#000' }}
                         >
                             {Object.keys(stations).map(s => <option key={s} value={s}>{s}</option>)}
                         </select>
@@ -168,13 +194,13 @@ const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePred
                     <div className="grid-2" style={{ gap: '10px' }}>
                         <div className="form-group">
                             <label>Geology</label>
-                            <select name="geology" value={formData.geology} onChange={handleChange}>
+                            <select name="geology" value={formData.geology} onChange={handleChange} style={{ width: '100%', padding: '8px', color: '#000' }}>
                                 {meta.geology.map(g => <option key={g} value={g}>{g}</option>)}
                             </select>
                         </div>
                         <div className="form-group">
                             <label>Geomorphology</label>
-                            <select name="geomorphology" value={formData.geomorphology} onChange={handleChange}>
+                            <select name="geomorphology" value={formData.geomorphology} onChange={handleChange} style={{ width: '100%', padding: '8px', color: '#000' }}>
                                 {meta.geomorphology.map(g => <option key={g} value={g}>{g}</option>)}
                             </select>
                         </div>
@@ -183,13 +209,13 @@ const PredictTab = ({ stations, selectedStation, setSelectedStation, setLivePred
                     <div className="grid-2" style={{ gap: '10px' }}>
                         <div className="form-group">
                             <label>Soil Type</label>
-                            <select name="soil" value={formData.soil} onChange={handleChange}>
+                            <select name="soil" value={formData.soil} onChange={handleChange} style={{ width: '100%', padding: '8px', color: '#000' }}>
                                 {meta.soil.map(s => <option key={s} value={s}>{s}</option>)}
                             </select>
                         </div>
                         <div className="form-group">
                             <label>Land Use (LULC)</label>
-                            <select name="lulc" value={formData.lulc} onChange={handleChange}>
+                            <select name="lulc" value={formData.lulc} onChange={handleChange} style={{ width: '100%', padding: '8px', color: '#000' }}>
                                 {meta.lulc.map(l => <option key={l} value={l}>{l}</option>)}
                             </select>
                         </div>

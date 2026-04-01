@@ -13,6 +13,26 @@ function App() {
   const [stations, setStations] = useState({});
   const [selectedStation, setSelectedStation] = useState('');
   const [livePrediction, setLivePrediction] = useState(null);
+  const [history, setHistory] = useState([]);
+  const [historyLoading, setHistoryLoading] = useState(true);
+
+  const fetchHistory = () => {
+    setHistoryLoading(true);
+    fetch('/api/history')
+        .then(res => res.json())
+        .then(data => {
+            setHistory(data.history || []);
+            setHistoryLoading(false);
+        })
+        .catch(err => {
+            console.error("Error fetching history:", err);
+            setHistoryLoading(false);
+        });
+  };
+
+  useEffect(() => {
+    fetchHistory();
+  }, []);
 
   useEffect(() => {
     fetch('/api/stations')
@@ -84,6 +104,8 @@ function App() {
             selectedStation={selectedStation}
             setSelectedStation={setSelectedStation}
             setLivePrediction={setLivePrediction}
+            fetchHistory={fetchHistory}
+            setHistory={setHistory}
           />
         )}
         {activeTab === 'map' && (
@@ -103,7 +125,7 @@ function App() {
           />
         )}
         {activeTab === 'accuracy' && <AccuracyTab />}
-        {activeTab === 'history' && <HistoryTab />}
+        {activeTab === 'history' && <HistoryTab history={history} loading={historyLoading} fetchHistory={fetchHistory} />}
       </main>
 
       <footer className="gw-footer">

@@ -24,9 +24,14 @@ def init_db():
             savi REAL,
             rainfall_mm REAL,
             predicted_zone TEXT,
-            probabilities TEXT
+            probabilities TEXT,
+            station TEXT
         )
     ''')
+    try:
+        cursor.execute("ALTER TABLE predictions ADD COLUMN station TEXT")
+    except sqlite3.OperationalError:
+        pass # column might already exist
     conn.commit()
     conn.close()
 
@@ -39,14 +44,14 @@ def save_prediction_to_sql(data: dict):
             INSERT INTO predictions (
                 geology, geomorphology, soil, slope_percent, 
                 drainage_density, lineament_density, lulc, 
-                ndvi, savi, rainfall_mm, predicted_zone, probabilities
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ndvi, savi, rainfall_mm, predicted_zone, probabilities, station
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             data.get("geology"), data.get("geomorphology"), data.get("soil"), 
             data.get("slope_percent"), data.get("drainage_density"), 
             data.get("lineament_density"), data.get("lulc"), 
             data.get("ndvi"), data.get("savi"), data.get("rainfall_mm"), 
-            data.get("predicted_zone"), str(data.get("probabilities"))
+            data.get("predicted_zone"), str(data.get("probabilities")), data.get("station")
         ))
         conn.commit()
         conn.close()
