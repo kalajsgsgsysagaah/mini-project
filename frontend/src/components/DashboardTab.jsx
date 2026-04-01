@@ -151,9 +151,22 @@ const DashboardTab = ({ selectedStation, setSelectedStation, stations, livePredi
                         </div>
 
                         <div className="card" style={{ background: 'rgba(102,126,234,0.05)', marginBottom: '20px', border: '1px dashed var(--accent1)' }}>
-                            <p style={{ fontStyle: 'italic', color: '#c8d8ff', lineHeight: '1.6' }}>
+                            <p style={{ fontStyle: 'italic', color: '#c8d8ff', lineHeight: '1.6', marginBottom: '10px' }}>
                                 "{selectedData.description || 'Monitoring core groundwater levels and recharge patterns across the Godavari basin.'}"
                             </p>
+                            {selectedData.climate_info && (
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px', marginTop: '15px', color: '#7a8ab0', fontSize: '0.85rem' }}>
+                                    <div style={{ background: 'rgba(0,0,0,0.2)', padding: '10px', borderRadius: '8px' }}>
+                                        <b style={{ color: '#4ecdc4', display: 'block', marginBottom: '4px' }}>☁️ Climate</b> {selectedData.climate_info}
+                                    </div>
+                                    <div style={{ background: 'rgba(0,0,0,0.2)', padding: '10px', borderRadius: '8px' }}>
+                                        <b style={{ color: '#ffd700', display: 'block', marginBottom: '4px' }}>🌾 Major Crops</b> {selectedData.major_crops}
+                                    </div>
+                                    <div style={{ background: 'rgba(0,0,0,0.2)', padding: '10px', borderRadius: '8px' }}>
+                                        <b style={{ color: '#1a73e8', display: 'block', marginBottom: '4px' }}>📍 Significance</b> {selectedData.geographic_significance}
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         <div className="grid-2">

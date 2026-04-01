@@ -240,11 +240,61 @@ except:
 #  Station master data
 # ─────────────────────────────────────────────
 STATIONS = {
-    "Bhadrachalam":    {"lat":17.668,"lon":80.893,"avg_discharge":1340,"peak_discharge":3400,"min_discharge":370,"current_level":46.5,"monsoon_flow":3200,"groundwater_zone":"High Potential Zone","aquifer_type":"Basalt with Granitic Gneiss","depth_to_water":8.5,"water_quality":"Good","yield_potential":"High (15-25 lpm)","recharge_rate":"Medium (500-750 mm/year)","density":"Moderate - 1 well/2 ha","soil_type":"Black Soil & Red Soil","geological_formation":"Deccan Basalt & Archean Granite","recommendation":"Suitable for irrigation wells"},
-    "Ramagundam NTPC": {"lat":18.755,"lon":79.513,"avg_discharge":1158,"peak_discharge":3000,"min_discharge":280,"current_level":43.2,"monsoon_flow":2800,"groundwater_zone":"Moderate Potential Zone","aquifer_type":"Granite with Quartzite","depth_to_water":12.3,"water_quality":"Good","yield_potential":"Moderate (8-15 lpm)","recharge_rate":"Low (350-500 mm/year)","density":"Low - 1 well/3-4 ha","soil_type":"Red Soil & Laterite","geological_formation":"Archean Granite & Pegmatite","recommendation":"Suitable for domestic wells"},
-    "Dowleswaram":     {"lat":16.934,"lon":81.771,"avg_discharge":1492,"peak_discharge":3700,"min_discharge":410,"current_level":47.5,"monsoon_flow":3500,"groundwater_zone":"Very High Potential Zone","aquifer_type":"Alluvium & Basalt","depth_to_water":6.2,"water_quality":"Excellent","yield_potential":"Very High (25-40 lpm)","recharge_rate":"High (750-1000 mm/year)","density":"High - 1 well/1.5 ha","soil_type":"Alluvial Soil","geological_formation":"Recent Alluvium","recommendation":"Highly suitable for large scale irrigation"},
-    "Pattiseema":      {"lat":17.136,"lon":81.609,"avg_discharge":1280,"peak_discharge":3300,"min_discharge":360,"current_level":46.2,"monsoon_flow":3150,"groundwater_zone":"High Potential Zone","aquifer_type":"Basalt & Alluvium","depth_to_water":7.8,"water_quality":"Good","yield_potential":"High (18-28 lpm)","recharge_rate":"High (650-850 mm/year)","density":"Moderate-High - 1 well/2 ha","soil_type":"Black Soil & Alluvial","geological_formation":"Deccan Basalt & Alluvium","recommendation":"Suitable for irrigation & domestic use"},
-    "Rajahmundry":     {"lat":17.000,"lon":81.804,"avg_discharge":1420,"peak_discharge":3620,"min_discharge":395,"current_level":47.2,"monsoon_flow":3400,"groundwater_zone":"Very High Potential Zone","aquifer_type":"Alluvium & Basalt","depth_to_water":5.8,"water_quality":"Excellent","yield_potential":"Very High (28-42 lpm)","recharge_rate":"High (780-1050 mm/year)","density":"High - 1 well/1.2 ha","soil_type":"Deep Alluvial Soil","geological_formation":"Recent Alluvium & Basalt","recommendation":"Highly suitable for large-scale irrigation and industrial use"},
+    "Bhadrachalam":    {
+        "lat":17.668,"lon":80.893,"avg_discharge":1340,"peak_discharge":3400,"min_discharge":370,"current_level":46.5,"monsoon_flow":3200,
+        "groundwater_zone":"High Potential Zone","aquifer_type":"Basalt with Granitic Gneiss","depth_to_water":8.5,"water_quality":"Good",
+        "yield_potential":"High (15-25 lpm)","recharge_rate":"Medium (500-750 mm/year)","density":"Moderate - 1 well/2 ha",
+        "soil_type":"Black Soil & Red Soil","geological_formation":"Deccan Basalt & Archean Granite",
+        "recommendation":"Suitable for irrigation wells",
+        "description": "Known for its historic temple on the banks of the Godavari, this station monitors a critical bend in the river. The groundwater here is heavily influenced by the surrounding basaltic layers and extensive forest cover, offering moderate to high yield. The annual monsoon heavily recharges local aquifers, making it a reliable source for local agriculture while preserving the rich biodiversity of the region.",
+        "climate_info": "Tropical wet and dry, with heavy monsoon rainfall accounting for 80% of annual precipitation.",
+        "major_crops": "Paddy, Cotton, and local Millets.",
+        "geographic_significance": "Acts as a primary flood calculation node before the Godavari enters the lower basin."
+    },
+    "Ramagundam NTPC": {
+        "lat":18.755,"lon":79.513,"avg_discharge":1158,"peak_discharge":3000,"min_discharge":280,"current_level":43.2,"monsoon_flow":2800,
+        "groundwater_zone":"Moderate Potential Zone","aquifer_type":"Granite with Quartzite","depth_to_water":12.3,"water_quality":"Good",
+        "yield_potential":"Moderate (8-15 lpm)","recharge_rate":"Low (350-500 mm/year)","density":"Low - 1 well/3-4 ha",
+        "soil_type":"Red Soil & Laterite","geological_formation":"Archean Granite & Pegmatite",
+        "recommendation":"Suitable for domestic wells",
+        "description": "Located near one of India's largest power plants, this station tracks water levels in a rapidly industrializing open-cast mining zone. The groundwater management here is vital for maintaining the balance between industrial cooling needs and domestic availability. The harder granite terrains lead to lower natural recharge, making sustainable extraction crucial.",
+        "climate_info": "Semi-arid and extremely hot during summers, reaching 45°C+. Erratic rainfall patterns.",
+        "major_crops": "Maize, Red Gram, and limited Paddy.",
+        "geographic_significance": "A critical intersection of industrial water extraction and the Godavari river flow."
+    },
+    "Dowleswaram":     {
+        "lat":16.934,"lon":81.771,"avg_discharge":1492,"peak_discharge":3700,"min_discharge":410,"current_level":47.5,"monsoon_flow":3500,
+        "groundwater_zone":"Very High Potential Zone","aquifer_type":"Alluvium & Basalt","depth_to_water":6.2,"water_quality":"Excellent",
+        "yield_potential":"Very High (25-40 lpm)","recharge_rate":"High (750-1000 mm/year)","density":"High - 1 well/1.5 ha",
+        "soil_type":"Alluvial Soil","geological_formation":"Recent Alluvium",
+        "recommendation":"Highly suitable for large scale irrigation",
+        "description": "Site of the famous Sir Arthur Cotton Barrage, this location is the nerve center for irrigation control in the fertile delta. The alluvium-rich soil here provides exceptional groundwater potential with very shallow water tables, supporting vast hectares of crops year-round while preventing seawater intrusion from the nearby Bay of Bengal.",
+        "climate_info": "Coastal tropical climate with high humidity and significant cyclonic rainfall from the Bay of Bengal.",
+        "major_crops": "Extensive Paddy, Sugarcane, and Aquaculture.",
+        "geographic_significance": "The apex of the Godavari delta, dividing the river into Gautami and Vasishta branches."
+    },
+    "Pattiseema":      {
+        "lat":17.136,"lon":81.609,"avg_discharge":1280,"peak_discharge":3300,"min_discharge":360,"current_level":46.2,"monsoon_flow":3150,
+        "groundwater_zone":"High Potential Zone","aquifer_type":"Basalt & Alluvium","depth_to_water":7.8,"water_quality":"Good",
+        "yield_potential":"High (18-28 lpm)","recharge_rate":"High (650-850 mm/year)","density":"Moderate-High - 1 well/2 ha",
+        "soil_type":"Black Soil & Alluvial","geological_formation":"Deccan Basalt & Alluvium",
+        "recommendation":"Suitable for irrigation & domestic use",
+        "description": "A modern engineering marvel, this station is part of the first-ever river linking project traversing from the Godavari to the Krishna basin. It monitors the massive lift irrigation pumps and diversion channels. The localized groundwater here is highly dynamic, benefiting from the constant surface water movement and varied geological boundaries.",
+        "climate_info": "Tropical savanna with distinct wet and dry seasons. Moderate coastal influence.",
+        "major_crops": "Tobacco, Paddy, and commercial Horticulture.",
+        "geographic_significance": "The massive inter-basin transfer site routing surplus Godavari flood waters to the Krishna river."
+    },
+    "Rajahmundry":     {
+        "lat":17.000,"lon":81.804,"avg_discharge":1420,"peak_discharge":3620,"min_discharge":395,"current_level":47.2,"monsoon_flow":3400,
+        "groundwater_zone":"Very High Potential Zone","aquifer_type":"Alluvium & Basalt","depth_to_water":5.8,"water_quality":"Excellent",
+        "yield_potential":"Very High (28-42 lpm)","recharge_rate":"High (780-1050 mm/year)","density":"High - 1 well/1.2 ha",
+        "soil_type":"Deep Alluvial Soil","geological_formation":"Recent Alluvium & Basalt",
+        "recommendation":"Highly suitable for large-scale irrigation and industrial use",
+        "description": "Situated by the widest point of the Godavari river, this station overlooks the iconic Rail-cum-Road bridge and serves as the cultural capital of the region. The deep alluvial sand deposits make it one of the most productive groundwater zones globally, capable of sustaining massive municipal and industrial extraction without significant drawdown.",
+        "climate_info": "Warm and humid tropical climate, prone to heavy pre-monsoon showers and cyclones.",
+        "major_crops": "Paddy, Coconut, Banana, and Mango orchards.",
+        "geographic_significance": "Major urban and commercial hub situated right before the river bifurcates into the delta."
+    },
 }
 
 ORDER_MAP = {'Very Low':0,'Low':1,'Moderate':2,'High':3,'Very High':4}
@@ -639,9 +689,12 @@ def station_detail(name):
                   border:1px solid rgba(102,126,234,0.2);margin-bottom:14px;">
         <h3 style="margin:0 0 10px;color:#ffd700;font-size:14px;">🔬 Characteristics</h3>
         <p style="margin:5px 0"><b>Recharge:</b>    {d['recharge_rate']}</p>
-        <p style="margin:5px 0"><b>Well Density:</b> {d['density']}</p>
-        <p style="margin:5px 0"><b>Soil:</b>         {d['soil_type']}</p>
-        <p style="margin:5px 0"><b>Geology:</b>      {d['geological_formation']}</p>
+        <p style="margin:5px 0"><b>Well Density:</b> {d.get('density', '')}</p>
+        <p style="margin:5px 0"><b>Soil:</b>         {d.get('soil_type', '')}</p>
+        <p style="margin:5px 0"><b>Geology:</b>      {d.get('geological_formation', '')}</p>
+        <p style="margin:5px 0;margin-top:10px;border-top:1px solid rgba(255,255,255,0.1);padding-top:10px"><b>Climate:</b>     {d.get('climate_info', '')}</p>
+        <p style="margin:5px 0"><b>Crops:</b>       {d.get('major_crops', '')}</p>
+        <p style="margin:5px 0"><b>Significance:</b> {d.get('geographic_significance', '')}</p>
       </div>
       <div style="background:rgba(102,126,234,0.15);padding:14px;border-radius:12px;
                   border:1px solid {bc};color:#ffd700;font-weight:700;font-size:14px;">
